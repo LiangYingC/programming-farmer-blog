@@ -1,5 +1,6 @@
 // 1. Typescript and ESlint Example on Next.js repo : https://github.com/vercel/next.js/tree/canary/examples/with-typescript-eslint-jest
-// 2. Using ESLint and Prettier in a TypeScript Project : https://www.robertcooper.me/using-eslint-and-prettier-in-a-typescript-project
+// 2. Start a clean Next.js project with TypeScript, ESLint and Prettier from scratch : https://paulintrognon.fr/blog/typescript-prettier-eslint-next-js
+// 3. Using ESLint and Prettier in a TypeScript Project : https://www.robertcooper.me/using-eslint-and-prettier-in-a-typescript-project
 
 {
   "parser": "@typescript-eslint/parser",
