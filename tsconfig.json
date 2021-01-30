@@ -3,7 +3,7 @@
 {
   "compilerOptions": {
     "target": "esnext", // 使用 Next.js 指定生成的 js 檔案為 ESNext 版本
-    "module": "esnext", // 使用 Next.js 指定生成的 module 類型為 Esnext module
+    "module": "esnext", // 使用 Next.js 指定生成的 module 類型為 ESNext module
     "jsx": "preserve", // 使用 Next.js 用 Preserve mode 支援 JSX 語法。 Preserve mode 會保留 JSX 原始狀態，藉此提供完整資訊給其他編譯器，如：babel，再次編譯。 Next.js uses Babel to handle TypeScript, so need preserve mode
     "lib": ["dom", "dom.iterable", "esnext"], // 編譯過程中需要引入的 library 文件列表
     "strict": true,
