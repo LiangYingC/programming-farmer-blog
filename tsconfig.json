@@ -23,6 +23,6 @@
       "@pages/*": ["./pages/*"]
     }
   },
-  "include": ["next-env.d.ts", "pages/*.ts", "pages/*.tsx"],
+  "include": ["next-env.d.ts", "./pages/*.ts", "./pages/*.tsx", "*.d.ts"],
   "exclude": ["node_modules"]
 }
