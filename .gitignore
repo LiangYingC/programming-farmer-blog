@@ -1,1 +1,16 @@
+# Dependency directories
 node_modules
+
+# build output files
+/.next/
+/out/
+
+# production
+/build
+
+# environment variables files
+.env
+
+# vercel
+.vercel
+
