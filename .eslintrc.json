@@ -27,7 +27,7 @@
   },
   "settings": {
     "react": {
-      "version": "detect"
+      "version": "detect" // detect automatically picks the version you have installed.
     }
   },
   "rules": {
