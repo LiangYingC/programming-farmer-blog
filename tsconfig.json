@@ -1,0 +1,28 @@
+// 1. 官方文件 : https://www.typescriptlang.org/docs/handbook/compiler-options.html
+// 2. Typescript 配置文件详解 : https://blog.cjw.design/blog/old/typescript
+{
+  "compilerOptions": {
+    "target": "esnext", // 使用 Next.js 指定生成的 js 檔案為 ESNext 版本
+    "module": "esnext", // 使用 Next.js 指定生成的 module 類型為 Esnext module
+    "jsx": "preserve", // 使用 Next.js 用 Preserve mode 支援 JSX 語法。 Preserve mode 會保留 JSX 原始狀態，藉此提供完整資訊給其他編譯器，如：babel，再次編譯。 Next.js uses Babel to handle TypeScript, so need preserve mode
+    "lib": ["dom", "dom.iterable", "esnext"], // 編譯過程中需要引入的 library 文件列表
+    "strict": true,
+    "sourceMap": true, // 生成相應的 .map 文件，方便 debug
+    "removeComments": true,
+    "preserveConstEnums": true, // 保留 const enum，如果使用 const 宣告 Enum，編譯結果不會產生 Object，Ref : https://reurl.cc/g80lbN
+    "strictNullChecks": true, // 將 null 與 undefined 視為不同的型別
+    "esModuleInterop": true, // 使用 Next.js 編譯時會用到 babel，因此需開啟 esModuleInterop，幫助兼容 babel 生態系
+    "skipLibCheck": true, // 不要對 declaration files（ *.d.ts）中，已聲明的 library 做型別檢查。主要是因為並非每個 library 都有支援 ts
+    "moduleResolution": "node", // 決定如何處理 module。不設置的話，找 declaration files 的時候 ts 不會在 node_modules 中找
+    "resolveJsonModule": true, // 可以透過 import 導入 .json 文件
+    "noEmit": true, // 不生成輸出文件
+    "isolatedModules": true,
+    "forceConsistentCasingInFileNames": true, // 禁止對同一份文件，使用大小寫不一致的引用
+    "allowJs": true,
+    "paths": {
+      "@pages/*": ["./pages/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "pages/*.ts", "pages/*.tsx"],
+  "exclude": ["node_modules"]
+}

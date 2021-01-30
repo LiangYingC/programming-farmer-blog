@@ -1,17 +1,26 @@
 {
-  "name": "Programming Farmer Blog",
+  "name": "programming-farmer-blog",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Blog"
+  ],
+  "author": "LiangC",
   "license": "ISC",
   "dependencies": {
     "next": "^10.0.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.22",
+    "@types/react": "^17.0.0",
+    "typescript": "^4.1.3"
   }
 }
