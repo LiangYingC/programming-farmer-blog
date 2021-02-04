@@ -1,29 +1,22 @@
 import { AppProps } from 'next/app';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    background-color: #333;
-  }
-`;
-
-const theme = {
-  colors: {
-    primary: '#0070f3',
-  },
+const config = {
+  initialColorMode: 'dark',
+  useSystemColorMode: true,
 };
+
+const theme = extendTheme({
+  config,
+});
+
+console.log({ theme });
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </>
+    <ChakraProvider theme={theme}>
+      <Component {...pageProps} />
+    </ChakraProvider>
   );
 };
 
