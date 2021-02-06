@@ -24,7 +24,8 @@
       "@pages/*": ["pages/*"],
       "@configs/*": ["configs/*"],
       "@components/*": ["components/*"],
-      "@contents/*": ["contents/*"]
+      "@contents/*": ["contents/*"],
+      "@lib/*": ["lib/*"]
     }
   },
   "include": ["./**/*.ts", "./**/*.tsx", "next-env.d.ts"],
