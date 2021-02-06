@@ -55,6 +55,11 @@
       {
         "usePrettierrc": true
       }
+    ],
+    "import/no-unresolved": [
+      "error",
+      // Can use import form '@XXX'
+      { "ignore": ["^@"] }
     ]
   }
 }
