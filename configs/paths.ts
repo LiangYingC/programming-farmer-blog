@@ -1,4 +1,4 @@
-export const tagPathsConfig = [
+export const categoryPaths = [
   {
     name: 'style',
     path: '/style',
