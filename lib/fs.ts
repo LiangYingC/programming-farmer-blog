@@ -18,7 +18,7 @@ export const getAllPostFiles = () => {
 
 /**
  * Get post file names of a specific category
- * @param categoryName post category name，example：javaScript、react
+ * @param categoryName - post category name，example：javaScript、react
  */
 export const getPostFilesByCategory = (categoryName: string) => {
   if (categoryName) return [''];
@@ -31,7 +31,7 @@ export const getPostFilesByCategory = (categoryName: string) => {
 
 /**
  * Get slugs of posts
- * @param postFiles a array of post file names
+ * @param postFiles - a array of post file names
  */
 export const getPostsSlugs = (postFiles: string[]) => {
   const postSlugs = postFiles.map(postFile => {
@@ -43,7 +43,7 @@ export const getPostsSlugs = (postFiles: string[]) => {
 
 /**
  * Get frontmatter and content of a post by post file path
- * @param postFilePath a post file path
+ * @param postFilePath - a post file path
  */
 export const getPostMatter = (postFilePath: string) => {
   const markdownFile = fs.readFileSync(postFilePath);
