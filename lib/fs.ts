@@ -3,15 +3,25 @@ import matter from 'gray-matter';
 import { categoryPaths } from '@configs/paths';
 
 /**
- * Get file names of all posts
+ * Get file name and category of all posts
+ * @return [{category, postFile} , ...]
  */
 export const getAllPostFiles = () => {
   const allPostfiles = categoryPaths.reduce((prev, category) => {
-    const postsDirectory = `${process.cwd()}/contents/posts/${category.name}`;
+    const categoryName = category.name;
+
+    const postsDirectory = `${process.cwd()}/contents/posts/${categoryName}`;
     const postFiles = fs.readdirSync(postsDirectory);
 
-    return [...prev, ...postFiles];
-  }, [] as string[]);
+    const postFilesData = postFiles.map(postFile => {
+      return {
+        category: categoryName,
+        postFile: postFile,
+      };
+    });
+
+    return [...prev, ...postFilesData];
+  }, [] as { category: string; postFile: string }[]);
 
   return allPostfiles;
 };
@@ -21,8 +31,6 @@ export const getAllPostFiles = () => {
  * @param categoryName - post category name，example：javaScript、react
  */
 export const getPostFilesByCategory = (categoryName: string) => {
-  if (categoryName) return [''];
-
   const postsDirectory = `${process.cwd()}/contents/posts/${categoryName}`;
   const postFiles = fs.readdirSync(postsDirectory);
 
@@ -30,23 +38,19 @@ export const getPostFilesByCategory = (categoryName: string) => {
 };
 
 /**
- * Get slugs of posts
- * @param postFiles - a array of post file names
+ * Get slug of a post
+ * @param postFiles - a post file name
  */
-export const getPostsSlugs = (postFiles: string[]) => {
-  const postSlugs = postFiles.map(postFile => {
-    return postFile.replace('.md', '');
-  });
-
-  return postSlugs;
+export const getPostSlug = (postFile: string) => {
+  return postFile.replace('.md', '');
 };
 
 /**
- * Get frontmatter and content of a post by post file path
+ * Get frontmatter and content of the post by post file path
  * @param postFilePath - a post file path
  */
 export const getPostMatter = (postFilePath: string) => {
-  const markdownFile = fs.readFileSync(postFilePath);
+  const markdownFile = fs.readFileSync(postFilePath).toString();
   const { data, content } = matter(markdownFile);
 
   return { frontmatter: data, content };
