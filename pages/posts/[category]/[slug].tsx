@@ -1,12 +1,7 @@
 import { FC } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { useRouter } from 'next/router';
-import { Text } from '@chakra-ui/react';
+import PostContent from '@components/PostContent';
 import { getAllPostFiles, getPostSlug, getPostMatter } from '@lib/fs';
-import fs from 'fs';
-import ReactMarkdown from 'react-markdown/with-html';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus, atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface Frontmatter {
   title: string;
@@ -20,21 +15,8 @@ interface PostPageProps {
   content: string;
 }
 
-const CodeBlock: FC<{ language: string; value: any }> = ({ language, value }) => {
-  return (
-    <SyntaxHighlighter language={language} style={vscDarkPlus}>
-      {value}
-    </SyntaxHighlighter>
-  );
-};
-
 const PostPage: FC<PostPageProps> = ({ content, frontmatter }) => {
-  console.log({ content, frontmatter });
-  return (
-    <article>
-      <ReactMarkdown escapeHtml={false} source={content} renderers={{ code: CodeBlock }} />
-    </article>
-  );
+  return <PostContent content={content} />;
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
