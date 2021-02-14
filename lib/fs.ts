@@ -46,12 +46,12 @@ export const getPostSlug = (postFile: string) => {
 };
 
 /**
- * Get frontmatter and content of the post by post file path
+ * Get frontmatter and content of the markdown post by post file path
  * @param postFilePath - a post file path
  */
 export const getPostMatter = (postFilePath: string) => {
-  const markdownFile = fs.readFileSync(postFilePath).toString();
-  const { data, content } = matter(markdownFile);
+  const markdownFileContent = fs.readFileSync(postFilePath, 'utf8').toString();
+  const { data, content } = matter(markdownFileContent);
 
   return { frontmatter: data, content };
 };
