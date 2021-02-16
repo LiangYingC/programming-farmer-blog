@@ -18,10 +18,9 @@
   "author": "LiangC",
   "license": "ISC",
   "dependencies": {
-    "@chakra-ui/icons": "^1.0.5",
-    "@chakra-ui/react": "^1.2.1",
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
+    "emotion-normalize": "^11.0.1",
     "framer-motion": "^3.2.2-rc.1",
     "gray-matter": "^4.0.2",
     "next": "^10.0.6",
@@ -31,10 +30,10 @@
     "react-syntax-highlighter": "^15.4.3"
   },
   "devDependencies": {
+    "@emotion/babel-plugin": "^11.2.0",
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.0",
     "@types/react-syntax-highlighter": "^13.5.0",
-    "@types/styled-components": "^5.1.7",
     "@typescript-eslint/eslint-plugin": "^4.14.1",
     "@typescript-eslint/parser": "^4.14.1",
     "eslint": "^7.18.0",
