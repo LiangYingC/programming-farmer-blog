@@ -1,8 +1,6 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { Text } from '@chakra-ui/react';
 import { categoryPaths } from '@configs/paths';
 import { getPostFilesByCategory, getPostMatter, getPostSlug } from '@lib/fs';
 
