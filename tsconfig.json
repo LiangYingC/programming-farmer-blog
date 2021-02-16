@@ -25,7 +25,8 @@
       "@configs/*": ["configs/*"],
       "@components/*": ["components/*"],
       "@contents/*": ["contents/*"],
-      "@lib/*": ["lib/*"]
+      "@lib/*": ["lib/*"],
+      "@styles/*": ["styles/*"]
     }
   },
   "include": ["./**/*.ts", "./**/*.tsx", "next-env.d.ts"],
