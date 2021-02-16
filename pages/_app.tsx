@@ -1,12 +1,15 @@
 import { AppProps } from 'next/app';
-import { ChakraProvider } from '@chakra-ui/react';
-import { theme } from '@configs/styles';
+import { ThemeProvider } from '@emotion/react';
+import { theme } from '@styles/theme';
+import GlobalStyle from '@styles/GlobalStyle';
 
 const App = ({ Component, pageProps }: AppProps) => {
+  console.log({ theme });
   return (
-    <ChakraProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      {GlobalStyle}
       <Component {...pageProps} />
-    </ChakraProvider>
+    </ThemeProvider>
   );
 };
 
