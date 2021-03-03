@@ -1,4 +1,4 @@
-export const theme = {
+export const defaultTheme = {
   fontSizes: {
     xs: '0.75rem', // 12px
     sm: '0.875rem', // 14px
@@ -66,4 +66,48 @@ export const theme = {
   },
 };
 
-export type Theme = typeof theme;
+export const darkThemeColors = {
+  textColor1: '#ffffff',
+  textColor2: '#e5e5e5',
+  textColor3: '#eeeeee',
+  textColor4: '#dddddd',
+  textColor5: '#cccccc',
+  textColor6: '#bbbbbb',
+  textBgColor: 'hsla(0, 0%, 100%, 0.1)',
+  bgColor1: '#282b30',
+  bgColor2: '#202226',
+  bgColor3: '#1b1c21',
+  activeColor: '#ffd29b',
+};
+
+export const lightThemeColors = {
+  textColor1: '#333333',
+  textColor2: '',
+  textColor3: '',
+  textColor4: '',
+  textColor5: '',
+  textColor6: '',
+  textBgColor: '',
+  bgColor1: '#ffffff',
+  bgColor2: '',
+  bgColor3: '',
+  activeColor: '',
+};
+
+export type DefaultTheme = typeof defaultTheme;
+
+export interface Theme extends DefaultTheme {
+  colors: {
+    textColor1: string;
+    textColor2: string;
+    textColor3: string;
+    textColor4: string;
+    textColor5: string;
+    textColor6: string;
+    textBgColor: string;
+    bgColor1: string;
+    bgColor2: string;
+    bgColor3: string;
+    activeColor: string;
+  };
+}
