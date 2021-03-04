@@ -1,15 +1,29 @@
 import { AppProps } from 'next/app';
-import { ThemeProvider } from '@emotion/react';
-import { theme } from '@styles/theme';
-import GlobalStyle from '@styles/GlobalStyle';
+import { ThemeProvider, Global } from '@emotion/react';
+import { ColorModeProvider, useColorMode } from '@contexts/ColorModeContext';
+import { defaultTheme, darkThemeColors, lightThemeColors } from '@styles/theme';
+import getGlobalStyle from '@styles/getGlobalStyle';
 
-const App = ({ Component, pageProps }: AppProps) => {
-  console.log({ theme });
+const ThemeContainer = ({ children }: { children: React.ReactNode }) => {
+  const { isDark } = useColorMode();
+  const colors = isDark ? darkThemeColors : lightThemeColors;
+  const theme = { ...defaultTheme, colors };
+
   return (
     <ThemeProvider theme={theme}>
-      {GlobalStyle}
-      <Component {...pageProps} />
+      <Global styles={getGlobalStyle(theme)} />
+      {children}
     </ThemeProvider>
+  );
+};
+
+const App = ({ Component, pageProps }: AppProps) => {
+  return (
+    <ColorModeProvider>
+      <ThemeContainer>
+        <Component {...pageProps} />
+      </ThemeContainer>
+    </ColorModeProvider>
   );
 };
 
