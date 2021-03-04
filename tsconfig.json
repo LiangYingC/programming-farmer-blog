@@ -25,6 +25,7 @@
       "@configs/*": ["configs/*"],
       "@components/*": ["components/*"],
       "@contents/*": ["contents/*"],
+      "@contexts/*": ["contexts/*"],
       "@lib/*": ["lib/*"],
       "@styles/*": ["styles/*"]
     }
