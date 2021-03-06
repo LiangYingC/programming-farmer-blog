@@ -37,8 +37,6 @@ export const ColorModeProvider: FC = ({ children }) => {
     setIsDark(prev => !prev);
   }, []);
 
-  console.log({ toggleColorMode });
-
   const context = useMemo(
     () => ({
       isDark,
