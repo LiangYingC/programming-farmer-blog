@@ -34,6 +34,14 @@ export const defaultTheme = {
     tall: '1.625',
     taller: '2',
   },
+  letterSpacings: {
+    tighter: '-1px',
+    tight: '-0.5px',
+    normal: '0',
+    wide: '0.5px',
+    wider: '1px',
+    widest: '1.5px',
+  },
   zIndexs: {
     auto: 'auto',
     hide: -1,
@@ -67,7 +75,7 @@ export const defaultTheme = {
 };
 
 export const darkThemeColors = {
-  textColor1: '#ffffff',
+  textColor1: '#fcfcfc',
   textColor2: '#e5e5e5',
   textColor3: '#eeeeee',
   textColor4: '#dddddd',
@@ -78,6 +86,7 @@ export const darkThemeColors = {
   bgColor2: '#202226',
   bgColor3: '#1b1c21',
   activeColor: '#ffd29b',
+  heightLightColor: '#ffd479',
 };
 
 export const lightThemeColors = {
@@ -88,13 +97,14 @@ export const lightThemeColors = {
   textColor5: '',
   textColor6: '',
   textBgColor: '',
-  bgColor1: '#ffffff',
+  bgColor1: '#fcfcfc',
   bgColor2: '',
   bgColor3: '',
   activeColor: '',
+  heightLightColor: '#eaab2c',
 };
 
-export type DefaultTheme = typeof defaultTheme;
+type DefaultTheme = typeof defaultTheme;
 
 export interface Theme extends DefaultTheme {
   colors: {
@@ -109,5 +119,6 @@ export interface Theme extends DefaultTheme {
     bgColor2: string;
     bgColor3: string;
     activeColor: string;
+    heightLightColor: string;
   };
 }

@@ -5,7 +5,6 @@
 import '@emotion/react';
 
 declare module '@emotion/react' {
-  import { Theme } from '@styles/theme';
   export interface Theme {
     fontSizes: {
       xs: string;
@@ -41,6 +40,14 @@ declare module '@emotion/react' {
       base: string;
       tall: string;
       taller: string;
+    };
+    letterSpacings: {
+      tighter: string;
+      tight: string;
+      normal: string;
+      wide: string;
+      wider: string;
+      widest: string;
     };
     zIndexs: {
       auto: string;
@@ -84,6 +91,7 @@ declare module '@emotion/react' {
       bgColor2: string;
       bgColor3: string;
       activeColor: string;
+      heightLightColor: string;
     };
   }
 }
