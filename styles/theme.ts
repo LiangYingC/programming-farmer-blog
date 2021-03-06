@@ -26,7 +26,6 @@ export const defaultTheme = {
     black: 900,
   },
   lineHeights: {
-    normal: 'normal',
     none: '1',
     shorter: '1.25',
     short: '1.375',

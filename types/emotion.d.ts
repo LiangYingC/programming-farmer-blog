@@ -33,7 +33,6 @@ declare module '@emotion/react' {
       black: number;
     };
     lineHeights: {
-      normal: string;
       none: string;
       shorter: string;
       short: string;
