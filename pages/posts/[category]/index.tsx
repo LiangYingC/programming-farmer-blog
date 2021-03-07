@@ -1,8 +1,10 @@
 import { FC } from 'react';
-import Link from 'next/link';
+import styled from '@emotion/styled';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { categoryPaths } from '@configs/paths';
 import { getPostFilesByCategory, getPostMatter, getPostSlug } from '@lib/fs';
+import Layout from '@components/Layout';
+import PostList from '@components/PostList';
 
 interface Frontmatter {
   title: string;
@@ -19,20 +21,18 @@ interface CategoryPageProps {
   }[];
 }
 
-const CategoryPage: FC<CategoryPageProps> = ({ category, posts }) => {
-  console.log({ category, posts });
-  return (
-    <div>
-      {posts.map(({ frontmatter, slug }) => {
-        const { title, description, date, category } = frontmatter;
+const Intro = styled.h2`
+  margin-bottom: 10px;
+  padding: 0 30px;
+  font-size: ${({ theme }) => theme.fontSizes['4xl']};
+`;
 
-        return (
-          <Link key={title} href={`/posts/${category}/${slug}`}>
-            {title}
-          </Link>
-        );
-      })}
-    </div>
+const CategoryPage: FC<CategoryPageProps> = ({ category, posts }) => {
+  return (
+    <Layout>
+      <Intro>Articles about {category}</Intro>
+      <PostList posts={posts} />
+    </Layout>
   );
 };
 
