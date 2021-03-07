@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { FiSun, FiMoon } from 'react-icons/fi';
+import { IoMdSunny, IoMdMoon } from 'react-icons/io';
 import Link from 'next/link';
 import { useColorMode } from '@contexts/ColorModeContext';
-import { Wrapper, Title, Nav, NavItem, ColorModeIcon } from '@components/Header/indexStyle';
+import { HeaderWrapper, Title, Nav, NavItem, ColorModeIcon } from '@components/Header/indexStyle';
 
 const Header: FC = () => {
   const { isDark, toggleColorMode } = useColorMode();
@@ -14,7 +14,7 @@ const Header: FC = () => {
   };
 
   return (
-    <Wrapper>
+    <HeaderWrapper>
       <Title>
         <Link href={'/'}>城市碼農</Link>
       </Title>
@@ -23,18 +23,10 @@ const Header: FC = () => {
           <Link href={'/posts'}>Articles</Link>
         </NavItem>
         <NavItem onClick={handleToggleColorMode}>
-          {isDark ? (
-            <ColorModeIcon>
-              <FiSun />
-            </ColorModeIcon>
-          ) : (
-            <ColorModeIcon>
-              <FiMoon />
-            </ColorModeIcon>
-          )}
+          <ColorModeIcon>{isDark ? <IoMdSunny /> : <IoMdMoon />}</ColorModeIcon>
         </NavItem>
       </Nav>
-    </Wrapper>
+    </HeaderWrapper>
   );
 };
 

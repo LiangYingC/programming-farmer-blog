@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const Wrapper = styled.header`
+export const HeaderWrapper = styled.header`
   position: fixed;
   top: 0;
   left: 50%;
@@ -16,6 +16,12 @@ export const Wrapper = styled.header`
 export const Title = styled.h1`
   padding-left: 20px;
   font-size: ${({ theme }) => theme.fontSizes['4xl']};
+  filter: brightness(0.9);
+  transition: 0.25s;
+
+  :hover {
+    filter: brightness(1);
+  }
 `;
 
 export const Nav = styled.nav`
@@ -27,6 +33,12 @@ export const NavItem = styled.div`
   padding: 10px;
   margin-right: 10px;
   cursor: pointer;
+  filter: brightness(0.9);
+  transition: 0.25s;
+
+  :hover {
+    filter: brightness(1);
+  }
 
   > a {
     font-size: ${({ theme }) => theme.fontSizes.xl};
@@ -37,8 +49,8 @@ export const NavItem = styled.div`
 
 export const ColorModeIcon = styled.div`
   position: relative;
-  top: 3px;
-  font-size: ${({ theme }) => theme.fontSizes['3xl']};
+  top: 4px;
+  font-size: ${({ theme }) => theme.fontSizes['4xl']};
   color: ${({ theme }) => theme.colors.heightLightColor};
-  transition: 10s;
+  transition: 0.25s;
 `;
