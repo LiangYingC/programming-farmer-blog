@@ -1,31 +1,22 @@
 import { FC } from 'react';
 import Link from 'next/link';
+import { formatDashDate } from '@lib/format';
+import { Posts } from '@myTypes/post';
 import { Article, Infos, Category, Date, Title, Brief } from '@components/PostList/indexStyle';
 
-interface Frontmatter {
-  title: string;
-  description: string;
-  date: string;
-  category: string;
-}
-
-const PostList: FC<{
-  posts: {
-    frontmatter: Frontmatter;
-    slug: string;
-  }[];
-}> = ({ posts }) => {
+const PostList: FC<{ posts: Posts }> = ({ posts }) => {
   return (
     <>
       {posts.map(({ frontmatter, slug }) => {
         const { title, description, date, category } = frontmatter;
+        const formattedDate = formatDashDate(date);
 
         return (
           <Link key={title} href={`/posts/${category}/${slug}`}>
             <Article>
               <Infos>
                 <Category>{category}</Category>
-                <Date>{date}</Date>
+                <Date>{formattedDate}</Date>
               </Infos>
               <Title>{title}</Title>
               <Brief>{description}</Brief>
