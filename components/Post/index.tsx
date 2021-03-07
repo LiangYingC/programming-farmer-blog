@@ -17,7 +17,7 @@ const CodeBlock: FC<{ language: string; value: string }> = ({ language, value })
   );
 };
 
-const PostContent: FC<{ content: string }> = ({ content }) => {
+const Post: FC<{ content: string }> = ({ content }) => {
   return (
     <Layout>
       <Article>
@@ -27,4 +27,4 @@ const PostContent: FC<{ content: string }> = ({ content }) => {
   );
 };
 
-export default PostContent;
+export default Post;
