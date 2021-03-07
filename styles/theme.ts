@@ -115,7 +115,6 @@ export interface Theme extends DefaultTheme {
     bgColor1: string;
     bgColor2: string;
     bgColor3: string;
-    activeColor: string;
     heightLightColor: string;
   };
 }
