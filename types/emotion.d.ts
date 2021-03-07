@@ -89,7 +89,6 @@ declare module '@emotion/react' {
       bgColor1: string;
       bgColor2: string;
       bgColor3: string;
-      activeColor: string;
       heightLightColor: string;
     };
   }

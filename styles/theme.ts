@@ -84,7 +84,6 @@ export const darkThemeColors = {
   bgColor1: '#282b30',
   bgColor2: '#202226',
   bgColor3: '#1b1c21',
-  activeColor: '#ffd29b',
   heightLightColor: '#ffd479',
 };
 
@@ -99,8 +98,7 @@ export const lightThemeColors = {
   bgColor1: '#fcfcfc',
   bgColor2: '',
   bgColor3: '',
-  activeColor: '',
-  heightLightColor: '#eaab2c',
+  heightLightColor: '#efb540',
 };
 
 type DefaultTheme = typeof defaultTheme;
