@@ -1,6 +1,6 @@
 ---
 title: 宣告變數， var 與 let / const 差異
-date: '2019-10-25'
+date: '2020-10-25'
 description: '2019 開始學 JS 時，已經倡導使用 let / const，然而網路上資料常有 var，它們差異在哪？'
 category: 'JavaScript'
 ---
