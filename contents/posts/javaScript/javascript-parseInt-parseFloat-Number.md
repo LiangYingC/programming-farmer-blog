@@ -1,7 +1,7 @@
 ---
 title: parseInt / parseFloat / Number，將字串轉型為數字的方法比較
 date: '2020-11-29'
-description: '最近在工作時遇到 string 要用 parseInt 還是 Number 轉型的選擇，因此閱讀 ES6 規格與 MDN 的定義，來大致理解 parseInt / parseFloat / Number 三者差異。其中有說明：parseInt(010, 10) 結果為 8 的原因。'
+description: '最近在工作時遇到 string 要用 parseInt 還是 Number 轉型的選擇，因此閱讀 ES6 規格與 MDN 的定義，來大致理解 parseInt / parseFloat / Number 三者差異。文中有解釋：為什麼 parseInt(010, 10) 的結果會是 8 的原因。'
 category: 'JavaScript'
 ---
 
