@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import PostContent from '@components/PostContent';
+import PostContent from '@components/Post';
 import { getAllPostFiles, getPostSlug, getPostMatter } from '@lib/fs';
 
 interface Frontmatter {

@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown/with-html';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import Layout from '@components/Layout';
-import { Article } from '@components/PostContent/indexStyle';
+import { Article } from '@components/Post/indexStyle';
 
 const CodeBlock: FC<{ language: string; value: string }> = ({ language, value }) => {
   return (
