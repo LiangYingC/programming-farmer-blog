@@ -1,14 +1,8 @@
 import { FC } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
+import { Frontmatter } from '@myTypes/post';
+import { getAllPosts, getPostMatter } from '@lib/fs';
 import Post from '@components/Post';
-import { getAllPostFiles, getPostSlug, getPostMatter } from '@lib/fs';
-
-interface Frontmatter {
-  title: string;
-  description: string;
-  date: string;
-  category: string;
-}
 
 interface PostPageProps {
   frontmatter: Frontmatter;
@@ -35,15 +29,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allPostFiles = getAllPostFiles();
+  const allPosts = getAllPosts();
 
-  const paths = allPostFiles.map(({ category, postFile }) => {
-    const postSlug = getPostSlug(postFile);
-
+  const paths = allPosts.map(({ category, slug }) => {
     return {
       params: {
-        category: category,
-        slug: postSlug,
+        category,
+        slug,
       },
     };
   });
