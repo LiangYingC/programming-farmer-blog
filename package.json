@@ -20,6 +20,7 @@
   "dependencies": {
     "@emotion/react": "^11.1.4",
     "@emotion/styled": "^11.0.0",
+    "date-fns": "^2.19.0",
     "emotion-normalize": "^11.0.1",
     "framer-motion": "^3.2.2-rc.1",
     "gray-matter": "^4.0.2",
