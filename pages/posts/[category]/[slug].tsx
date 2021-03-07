@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import PostContent from '@components/Post';
+import Post from '@components/Post';
 import { getAllPostFiles, getPostSlug, getPostMatter } from '@lib/fs';
 
 interface Frontmatter {
@@ -16,7 +16,7 @@ interface PostPageProps {
 }
 
 const PostPage: FC<PostPageProps> = ({ content, frontmatter }) => {
-  return <PostContent content={content} />;
+  return <Post content={content} />;
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
