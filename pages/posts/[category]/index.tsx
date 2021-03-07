@@ -1,24 +1,16 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
 import { GetStaticProps, GetStaticPaths } from 'next';
+import { Posts } from '@myTypes/post';
 import { categoryPaths } from '@configs/paths';
-import { getPostFilesByCategory, getPostMatter, getPostSlug } from '@lib/fs';
+import { getPostsByCategory } from '@lib/fs';
+import { sortPostsByDateDesc } from '@lib/sort';
 import Layout from '@components/Layout';
 import PostList from '@components/PostList';
 
-interface Frontmatter {
-  title: string;
-  description: string;
-  date: string;
-  category: string;
-}
-
 interface CategoryPageProps {
   category: string;
-  posts: {
-    frontmatter: Frontmatter;
-    slug: string;
-  }[];
+  posts: Posts;
 }
 
 const Intro = styled.h2`
@@ -38,27 +30,13 @@ const CategoryPage: FC<CategoryPageProps> = ({ category, posts }) => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const category = (params?.category || '') as string;
-
-  const postFiles = getPostFilesByCategory(category);
-
-  const posts = postFiles.map(postFile => {
-    // post frontmatter data
-    const postFilePath = `${process.cwd()}/contents/posts/${category}/${postFile}`;
-    const { frontmatter } = getPostMatter(postFilePath);
-
-    // post slug data
-    const postSlug = getPostSlug(postFile);
-
-    return {
-      frontmatter,
-      slug: postSlug,
-    };
-  });
+  const posts = getPostsByCategory(category);
+  const sortedPosts = sortPostsByDateDesc(posts);
 
   return {
     props: {
       category,
-      posts,
+      posts: sortedPosts,
     },
   };
 };
