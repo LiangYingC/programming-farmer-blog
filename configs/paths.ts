@@ -1,14 +1,14 @@
 export const categoryPaths = [
   {
-    name: 'Style',
-    path: '/Style',
+    name: 'styles',
+    path: '/style',
   },
   {
-    name: 'JavaScript',
-    path: '/JavaScript',
+    name: 'javaScripts',
+    path: '/javaScript',
   },
   {
-    name: 'React',
-    path: '/React',
+    name: 'reacts',
+    path: '/react',
   },
 ];
