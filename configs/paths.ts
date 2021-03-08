@@ -8,7 +8,7 @@ export const categoryPaths = [
     path: '/javaScript',
   },
   {
-    name: 'reacts',
+    name: 'react',
     path: '/react',
   },
 ];
