@@ -4,7 +4,7 @@ export const categoryPaths = [
     path: '/style',
   },
   {
-    name: 'javaScripts',
+    name: 'javaScript',
     path: '/javaScript',
   },
   {
