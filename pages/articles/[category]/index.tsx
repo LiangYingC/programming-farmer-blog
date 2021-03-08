@@ -1,16 +1,17 @@
 import { FC } from 'react';
 import styled from '@emotion/styled';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { Posts } from '@myTypes/post';
+import { Articles } from '@myTypes/articles';
 import { categoryPaths } from '@configs/paths';
-import { getPostsByCategory } from '@lib/fs';
-import { sortPostsByDateDesc } from '@lib/sort';
+import { getArticlesByCategory } from '@lib/fs';
+import { sortArticlesByDateDesc } from '@lib/sort';
+import { capitalizeLetter } from '@lib/format';
 import Layout from '@components/Layout';
-import PostList from '@components/PostList';
+import ArticleList from '@components/ArticleList';
 
 interface CategoryPageProps {
   category: string;
-  posts: Posts;
+  articles: Articles;
 }
 
 const Intro = styled.h2`
@@ -19,24 +20,26 @@ const Intro = styled.h2`
   font-size: ${({ theme }) => theme.fontSizes['4xl']};
 `;
 
-const CategoryPage: FC<CategoryPageProps> = ({ category, posts }) => {
+const CategoryPage: FC<CategoryPageProps> = ({ category, articles }) => {
+  const capitalizedCategory = capitalizeLetter(category);
+
   return (
     <Layout>
-      <Intro>Articles about {category}</Intro>
-      <PostList posts={posts} />
+      <Intro>Articles about {capitalizedCategory}</Intro>
+      <ArticleList articles={articles} />
     </Layout>
   );
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const category = (params?.category || '') as string;
-  const posts = getPostsByCategory(category);
-  const sortedPosts = sortPostsByDateDesc(posts);
+  const Articles = getArticlesByCategory(category);
+  const sortedArticles = sortArticlesByDateDesc(Articles);
 
   return {
     props: {
       category,
-      posts: sortedPosts,
+      articles: sortedArticles,
     },
   };
 };

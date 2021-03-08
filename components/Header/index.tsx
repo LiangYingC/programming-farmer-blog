@@ -20,7 +20,7 @@ const Header: FC = () => {
       </Title>
       <Nav>
         <NavItem>
-          <Link href={'/posts'}>Articles</Link>
+          <Link href={'/articles'}>Articles</Link>
         </NavItem>
         <NavItem onClick={handleToggleColorMode}>
           <ColorModeIcon>{isDark ? <IoMdSunny /> : <IoMdMoon />}</ColorModeIcon>

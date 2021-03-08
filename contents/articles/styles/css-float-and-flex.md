@@ -2,7 +2,7 @@
 title: 利用 clearfix 解決 float 浮動問題的三種方式
 date: 2019-11-05
 description: 這篇文章會說明 float 遇到的問題，以及三種利用「 clear:both 」處理的解決方式。
-category: Style
+category: styles
 ---
 
 ## 前言
@@ -214,6 +214,6 @@ _[codepen 有興趣可以玩玩](https://codepen.io/LiangC/pen/VwwQJPp)_
 
 #### 【 參考資料 】
 
-- [清除浮动的四种方式及其原理理解 | 掘金](https://juejin.im/post/59e7190bf265da4307025d9)
+- [清除浮动的四种方式及其原理理解 | 掘金](https://juejin.im/article/59e7190bf265da4307025d9)
 - [用 clearfix 解決 Bootstrap grid 跑版問題，以及其原理 | 關節 ](https://medium.com/@kansetsu7/%E5%88%A9%E7%94%A8clearfix%E8%A7%A3%E6%B1%BAbootstrap-grid-system%E8%B7%91%E7%89%88%E5%95%8F%E9%A1%8C-%E4%BB%A5%E5%8F%8A%E5%85%B6%E8%83%8C%E5%BE%8C%E5%8E%9F%E7%90%86-58f6f461e4ca)
 - [CSS 偽元素 ( before 與 after ) | OXXO](https://www.oxxostudio.tw/articles/201706/pseudo-element-1.html)

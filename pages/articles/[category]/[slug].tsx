@@ -1,24 +1,24 @@
 import { FC } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { Frontmatter } from '@myTypes/post';
-import { getAllPosts, getPostMatter } from '@lib/fs';
-import Post from '@components/Post';
+import { Frontmatter } from '@myTypes/articles';
+import { getAllArticles, getArticleMatter } from '@lib/fs';
+import Article from '@components/Article';
 
-interface PostPageProps {
+interface ArticlePageProps {
   frontmatter: Frontmatter;
   content: string;
 }
 
-const PostPage: FC<PostPageProps> = ({ content, frontmatter }) => {
-  return <Post content={content} />;
+const ArticlePage: FC<ArticlePageProps> = ({ content, frontmatter }) => {
+  return <Article content={content} />;
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = (params?.slug || '') as string;
   const category = (params?.category || '') as string;
 
-  const postFilePath = `${process.cwd()}/contents/posts/${category}/${slug}.md`;
-  const { frontmatter, content } = getPostMatter(postFilePath);
+  const articleFilePath = `${process.cwd()}/contents/Articles/${category}/${slug}.md`;
+  const { frontmatter, content } = getArticleMatter(articleFilePath);
 
   return {
     props: {
@@ -29,9 +29,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const allPosts = getAllPosts();
+  const allArticles = getAllArticles();
 
-  const paths = allPosts.map(({ category, slug }) => {
+  const paths = allArticles.map(({ category, slug }) => {
     return {
       params: {
         category,
@@ -46,4 +46,4 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export default PostPage;
+export default ArticlePage;

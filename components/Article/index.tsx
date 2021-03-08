@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown/with-html';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import Layout from '@components/Layout';
-import { Article } from '@components/Post/indexStyle';
+import { ArticleWrapper } from '@components/Article/indexStyle';
 
 const CodeBlock: FC<{ language: string; value: string }> = ({ language, value }) => {
   return (
@@ -17,14 +17,14 @@ const CodeBlock: FC<{ language: string; value: string }> = ({ language, value })
   );
 };
 
-const Post: FC<{ content: string }> = ({ content }) => {
+const Article: FC<{ content: string }> = ({ content }) => {
   return (
     <Layout>
-      <Article>
+      <ArticleWrapper>
         <ReactMarkdown escapeHtml={false} source={content} renderers={{ code: CodeBlock }} />
-      </Article>
+      </ArticleWrapper>
     </Layout>
   );
 };
 
-export default Post;
+export default Article;

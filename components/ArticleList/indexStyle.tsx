@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const Article = styled.article`
+export const ArticleWrapper = styled.article`
   padding: 30px;
   transition: 0.25s;
 

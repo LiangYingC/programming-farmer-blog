@@ -2,7 +2,7 @@
 title: 宣告變數， var 與 let / const 差異
 date: 2020-10-25
 description: 2019 開始學 JS 時，已經倡導使用 let / const，然而網路上資料常有 var，它們差異在哪？
-category: JavaScript
+category: javaScripts
 ---
 
 如果你像我一樣在 2019 年時開始學 JS，多少會有個疑惑：學習時是用 `let / const` 宣告變數，怎麼網路上查詢的 JS 程式碼，有些是用 `var` 宣告變數的呢？它們之間有什麼差異？

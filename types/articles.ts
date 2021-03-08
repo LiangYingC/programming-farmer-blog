@@ -5,10 +5,10 @@ export interface Frontmatter {
   category: string;
 }
 
-export interface Post {
+export interface Article {
   frontmatter: Frontmatter;
   slug: string;
   category: string;
 }
 
-export type Posts = Post[];
+export type Articles = Article[];

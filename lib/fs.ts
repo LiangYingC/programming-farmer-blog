@@ -1,22 +1,22 @@
 import fs from 'fs';
 import matter from 'gray-matter';
 import { categoryPaths } from '@configs/paths';
-import { Frontmatter, Posts } from '@myTypes/post';
+import { Frontmatter, Articles } from '@myTypes/articles';
 
 /**
- * Get slug of a post
- * @param postFileName - a post file name
+ * Get slug of a article
+ * @param articleFileName - a article file name
  */
-export const getPostSlug = (postFileName: string) => {
-  return postFileName.replace('.md', '');
+export const getArticleSlug = (articleFileName: string) => {
+  return articleFileName.replace('.md', '');
 };
 
 /**
- * Get frontmatter and content of the markdown post by post file path
- * @param postFilePath - a post file path
+ * Get frontmatter and content of the markdown article by article file path
+ * @param articleFilePath - a article file path
  */
-export const getPostMatter = (postFilePath: string) => {
-  const markdownFileContent = fs.readFileSync(postFilePath, 'utf8').toString();
+export const getArticleMatter = (articleFilePath: string) => {
+  const markdownFileContent = fs.readFileSync(articleFilePath, 'utf8').toString();
   const { data, content } = matter(markdownFileContent);
   const frontmatter = {
     ...data,
@@ -27,54 +27,54 @@ export const getPostMatter = (postFilePath: string) => {
 };
 
 /**
- * Make and return posts data by postFileNames and categoryName
- * @param postFileNames - post file names of posts, ex: [javascript-parseInt-parseFloat-Number, javascript-var-let-const-for-loop]
- * @param categoryName - a category name of posts, ex: JavaScript
+ * Make and return articles data by articleFileNames and categoryName
+ * @param articleFileNames - article file names of articles, ex: [javascript-parseInt-parseFloat-Number, javascript-var-let-const-for-loop]
+ * @param categoryName - a category name of articles, ex: JavaScript
  * @return [{ category, slug, frontmatter } , ...]
  */
-const makePosts = (postFileNames: string[], categoryName: string) => {
-  const posts = postFileNames.map(postFileName => {
-    // post frontmatter data
-    const postFilePath = `${process.cwd()}/contents/posts/${categoryName}/${postFileName}`;
-    const { frontmatter } = getPostMatter(postFilePath);
+const makeArticles = (articleFileNames: string[], categoryName: string) => {
+  const articles = articleFileNames.map(articleFileName => {
+    // article frontmatter data
+    const articleFilePath = `${process.cwd()}/contents/articles/${categoryName}/${articleFileName}`;
+    const { frontmatter } = getArticleMatter(articleFilePath);
 
-    // post slug data
-    const postSlug = getPostSlug(postFileName);
+    // article slug data
+    const articleSlug = getArticleSlug(articleFileName);
 
     return {
       category: categoryName,
-      slug: postSlug,
+      slug: articleSlug,
       frontmatter,
     };
   });
 
-  return posts;
+  return articles;
 };
 
 /**
- * Get posts data of a specific category
- * @param categoryName - post category name，example：JavaScript、React
+ * Get articles data of a specific category
+ * @param categoryName - article category name，example：JavaScript、React
  * @return [{ category, slug, frontmatter } , ...]
  */
-export const getPostsByCategory = (categoryName: string) => {
-  const postsDirectory = `${process.cwd()}/contents/posts/${categoryName}`;
-  const postFileNames = fs.readdirSync(postsDirectory);
-  const posts = makePosts(postFileNames, categoryName);
+export const getArticlesByCategory = (categoryName: string) => {
+  const articlesDirectory = `${process.cwd()}/contents/articles/${categoryName}`;
+  const articleFileNames = fs.readdirSync(articlesDirectory);
+  const articles = makeArticles(articleFileNames, categoryName);
 
-  return posts;
+  return articles;
 };
 
 /**
- * Get all posts data by categoryPaths config
+ * Get all articles data by categoryPaths config
  * @return [{ category, slug, frontmatter } , ...]
  */
-export const getAllPosts = () => {
-  const allPosts = categoryPaths.reduce((prev, category) => {
+export const getAllArticles = () => {
+  const allArticles = categoryPaths.reduce((prev, category) => {
     const categoryName = category.name;
-    const posts = getPostsByCategory(categoryName);
+    const articles = getArticlesByCategory(categoryName);
 
-    return [...prev, ...posts];
-  }, [] as Posts);
+    return [...prev, ...articles];
+  }, [] as Articles);
 
-  return allPosts;
+  return allArticles;
 };

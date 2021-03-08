@@ -1,26 +1,33 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { formatDashDate } from '@lib/format';
-import { Posts } from '@myTypes/post';
-import { Article, Infos, Category, Date, Title, Brief } from '@components/PostList/indexStyle';
+import { Articles } from '@myTypes/articles';
+import {
+  ArticleWrapper,
+  Infos,
+  Category,
+  Date,
+  Title,
+  Brief,
+} from '@components/ArticleList/indexStyle';
 
-const PostList: FC<{ posts: Posts }> = ({ posts }) => {
+const ArticleList: FC<{ articles: Articles }> = ({ articles }) => {
   return (
     <>
-      {posts.map(({ frontmatter, slug }) => {
+      {articles.map(({ frontmatter, slug }) => {
         const { title, description, date, category } = frontmatter;
         const formattedDate = formatDashDate(date);
 
         return (
-          <Link key={title} href={`/posts/${category}/${slug}`}>
-            <Article>
+          <Link key={title} href={`/articles/${category}/${slug}`}>
+            <ArticleWrapper>
               <Infos>
                 <Category>{category}</Category>
                 <Date>{formattedDate}</Date>
               </Infos>
               <Title>{title}</Title>
               <Brief>{description}</Brief>
-            </Article>
+            </ArticleWrapper>
           </Link>
         );
       })}
@@ -28,4 +35,4 @@ const PostList: FC<{ posts: Posts }> = ({ posts }) => {
   );
 };
 
-export default PostList;
+export default ArticleList;
