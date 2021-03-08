@@ -2,7 +2,7 @@
 title: 利用 clearfix 解決 float 浮動問題的三種方式
 date: 2019-11-05
 description: 這篇文章會說明 float 遇到的問題，以及三種利用「 clear:both 」處理的解決方式。
-category: styles
+category: style
 ---
 
 ## 前言

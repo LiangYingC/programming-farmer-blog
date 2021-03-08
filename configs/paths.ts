@@ -1,6 +1,6 @@
 export const categoryPaths = [
   {
-    name: 'styles',
+    name: 'style',
     path: '/style',
   },
   {
