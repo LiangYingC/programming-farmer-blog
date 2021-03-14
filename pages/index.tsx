@@ -1,88 +1,158 @@
-import { FC } from 'react';
-import fs from 'fs';
-import matter from 'gray-matter';
-import { GetStaticProps, GetStaticPaths } from 'next';
-// import { tagPathsConfig } from '@configs/paths';
+import { FC, useState, useEffect } from 'react';
+import styled from '@emotion/styled';
+import Link from 'next/link';
+import Image from 'next/image';
+import Layout from '@components/Layout';
+import { useColorMode } from '@contexts/ColorModeContext';
+import { allArticlesPaths } from '@configs/paths';
+import { capitalizeLetter } from '@lib/format';
 
-// interface HomePageProps {
-//   Articles: {
-//     Articles: {
-//       slug: string;
-//       frontmatter: {
-//         date: any;
-//       };
-//     }[];
-//   };
-// }
+const Bio = styled.div`
+  margin-top: 60px;
+  display: flex;
+`;
 
-const HomePage: FC = props => {
-  return <div>Welcome to the Homepage!</div>;
+const RoundImage = styled(Image)`
+  border-radius: 50%;
+`;
+
+const Intro = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 545px;
+  margin-left: 40px;
+`;
+
+const Title = styled.h2`
+  flex: none;
+  margin: 15px 0;
+  font-size: ${({ theme }) => theme.fontSizes['3xl']};
+`;
+
+const Divider = styled.span`
+  padding: 0 25px;
+`;
+
+const Description = styled.p`
+  flex: auto;
+  font-size: ${({ theme }) => theme.fontSizes.md};
+`;
+
+const SocialLinks = styled.div`
+  flex: none;
+  display: flex;
+  margin-bottom: 20px;
+`;
+
+const ButtonBase = styled.div`
+  border: 1px solid ${({ theme }) => theme.colors.textColor1};
+  border-radius: ${({ theme }) => theme.borderRadius.sm};
+  background-color: ${({ theme }) => theme.colors.bgColor2};
+  cursor: pointer;
+  transform: scale(1);
+  transition: 0.2s;
+
+  :active {
+    transform: scale(0.95);
+  }
+`;
+
+const SocialLink = styled(ButtonBase)`
+  padding: 10px 20px;
+  margin-right: 15px;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  letter-spacing: ${({ theme }) => theme.letterSpacings.wide};
+`;
+
+const GoArticleWapper = styled.div`
+  padding: 50px 15px;
+`;
+
+const GoArticlesBtns = styled.div`
+  margin-top: 20px;
+  display: flex;
+`;
+
+const GoArticlesBtn = styled(ButtonBase)`
+  margin-right: 20px;
+  padding: 10px 25px;
+  font-size: ${({ theme }) => theme.fontSizes.lg};
+  text-align: center;
+`;
+
+const myImages = {
+  dark: {
+    src: '/assets/dark-mode-me.jpg',
+    alt: 'Picture of the author at night.',
+  },
+  light: {
+    src: '/assets/light-mode-me.jpg',
+    alt: 'Picture of the author at day.',
+  },
 };
 
-// This function gets called at build time
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    // Only `/Articles/1` and `/Articles/2` are generated at build time
-    paths: [{ params: { id: '1' } }, { params: { id: '2' } }],
-    // Enable statically generating additional pages
-    // For example: `/Articles/3`
-    fallback: true,
-  };
+const socialLinks = [
+  {
+    site: `GitHub`,
+    link: `https://github.com/LiangYingC`,
+  },
+  {
+    site: `Linkedin`,
+    link: `https://www.linkedin.com/in/chen-liang-ying-4a0873165/`,
+  },
+];
+
+const HomePage: FC = () => {
+  const { isDark } = useColorMode();
+
+  const initImageState = isDark ? myImages.dark : myImages.light;
+
+  const [imageState, setImageState] = useState(initImageState);
+
+  useEffect(() => {
+    if (isDark) {
+      setImageState(myImages.dark);
+    } else {
+      setImageState(myImages.light);
+    }
+  }, [isDark]);
+
+  return (
+    <Layout>
+      <Bio>
+        <RoundImage src={imageState.src} alt={imageState.alt} width="250" height="250" />
+        <Intro>
+          <Title>
+            LiangC<Divider>|</Divider>Frontend Developer
+          </Title>
+          <Description>
+            曾為農夫、農產品品管、線上課程品管，現為前端工程師，喜歡栽培和成長，在城市裡耕耘程式，期望栽種有價值的產品。
+          </Description>
+          <SocialLinks>
+            {socialLinks.map(({ site, link }) => {
+              return (
+                <SocialLink key={site} onClick={() => window.open(link, '_blank')}>
+                  {site}
+                </SocialLink>
+              );
+            })}
+          </SocialLinks>
+        </Intro>
+      </Bio>
+      <GoArticleWapper>
+        <Title>Articles Category</Title>
+        <GoArticlesBtns>
+          {allArticlesPaths.map(({ name, path }) => {
+            return (
+              <Link key={name} href={`/articles${path}`}>
+                <GoArticlesBtn> {capitalizeLetter(name)}</GoArticlesBtn>
+              </Link>
+            );
+          })}
+        </GoArticlesBtns>
+      </GoArticleWapper>
+    </Layout>
+  );
 };
-
-// This also gets called at build time
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  // params contains the article `id`.
-  // If the route is like /Articles/1, then params.id is 1
-  const id = params?.id || '';
-  // Pass article data to the page via props
-  return {
-    props: { id },
-    // Re-generate the article at most once per second
-    // if a request comes in
-    revalidate: 1,
-  };
-};
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const tagPaths = tagPathsConfig.map(({ name }) => {
-//     return {
-//       params: {
-//         tag: name,
-//       },
-//     };
-//   });
-
-//   return {
-//     paths: tagPaths,
-//     fallback: true,
-//   };
-// };
-
-// export const getStaticProps: GetStaticProps = async ({ params }) => {
-//   const tag = params.tag;
-//   const files = fs.readdirSync(`${process.cwd()}/contents/Articles/${tag}`);
-
-//   const Articles = files.map(fileName => {
-//     const markdownWithMetadata = fs.readFileSync(`contents/Articles/${tag}/${fileName}`).toString();
-
-//     const { data } = matter(markdownWithMetadata);
-
-//     const frontmatter = {
-//       ...data,
-//     };
-
-//     return {
-//       slug: fileName.replace('.md', ''),
-//       frontmatter,
-//     };
-//   });
-
-//   return {
-//     props: {
-//       Articles,
-//     },
-//   };
-// };
 
 export default HomePage;
