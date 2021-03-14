@@ -27,6 +27,14 @@ const getGlobalStyle = (theme: Theme) => {
       color: ${theme.colors.textColor1};
       letter-spacing: ${theme.letterSpacings.widest};
       line-height: ${theme.lineHeights.short};
+
+      @media (max-width: ${theme.breakpoints.tabletS}) {
+        font-size: ${theme.fontSizes['4xl']};
+      }
+
+      @media (max-width: ${theme.breakpoints.mobileL}) {
+        font-size: ${theme.fontSizes['3xl']};
+      }
     }
 
     h2 {
@@ -36,6 +44,10 @@ const getGlobalStyle = (theme: Theme) => {
       color: ${theme.colors.textColor1};
       letter-spacing: ${theme.letterSpacings.wider};
       line-height: ${theme.lineHeights.shorter};
+
+      @media (max-width: ${theme.breakpoints.tabletS}) {
+        font-size: ${theme.fontSizes['2xl']};
+      }
     }
 
     h3 {
@@ -45,6 +57,10 @@ const getGlobalStyle = (theme: Theme) => {
       color: ${theme.colors.textColor1};
       letter-spacing: ${theme.letterSpacings.wider};
       line-height: ${theme.lineHeights.short};
+
+      @media (max-width: ${theme.breakpoints.tabletS}) {
+        font-size: ${theme.fontSizes.xl};
+      }
     }
 
     p {
@@ -53,12 +69,29 @@ const getGlobalStyle = (theme: Theme) => {
       color: ${theme.colors.textColor1};
       letter-spacing: ${theme.letterSpacings.wider};
       line-height: ${theme.lineHeights.tall};
+
+      @media (max-width: ${theme.breakpoints.tabletS}) {
+        font-size: ${theme.fontSizes.md};
+      }
+
+      @media (max-width: ${theme.breakpoints.tabletS}) {
+        margin: 20px 0px;
+      }
     }
 
     li {
-      margin: 15px 0;
+      margin: 15px 0px;
       font-size: ${theme.fontSizes.lg};
       line-height: ${theme.lineHeights.base};
+
+      @media (max-width: ${theme.breakpoints.tabletS}) {
+        font-size: ${theme.fontSizes.md};
+      }
+    }
+
+    ul,
+    ol {
+      padding-left: 25px;
     }
 
     a {
@@ -66,6 +99,10 @@ const getGlobalStyle = (theme: Theme) => {
       color: ${theme.colors.textColor1};
       text-decoration: none;
       cursor: pointer;
+
+      @media (max-width: ${theme.breakpoints.tabletS}) {
+        font-size: ${theme.fontSizes.md};
+      }
     }
 
     img {
@@ -87,6 +124,10 @@ const getGlobalStyle = (theme: Theme) => {
       line-height: ${theme.lineHeights.base};
       border-radius: ${theme.borderRadius.sm};
       background-color: ${theme.colors.bgColor3} !important;
+
+      @media (max-width: ${theme.breakpoints.tabletS}) {
+        font-size: ${theme.fontSizes.md};
+      }
     }
 
     p > code,
