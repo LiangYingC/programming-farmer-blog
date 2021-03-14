@@ -74,7 +74,7 @@ export const defaultTheme = {
 };
 
 export const darkThemeColors = {
-  textColor1: '#fcfcfc',
+  textColor1: '#f9f9f9',
   textColor2: '#e5e5e5',
   textColor3: '#eeeeee',
   textColor4: '#dddddd',
