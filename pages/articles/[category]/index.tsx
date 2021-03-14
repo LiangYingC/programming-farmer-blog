@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import styled from '@emotion/styled';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { Articles } from '@myTypes/articles';
 import { articleCategoryPaths } from '@configs/paths';
