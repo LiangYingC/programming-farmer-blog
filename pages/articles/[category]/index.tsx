@@ -2,7 +2,7 @@ import { FC } from 'react';
 import styled from '@emotion/styled';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { Articles } from '@myTypes/articles';
-import { categoryPaths } from '@configs/paths';
+import { articleCategoryPaths } from '@configs/paths';
 import { getArticlesByCategory } from '@lib/fs';
 import { sortArticlesByDateDesc } from '@lib/sort';
 import { capitalizeLetter } from '@lib/format';
@@ -45,7 +45,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = categoryPaths.map(({ name }) => {
+  const paths = articleCategoryPaths.map(({ name }) => {
     return {
       params: {
         category: name,

@@ -1,6 +1,6 @@
 import fs from 'fs';
 import matter from 'gray-matter';
-import { categoryPaths } from '@configs/paths';
+import { articleCategoryPaths } from '@configs/paths';
 import { Frontmatter, Articles } from '@myTypes/articles';
 
 /**
@@ -65,11 +65,11 @@ export const getArticlesByCategory = (categoryName: string) => {
 };
 
 /**
- * Get all articles data by categoryPaths config
+ * Get all articles data by articleCategoryPaths config
  * @return [{ category, slug, frontmatter } , ...]
  */
 export const getAllArticles = () => {
-  const allArticles = categoryPaths.reduce((prev, category) => {
+  const allArticles = articleCategoryPaths.reduce((prev, category) => {
     const categoryName = category.name;
     const articles = getArticlesByCategory(categoryName);
 
