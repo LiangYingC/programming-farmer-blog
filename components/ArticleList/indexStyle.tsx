@@ -4,6 +4,10 @@ export const ArticleIntro = styled.h2`
   margin: 30px 0 15px 0;
   padding: 0 5px;
   font-size: ${({ theme }) => theme.fontSizes['4xl']};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
+    font-size: ${({ theme }) => theme.fontSizes['2xl']};
+  }
 `;
 
 export const ArticleWrapper = styled.article`
@@ -14,6 +18,10 @@ export const ArticleWrapper = styled.article`
   :hover {
     cursor: pointer;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
+    margin: 0;
+  }
 `;
 
 export const Infos = styled.div`
@@ -21,6 +29,10 @@ export const Infos = styled.div`
   display: flex;
   align-items: center;
   color: ${({ theme }) => theme.colors.textColor1};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
+    margin-bottom: 5px;
+  }
 `;
 
 export const Category = styled.span`
@@ -33,17 +45,29 @@ export const Category = styled.span`
   letter-spacing: ${({ theme }) => theme.letterSpacings.wide};
   border: 2px solid ${({ theme }) => theme.colors.textColor1};
   border-radius: ${({ theme }) => theme.borderRadius.xs};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+  }
 `;
 
 export const Date = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.sm};
   font-style: italic;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
+    font-size: ${({ theme }) => theme.fontSizes.xs};
+  }
 `;
 
 export const Title = styled.h3`
   margin-top: 0;
   margin-bottom: 15px;
   line-height: ${({ theme }) => theme.lineHeights.base};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
+    margin-bottom: 10px;
+  }
 `;
 
 export const Brief = styled.p`
@@ -52,4 +76,8 @@ export const Brief = styled.p`
   letter-spacing: ${({ theme }) => theme.letterSpacings.wider};
   line-height: ${({ theme }) => theme.lineHeights.base};
   color: ${({ theme }) => theme.colors.textColor4};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
+    font-size: ${({ theme }) => theme.fontSizes.sm};
+  }
 `;
