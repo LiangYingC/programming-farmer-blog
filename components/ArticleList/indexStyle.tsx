@@ -1,12 +1,17 @@
 import styled from '@emotion/styled';
 
+export const ArticleIntro = styled.h2`
+  margin: 30px 0 15px 0;
+  padding: 0 5px;
+  font-size: ${({ theme }) => theme.fontSizes['4xl']};
+`;
+
 export const ArticleWrapper = styled.article`
-  padding: 30px;
+  padding: 20px 5px;
+  margin: 10px 0;
   transition: 0.25s;
 
   :hover {
-    box-shadow: inset 0 0 12px 1.5px rgba(255, 255, 255, 0.35);
-    border-radius: ${({ theme }) => theme.borderRadius.xs};
     cursor: pointer;
   }
 `;

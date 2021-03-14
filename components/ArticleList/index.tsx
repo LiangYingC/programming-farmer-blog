@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { formatDashDate } from '@lib/format';
 import { Articles } from '@myTypes/articles';
 import {
+  ArticleIntro,
   ArticleWrapper,
   Infos,
   Category,
@@ -11,9 +12,13 @@ import {
   Brief,
 } from '@components/ArticleList/indexStyle';
 
-const ArticleList: FC<{ articles: Articles }> = ({ articles }) => {
+const ArticleList: FC<{ articleIntro?: string; articles: Articles }> = ({
+  articleIntro,
+  articles,
+}) => {
   return (
     <>
+      {articleIntro && <ArticleIntro>{articleIntro}</ArticleIntro>}
       {articles.map(({ frontmatter, slug }) => {
         const { title, description, date, category } = frontmatter;
         const formattedDate = formatDashDate(date);

@@ -7,17 +7,10 @@ import { sortArticlesByDateDesc } from '@lib/sort';
 import Layout from '@components/Layout';
 import ArticleList from '@components/ArticleList';
 
-const Intro = styled.h2`
-  margin-bottom: 10px;
-  padding: 0 30px;
-  font-size: ${({ theme }) => theme.fontSizes['4xl']};
-`;
-
 const AllArticlesPage: FC<{ articles: Articles }> = ({ articles }) => {
   return (
     <Layout>
-      <Intro>Articles</Intro>
-      <ArticleList articles={articles} />
+      <ArticleList articleIntro={'Articles'} articles={articles} />
     </Layout>
   );
 };

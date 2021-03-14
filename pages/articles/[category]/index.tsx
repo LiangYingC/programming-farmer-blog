@@ -14,19 +14,12 @@ interface CategoryPageProps {
   articles: Articles;
 }
 
-const Intro = styled.h2`
-  margin-bottom: 10px;
-  padding: 0 30px;
-  font-size: ${({ theme }) => theme.fontSizes['4xl']};
-`;
-
 const CategoryPage: FC<CategoryPageProps> = ({ category, articles }) => {
   const capitalizedCategory = capitalizeLetter(category);
 
   return (
     <Layout>
-      <Intro>Articles about {capitalizedCategory}</Intro>
-      <ArticleList articles={articles} />
+      <ArticleList articleIntro={`Articles about ${capitalizedCategory}`} articles={articles} />
     </Layout>
   );
 };
