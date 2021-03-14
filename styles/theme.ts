@@ -96,7 +96,7 @@ export const lightThemeColors = {
   textColor6: '',
   textBgColor: '',
   bgColor1: '#fcfcfc',
-  bgColor2: '',
+  bgColor2: '#eeeeee',
   bgColor3: '',
   heightLightColor: '#efb540',
 };
