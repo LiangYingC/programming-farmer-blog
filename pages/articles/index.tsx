@@ -9,7 +9,7 @@ import ArticleList from '@components/ArticleList';
 const AllArticlesPage: FC<{ articles: Articles }> = ({ articles }) => {
   return (
     <Layout>
-      <ArticleList articleIntro={'Articles'} articles={articles} />
+      <ArticleList articleIntro={'All Articles'} articles={articles} />
     </Layout>
   );
 };
