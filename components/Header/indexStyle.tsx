@@ -16,16 +16,17 @@ export const HeaderWrapper = styled.header<{
   transition: 0.2s;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
-    top: ${({ isHide }) => (isHide ? '-55px' : '0px')};
-    height: 50px;
+    top: ${({ isHide }) => (isHide ? '-45px' : '0px')};
+    height: 45px;
     background-color: ${({ theme }) => theme.colors.bgColor2};
   }
 `;
 
 export const InnerWrapper = styled.div`
-  max-width: 800px;
+  max-width: 920px;
   height: 100%;
   margin: 0 auto;
+  padding: 0 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -45,7 +46,7 @@ export const Title = styled.h1`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
-    font-size: ${({ theme }) => theme.fontSizes.xl};
+    font-size: ${({ theme }) => theme.fontSizes['xl']};
   }
 `;
 
