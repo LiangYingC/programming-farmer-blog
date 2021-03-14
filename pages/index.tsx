@@ -12,14 +12,18 @@ const Bio = styled.div`
   display: flex;
 `;
 
-const RoundImage = styled(Image)`
+const RoundImageWrapper = styled.div`
+  flex: none;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
+  overflow: hidden;
 `;
 
 const Intro = styled.div`
+  flex: auto;
   display: flex;
   flex-direction: column;
-  max-width: 545px;
   margin-left: 40px;
 `;
 
@@ -120,7 +124,9 @@ const HomePage: FC = () => {
   return (
     <Layout>
       <Bio>
-        <RoundImage src={imageState.src} alt={imageState.alt} width="250" height="250" />
+        <RoundImageWrapper>
+          <Image src={imageState.src} alt={imageState.alt} width="250" height="250" />
+        </RoundImageWrapper>
         <Intro>
           <Title>
             LiangC<Divider>|</Divider>Frontend Developer
