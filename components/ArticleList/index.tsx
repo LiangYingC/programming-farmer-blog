@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { formatDashDate } from '@lib/format';
+import { formatDashDate, capitalizeLetter } from '@lib/format';
 import { Articles } from '@myTypes/articles';
 import {
   ArticleIntro,
@@ -27,7 +27,7 @@ const ArticleList: FC<{ articleIntro?: string; articles: Articles }> = ({
           <Link key={title} href={`/articles/${category}/${slug}`}>
             <ArticleWrapper>
               <Infos>
-                <Category>{category}</Category>
+                <Category>{capitalizeLetter(category)}</Category>
                 <Date>{formattedDate}</Date>
               </Infos>
               <Title>{title}</Title>
