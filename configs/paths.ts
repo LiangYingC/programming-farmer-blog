@@ -1,14 +1,22 @@
-export const categoryPaths = [
+export const articleCategoryPaths = [
   {
-    name: 'style',
-    path: '/style',
+    name: 'react',
+    path: '/react',
   },
   {
     name: 'javaScript',
     path: '/javaScript',
   },
   {
-    name: 'react',
-    path: '/react',
+    name: 'style',
+    path: '/style',
   },
+];
+
+export const allArticlesPaths = [
+  {
+    name: 'all',
+    path: '/',
+  },
+  ...articleCategoryPaths,
 ];
