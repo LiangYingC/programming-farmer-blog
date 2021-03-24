@@ -15,7 +15,7 @@ category: style
 
 首先先理解問題是什麼：**當我們利用 `float` 排版，結果會造成使用 `float` 的元素區塊本身的高度被無視**，進而下方的元素擠上來，形成的排版錯誤狀況。延伸地說，也可能造成父元素的高度坍塌，因為忽略掉父元素內容物的高度。直接看例子比較清楚，由下例可以發現 Footer 非預期性地往上跑了：
 
-![Chinese Salty Egg](./01.gif)
+![Chinese Salty Egg](/article/style/css-float-and-flex/01.gif)
 
 為什麼會導致這樣的錯誤？
 
@@ -45,7 +45,7 @@ float 屬性，顧名思義是「 讓元素區塊直接產生浮起來的效果 
 */
 ```
 
-![clear: both](./02.gif)
+![clear: both](/article/style/css-float-and-flex/02.gif)
 
 可以發現加入 `clear: both` 後，Footer 區塊確實回到 Right 區塊下方。
 
@@ -82,7 +82,7 @@ float 屬性，顧名思義是「 讓元素區塊直接產生浮起來的效果 
 }
 ```
 
-![clearfix](./03.gif)
+![clearfix](/article/style/css-float-and-flex/03.gif)
 
 好，先整理一下，目前已經可以透過兩種方式解決浮動問題，包括：
 
@@ -145,7 +145,7 @@ CSS 浮動與清除浮動的設定：
 - `::before` 是指可以用 CSS 操控在原本的元素「之前」的內容 。
 - `::after` 是指可以用 CSS 操控在原本的元素「之後」的內容，。
 
-![::after 的效果圖](./04.png)
+![::after 的效果圖](/article/style/css-float-and-flex/04.png)
 
 以上範例，就是用 `.example::after` 操作 example 元素後方的內容（新增內容）。如此一來，可以了解到： **`::after` 可以在選定的元素後方，新增元素**。
 
@@ -187,7 +187,7 @@ ok，到這裡能理解的話，就差不多了，接著看 CSS 的變化，因�
 
 這樣的方便性呢，就是**只要將 clearfix 加入想清除浮動元素的父元素的 class 中就能達成啦**，非常方便！
 
-![clearfix3](./05.gif)
+![clearfix3](/article/style/css-float-and-flex/05.gif)
 _[codepen 有興趣可以玩玩](https://codepen.io/LiangC/pen/VwwQJPp)_
 
 <hr>
