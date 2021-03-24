@@ -1,4 +1,5 @@
 import { FC, useState, useEffect } from 'react';
+import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -70,7 +71,21 @@ const SocialLinks = styled.div`
   }
 `;
 
+export const SocialLink = styled.div`
+  font-size: ${({ theme }) => theme.fontSizes['4xl']};
+  padding-top: 5px;
+  padding-right: 10px;
+  filter: brightness(0.95);
+  transition: 0.25s;
+
+  :hover {
+    filter: brightness(1);
+    cursor: pointer;
+  }
+`;
+
 const ButtonBase = styled.div`
+  letter-spacing: ${({ theme }) => theme.letterSpacings.wide};
   border: 1px solid ${({ theme }) => theme.colors.textColor1};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
   background-color: ${({ theme }) => theme.colors.bgColor2};
@@ -81,13 +96,6 @@ const ButtonBase = styled.div`
   :active {
     transform: scale(0.95);
   }
-`;
-
-const SocialLink = styled(ButtonBase)`
-  padding: 10px 20px;
-  margin-right: 15px;
-  font-size: ${({ theme }) => theme.fontSizes.lg};
-  letter-spacing: ${({ theme }) => theme.letterSpacings.wide};
 `;
 
 const GoArticleWapper = styled.div`
@@ -129,12 +137,18 @@ const myImages = {
 
 const socialLinks = [
   {
-    site: `GitHub`,
-    link: `https://github.com/LiangYingC`,
+    site: 'GitHub',
+    link: 'https://github.com/LiangYingC',
+    getIcon: function getGithubIcon() {
+      return <AiFillGithub />;
+    },
   },
   {
-    site: `Linkedin`,
-    link: `https://www.linkedin.com/in/chen-liang-ying-4a0873165/`,
+    site: 'Linkedin',
+    link: 'https://www.linkedin.com/in/chen-liang-ying-4a0873165/',
+    getIcon: function getLinkedinIcon() {
+      return <AiFillLinkedin />;
+    },
   },
 ];
 
@@ -167,10 +181,10 @@ const HomePage: FC = () => {
             曾為農夫、農產品品管、線上課程品管，現為前端工程師，喜歡栽培和成長，在城市裡耕耘程式，期望栽種有價值的產品。
           </Description>
           <SocialLinks>
-            {socialLinks.map(({ site, link }) => {
+            {socialLinks.map(({ site, link, getIcon }) => {
               return (
                 <SocialLink key={site} onClick={() => window.open(link, '_blank')}>
-                  {site}
+                  <SocialLink>{getIcon()}</SocialLink>
                 </SocialLink>
               );
             })}

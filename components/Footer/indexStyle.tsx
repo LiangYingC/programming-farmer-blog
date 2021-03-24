@@ -12,30 +12,17 @@ export const DesktopFooterWrapper = styled.footer`
   }
 `;
 
-export const SocialLinks = styled.div`
-  margin-right: 15px;
-`;
-
-export const SocialLink = styled.a`
-  font-size: ${({ theme }) => theme.fontSizes['2xl']};
-  padding-top: 5px;
-  padding-right: 10px;
-  filter: brightness(0.9);
-  transition: 0.25s;
-
-  :hover {
-    filter: brightness(1);
-  }
-`;
-
 export const CopyrightWrap = styled.div`
   display: flex;
   align-items: center;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  letter-spacing: ${({ theme }) => theme.letterSpacings.wide};
+  color: ${({ theme }) => theme.colors.textColor6};
 `;
 
 export const CopyrightIcon = styled.span`
   padding-right: 5px;
-  font-size: ${({ theme }) => theme.fontSizes.xl};
+  font-size: ${({ theme }) => theme.fontSizes.lg};
 `;
 
 export const MobileFooterWrapper = styled.footer`

@@ -1,34 +1,14 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
 import { FaReact } from 'react-icons/fa';
 import { IoLogoJavascript, IoLogoCss3 } from 'react-icons/io';
 import {
   DesktopFooterWrapper,
-  SocialLinks,
-  SocialLink,
   CopyrightWrap,
   CopyrightIcon,
   MobileFooterWrapper,
   FooterIcon,
 } from '@components/Footer/indexStyle';
-
-const socialLinkList = [
-  {
-    site: 'GitHub',
-    link: 'https://github.com/LiangYingC',
-    getIcon: function getGithubIcon() {
-      return <AiFillGithub />;
-    },
-  },
-  {
-    site: 'Linkedin',
-    link: 'https://www.linkedin.com/in/chen-liang-ying-4a0873165/',
-    getIcon: function getLinkedinIcon() {
-      return <AiFillLinkedin />;
-    },
-  },
-];
 
 const mobileFooterConfig = [
   {
@@ -58,21 +38,11 @@ const Footer: FC = () => {
   return (
     <>
       <DesktopFooterWrapper>
-        <SocialLinks>
-          {socialLinkList.map(({ link, getIcon }) => {
-            return (
-              <SocialLink href={link} key={link} target="_blank" rel="noreferrer noopener">
-                {getIcon()}
-              </SocialLink>
-            );
-          })}
-        </SocialLinks>
         <CopyrightWrap>
           <CopyrightIcon>©</CopyrightIcon>
-          <span>{new Date().getFullYear()} LiangChen</span>
+          <span>{new Date().getFullYear()} LiangC. All rights reserved.</span>
         </CopyrightWrap>
       </DesktopFooterWrapper>
-
       <MobileFooterWrapper>
         {mobileFooterConfig.map(({ name, path, getIcon }) => {
           return (
