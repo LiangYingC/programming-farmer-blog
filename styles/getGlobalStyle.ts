@@ -46,6 +46,7 @@ const getGlobalStyle = (theme: Theme) => {
       line-height: ${theme.lineHeights.shorter};
 
       @media (max-width: ${theme.breakpoints.tabletS}) {
+        margin: 25px 0px;
         font-size: ${theme.fontSizes['2xl']};
       }
     }
