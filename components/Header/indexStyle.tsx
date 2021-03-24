@@ -17,7 +17,7 @@ export const HeaderWrapper = styled.header<{
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
     top: ${({ isHide }) => (isHide ? '-45px' : '0px')};
-    height: 45px;
+    height: 50px;
     background-color: ${({ theme }) => theme.colors.bgColor2};
   }
 `;
@@ -28,15 +28,11 @@ export const InnerWrapper = styled.div`
   margin: 0 auto;
   padding: 0 15px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
-    justify-content: center;
-  }
 `;
 
 export const Title = styled.h1`
+  flex: auto;
   font-size: ${({ theme }) => theme.fontSizes['4xl']};
   filter: brightness(0.9);
   transition: 0.2s;
@@ -46,11 +42,17 @@ export const Title = styled.h1`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
-    font-size: ${({ theme }) => theme.fontSizes['xl']};
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+    filter: brightness(0.95);
+
+    > a {
+      font-size: ${({ theme }) => theme.fontSizes.xl};
+    }
   }
 `;
 
 export const Nav = styled.nav`
+  flex: none;
   display: flex;
   align-items: center;
 
@@ -77,13 +79,21 @@ export const NavItem = styled.div`
   }
 `;
 
-export const ColorModeIcon = styled.div`
+export const ColorModeBtn = styled.div`
+  flex: none;
   position: relative;
   top: 4px;
   left: 5px;
+`;
+
+export const ColorModeIcon = styled.div`
   font-size: ${({ theme }) => theme.fontSizes['4xl']};
   color: ${({ theme }) => theme.colors.heightLightColor};
   transition: 0.25s;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
+    font-size: ${({ theme }) => theme.fontSizes['3xl']};
+  }
 `;
 
 export const MobileHeaderWrapper = styled.header<{

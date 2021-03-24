@@ -9,6 +9,7 @@ import {
   Title,
   Nav,
   NavItem,
+  ColorModeBtn,
   ColorModeIcon,
 } from '@components/Header/indexStyle';
 
@@ -32,10 +33,10 @@ const Header: FC = () => {
           <NavItem>
             <Link href={'/articles'}>Articles</Link>
           </NavItem>
-          <NavItem onClick={handleToggleColorMode}>
-            <ColorModeIcon>{isDark ? <IoMdSunny /> : <IoMdMoon />}</ColorModeIcon>
-          </NavItem>
         </Nav>
+        <ColorModeBtn onClick={handleToggleColorMode}>
+          <ColorModeIcon>{isDark ? <IoMdSunny /> : <IoMdMoon />}</ColorModeIcon>
+        </ColorModeBtn>
       </InnerWrapper>
     </HeaderWrapper>
   );
