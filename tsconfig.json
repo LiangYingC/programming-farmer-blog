@@ -19,10 +19,19 @@
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true, // 禁止對同一份文件，使用大小寫不一致的引用
     "allowJs": true,
+    "baseUrl": ".",
     "paths": {
-      "@pages/*": ["./pages/*"]
+      "@pages/*": ["pages/*"],
+      "@configs/*": ["configs/*"],
+      "@components/*": ["components/*"],
+      "@contents/*": ["contents/*"],
+      "@contexts/*": ["contexts/*"],
+      "@lib/*": ["lib/*"],
+      "@styles/*": ["styles/*"],
+      "@myTypes/*": ["types/*"],
+      "@hooks/*": ["hooks/*"]
     }
   },
-  "include": ["next-env.d.ts", "./pages/*.ts", "./pages/*.tsx", "*.d.ts"],
+  "include": ["./**/*.ts", "./**/*.tsx", "next-env.d.ts"],
   "exclude": ["node_modules"]
 }
