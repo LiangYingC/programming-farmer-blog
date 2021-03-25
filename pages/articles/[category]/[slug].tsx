@@ -17,7 +17,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = (params?.slug || '') as string;
   const category = (params?.category || '') as string;
 
-  const articleFilePath = `${process.cwd()}/contents/Articles/${category}/${slug}.md`;
+  const articleFilePath = `${process.cwd()}/contents/article/${category}/${slug}.md`;
   const { frontmatter, content } = getArticleMatter(articleFilePath);
 
   return {

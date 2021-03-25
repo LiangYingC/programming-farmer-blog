@@ -35,7 +35,7 @@ export const getArticleMatter = (articleFilePath: string) => {
 const makeArticles = (articleFileNames: string[], categoryName: string) => {
   const articles = articleFileNames.map(articleFileName => {
     // article frontmatter data
-    const articleFilePath = `${process.cwd()}/contents/articles/${categoryName}/${articleFileName}`;
+    const articleFilePath = `${process.cwd()}/contents/article/${categoryName}/${articleFileName}`;
     const { frontmatter } = getArticleMatter(articleFilePath);
 
     // article slug data
@@ -57,7 +57,7 @@ const makeArticles = (articleFileNames: string[], categoryName: string) => {
  * @return [{ category, slug, frontmatter } , ...]
  */
 export const getArticlesByCategory = (categoryName: string) => {
-  const articlesDirectory = `${process.cwd()}/contents/articles/${categoryName}`;
+  const articlesDirectory = `${process.cwd()}/contents/article/${categoryName}`;
   const articleFileNames = fs.readdirSync(articlesDirectory);
   const articles = makeArticles(articleFileNames, categoryName);
 
