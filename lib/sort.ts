@@ -6,7 +6,6 @@ import { parseJsonStrToDate } from '@lib/format';
  */
 export const sortArticlesByDateDesc = (Articles: Articles) => {
   Articles.sort((a, b) => {
-    console.log({ a, b });
     return parseJsonStrToDate(a.frontmatter.date) > parseJsonStrToDate(b.frontmatter.date) ? -1 : 1;
   });
 
