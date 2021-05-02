@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC, ReactNode, forwardRef } from 'react';
 import Link from 'next/link';
 import { FaReact } from 'react-icons/fa';
 import { IoLogoJavascript, IoLogoCss3 } from 'react-icons/io';
@@ -13,26 +13,31 @@ import {
 const mobileFooterConfig = [
   {
     name: 'react',
-    path: '/react',
-    getIcon: function getReactIcon() {
-      return <FaReact />;
-    },
+    component: <FaReact />,
   },
   {
     name: 'javaScript',
-    path: '/javaScript',
-    getIcon: function getJavascriptIcon() {
-      return <IoLogoJavascript />;
-    },
+    component: <IoLogoJavascript />,
   },
   {
     name: 'style',
-    path: '/style',
-    getIcon: function getCssIcon() {
-      return <IoLogoCss3 />;
-    },
+    component: <IoLogoCss3 />,
   },
 ];
+
+/**
+ * If the Link child is a function component, need to use React.forwardRef to solve “Warning: Function components cannot be given refs.”
+ * https://nextjs.org/docs/api-reference/next/link#if-the-child-is-a-function-component
+ */
+const IconBtn = forwardRef<HTMLAnchorElement, { iconElemenet: ReactNode; href: string }>(
+  function IconBtn({ iconElemenet, href }, ref) {
+    return (
+      <FooterIcon href={href} ref={ref}>
+        {iconElemenet}
+      </FooterIcon>
+    );
+  }
+);
 
 const Footer: FC = () => {
   return (
@@ -44,11 +49,11 @@ const Footer: FC = () => {
         </CopyrightWrap>
       </DesktopFooterWrapper>
       <MobileFooterWrapper>
-        {mobileFooterConfig.map(({ name, path, getIcon }) => {
+        {mobileFooterConfig.map(({ name, component }) => {
           return (
-            <FooterIcon key={name}>
-              <Link href={`/articles${path}`}>{getIcon()}</Link>
-            </FooterIcon>
+            <Link key={name} href={`/articles/${name}`} passHref>
+              <IconBtn iconElemenet={component} href={`/articles/${name}`} />
+            </Link>
           );
         })}
       </MobileFooterWrapper>
