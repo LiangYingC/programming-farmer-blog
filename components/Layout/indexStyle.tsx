@@ -8,5 +8,6 @@ export const Content = styled.main`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
     padding-top: 45px;
+    padding-bottom: 65px;
   }
 `;
