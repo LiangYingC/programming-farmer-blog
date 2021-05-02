@@ -41,7 +41,7 @@ export const MobileFooterWrapper = styled.footer`
   }
 `;
 
-export const FooterIcon = styled.div`
+export const FooterIcon = styled.a`
   position: relative;
   top: 3px;
   left: 0px;
