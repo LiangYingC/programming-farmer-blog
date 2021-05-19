@@ -323,6 +323,7 @@ console.log(a); // { number: 10 } => 跟著改變
 - [你不可不知的 JavaScript 二三事#Day26：程式界的哈姆雷特 —— Pass by value, or Pass by reference？](https://ithelp.ithome.com.tw/articles/10209104)
 - [深入探討 JavaScript 中的參數傳遞：call by value 還是 reference？](https://blog.techbridge.cc/2018/06/23/javascript-call-by-value-or-reference/)
 - [重新認識 JavaScript: Day 05 JavaScript 是「傳值」或「傳址」？](https://ithelp.ithome.com.tw/articles/10191057)
+- [基本資料型別和參考資料型別 Primitive Data Type & Reference Data Type - 彭彭直播](https://www.youtube.com/watch?v=43VI2zWSpd0)
 - [Is JavaScript a pass-by-reference or pass-by-value language?](https://stackoverflow.com/questions/518000/is-javascript-a-pass-by-reference-or-pass-by-value-language)
 - [11.2. By Value Versus by Reference](https://docstore.mik.ua/orelly/webprog/jscript/ch11_02.htm)
 - [技術名詞紛爭多](https://www.ithome.com.tw/voice/94877)
