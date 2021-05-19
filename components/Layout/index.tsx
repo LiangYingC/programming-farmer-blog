@@ -27,7 +27,6 @@ const Layout: FC<LayoutProps> = ({ children, pageTitle, pageDesc, pageURL, pageT
         <meta property="og:url" content={pageURL} key="ogUrl" />
         <meta property="og:image" content="/assets/icons/icon-384x384.png" key="ogImage" />
         <meta property="og:site_name" content="城市碼農" key="ogSiteName" />
-        <meta name="twitter:card" content={pageType} key="twitterType" />
         <meta name="twitter:title" content={pageTitle} key="twitterTitle" />
         <meta name="twitter:description" content={pageDesc} key="twitterDesc" />
         <meta name="twitter:url" content={pageURL} key="twitterPageUrl" />
