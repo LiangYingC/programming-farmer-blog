@@ -18,7 +18,7 @@ const Layout: FC<LayoutProps> = ({ children, pageTitle, pageDesc, pageURL, pageT
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="utf-8" />
-        <link rel="shortcut icon" href="/assets/favicon-32x32.png" />
+        <link rel="shortcut icon" href="/assets/icons/favicon-32x32.png" />
         <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} key="desc" />
         <meta property="og:type" content={pageType} key="ogType" />
