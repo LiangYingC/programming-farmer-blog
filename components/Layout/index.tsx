@@ -30,7 +30,7 @@ const Layout: FC<LayoutProps> = ({ children, pageTitle, pageDesc, pageURL, pageT
         <meta name="twitter:title" content={pageTitle} key="twitterTitle" />
         <meta name="twitter:description" content={pageDesc} key="twitterDesc" />
         <meta name="twitter:url" content={pageURL} key="twitterPageUrl" />
-        <meta name="twitter:image" content={''} key="twitterImage" />
+        <meta name="twitter:image" content="/assets/icons/icon-384x384.png" key="twitterImage" />
         <meta name="twitter:creator" content="@LiangCh95173853" key="twitterCreator" />
       </Head>
       <Header />
