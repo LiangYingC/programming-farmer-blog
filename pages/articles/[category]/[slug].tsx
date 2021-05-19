@@ -7,10 +7,18 @@ import Article from '@components/Article';
 interface ArticlePageProps {
   frontmatter: Frontmatter;
   content: string;
+  articleUrl: string;
 }
 
-const ArticlePage: FC<ArticlePageProps> = ({ content, frontmatter }) => {
-  return <Article content={content} />;
+const ArticlePage: FC<ArticlePageProps> = ({ content, frontmatter, articleUrl }) => {
+  return (
+    <Article
+      content={content}
+      pageTitle={frontmatter.title}
+      pageDesc={frontmatter.description}
+      pageURL={articleUrl}
+    />
+  );
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -24,6 +32,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       content: `# ${frontmatter.title}\n${content}`,
       frontmatter,
+      articleUrl: `https://www.programfarmer.com/articles/${category}/${slug}`,
     },
   };
 };

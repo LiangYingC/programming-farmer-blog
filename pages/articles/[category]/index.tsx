@@ -17,7 +17,12 @@ const CategoryPage: FC<CategoryPageProps> = ({ category, articles }) => {
   const capitalizedCategory = capitalizeLetter(category);
 
   return (
-    <Layout>
+    <Layout
+      pageType="website"
+      pageTitle={`城市碼農 | LiangC | ${capitalizedCategory} 技術文章`}
+      pageDesc={`城市碼農技術部落格中，關於 ${capitalizedCategory} 的文章列表。`}
+      pageURL={`https://www.programfarmer.com/articles/${category}`}
+    >
       <ArticleList articleIntro={`Articles about ${capitalizedCategory}`} articles={articles} />
     </Layout>
   );

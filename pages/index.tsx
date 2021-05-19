@@ -168,7 +168,12 @@ const HomePage: FC = () => {
   }, [isDark]);
 
   return (
-    <Layout>
+    <Layout
+      pageType="website"
+      pageTitle="城市碼農 | LiangC "
+      pageDesc="曾為農夫、農產品品管、線上課程品管，現為前端工程師，喜歡栽培和成長，在城市裡耕耘程式，期望栽種有價值的產品。"
+      pageURL="https://www.programfarmer.com/"
+    >
       <Bio>
         <RoundImageWrapper>
           <Image src={imageState.src} alt={imageState.alt} width="250" height="250" />

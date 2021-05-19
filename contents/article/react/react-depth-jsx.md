@@ -26,11 +26,7 @@ category: react
 用 `React.createElement` 結果為：
 
 ```javascript
-const containerElement = React.createElement(
-    'div',
-    { className: 'container'},
-    'Hello World !'}
-);
+const containerElement = React.createElement('div', { className: 'container' }, 'Hello World !');
 ```
 
 通常使用 `React.createElement` 最主要會傳入三個參數 `component`、`props`、 `...children`。完整的函式為 `React.createElement(component, props, ...children)`。
@@ -39,7 +35,7 @@ const containerElement = React.createElement(
 - **props** : 可傳入 `object`，代表提供給 element 的 props，如果沒有任何 props 可以傳入 `null`。
 - **...childern** : 可傳入要提供給 component 的 childern，可為 `component` or `strng`，如果有多個 children 時需組合時，可以用 `array` 傳入。
 
-由於第二個參數 `props` 中，也可以傳入 `children` ，因此上面的例子，可以只傳入兩個參數寫成：
+由於第二個參數 `props` 中，也可以傳入 `children` ，因此上面 `Hello World !` 的例子，可以只傳入兩個參數寫成：
 
 ```javascript
 const containerElement = React.createElement('div', {
