@@ -43,7 +43,7 @@ console.log(b); // 5
 
 _p.s 本文的附圖都是便於理解抽象概念所做，實際在記憶體運作往往更加複雜。_
 
-![pass by value data 1](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/01.png)
+![pass by value data 1](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/01.png)
 
 變數以變數表的概念儲存於記憶體中，分為「變數本身」以及「變數所對應的資料」。以 `pass by value` 的變數而言，資料會直接以「值 (value)」的形式儲存於名為 stack 的記憶體空間（較小的空間但相對存取快），因此複製變數時，連資料的值也一起複製 pass 過去，就形成全新的值。因此改變原本變數 `a` 的值，並不會影響到新的變數 `b` 的值。
 
@@ -51,7 +51,7 @@ _p.s 本文的附圖都是便於理解抽象概念所做，實際在記憶體運
 
 以上這些資料的值，都會直接儲存於 stack 空間中，概念如下圖：
 
-![pass by value data 2](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/02.png)
+![pass by value data 2](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/02.png)
 
 <hr>
 
@@ -83,9 +83,9 @@ console.log(b); // { number : 10 }
 
 因此當 b 複製 a 時，其實僅是複製了 a 變數在 stack 中儲存的地址，並沒有複製值，而「同個地址」背後都是指向「同樣的值」 `{ number : 5}`，所以 a 將值改變成 `{ number : 10 }` 的時候，b 的值也會跟著改變成 `{ number : 10 }`，如下方示意圖：
 
-![pass by reference data 1](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/03.png)
+![pass by reference data 1](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/03.png)
 
-![pass by reference data 2](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/04.png)
+![pass by reference data 2](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/04.png)
 
 到此為止，就大致了解 `pass by value` 以及 `pass by reference` 的概念和行為。
 
@@ -117,9 +117,9 @@ console.log(b); // { number : 5 } 那尼！！！居然沒有跟著改變！！�
 
 概念如下圖，在 Heap 中新增 `{ number : 10 }` 及對應的新地址，而 `a` 的資料會更新成新產生的地址：
 
-![pass by sharing data 1](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/05.png)
+![pass by sharing data 1](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/05.png)
 
-![pass by sharing data 2](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/06.png)
+![pass by sharing data 2](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/06.png)
 
 這種改變的行為概念上似乎混合了兩種形式：
 
@@ -154,7 +154,7 @@ console.log(b); // { number : 10 }
 
 這邊的思考重點其實是「腦中要有變數表的圖在跑」，回顧 reference 被複製的圖後，會發現兩變數會互相影響是很合理的現象，再次附圖供參考。
 
-![pass by reference data 1](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/03.png)
+![pass by reference data 1](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/03.png)
 
 <hr>
 
@@ -185,9 +185,9 @@ console.log(a); // 5 => 沒被改變
 
 概念的圖解如下：
 
-![primitive data with function 1](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/07.png)
+![primitive data with function 1](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/07.png)
 
-![primitive data with function 2](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/08.png)
+![primitive data with function 2](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/08.png)
 
 ```javascript
 function test(objectData) {
@@ -210,9 +210,9 @@ console.log(a); // { number: 10 } => 跟著改變
 
 概念的圖解如下：
 
-![object data with function 1](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/08.png)
+![object data with function 1](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/08.png)
 
-![object data with function 2](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/09.png)
+![object data with function 2](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/09.png)
 
 ```javascript
 function test(objectData) {
@@ -235,7 +235,7 @@ console.log(a); // { number: 5 } => 沒被改變
 
 概念和上面的例子很相似，差異就在於「重新賦值」是產生新的物件以及新地址：
 
-![object data with function 3](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/11.png)
+![object data with function 3](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/11.png)
 
 根據上面的三個例子，能明白**可將傳遞參數的過程視為複製變數來思考**，就能理解為何在某些情況下 `function` 內部變數與外部變數會相互影響，某些情況下又不會，一切的源頭都與變數對應的資料是 `值(value)` 或 `地址(reference)` 有關囉。
 
@@ -245,7 +245,7 @@ console.log(a); // { number: 5 } => 沒被改變
 
 再次回顧無論是複製**基本型別**變數與複製**物件型別**變數的概念表：
 
-![pass by value and pass by sharing](/article/javascript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/12.png)
+![pass by value and pass by sharing](/article/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing/12.png)
 
 如果不去管變數表中的資料欄位，被複製的到底是原本的值或是地址，直觀地來看，其實都是在複製「資料欄位內儲存的值」。假如角度是以：**複製時傳遞的都是「資料欄位內儲存的值(value)」來看的話，就有可能會被視為 JavaScript 都是 pass by value**。因此才會有相關的說法產生。
 
