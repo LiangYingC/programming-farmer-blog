@@ -42,8 +42,8 @@ const getGlobalStyle = (theme: Theme) => {
       font-size: ${theme.fontSizes['4xl']};
       font-weight: ${theme.fontWeights.bold};
       color: ${theme.colors.textColor1};
-      letter-spacing: ${theme.letterSpacings.wider};
-      line-height: ${theme.lineHeights.shorter};
+      letter-spacing: ${theme.letterSpacings.widest};
+      line-height: ${theme.lineHeights.short};
 
       @media (max-width: ${theme.breakpoints.tabletS}) {
         margin: 25px 0px;
