@@ -42,8 +42,8 @@ const getGlobalStyle = (theme: Theme) => {
       font-size: ${theme.fontSizes['4xl']};
       font-weight: ${theme.fontWeights.bold};
       color: ${theme.colors.textColor1};
-      letter-spacing: ${theme.letterSpacings.wider};
-      line-height: ${theme.lineHeights.shorter};
+      letter-spacing: ${theme.letterSpacings.widest};
+      line-height: ${theme.lineHeights.short};
 
       @media (max-width: ${theme.breakpoints.tabletS}) {
         margin: 25px 0px;
@@ -83,7 +83,8 @@ const getGlobalStyle = (theme: Theme) => {
     li {
       margin: 15px 0px;
       font-size: ${theme.fontSizes.lg};
-      line-height: ${theme.lineHeights.base};
+      letter-spacing: ${theme.letterSpacings.wider};
+      line-height: ${theme.lineHeights.tall};
 
       @media (max-width: ${theme.breakpoints.tabletS}) {
         font-size: ${theme.fontSizes.md};
@@ -93,6 +94,14 @@ const getGlobalStyle = (theme: Theme) => {
     ul,
     ol {
       padding-left: 25px;
+    }
+
+    em {
+      font-size: ${theme.fontSizes.md};
+
+      @media (max-width: ${theme.breakpoints.tabletS}) {
+        font-size: ${theme.fontSizes.sm};
+      }
     }
 
     a {
