@@ -5,8 +5,9 @@ import { defaultTheme, darkThemeColors, lightThemeColors } from '@styles/theme';
 import getGlobalStyle from '@styles/getGlobalStyle';
 
 const ThemeContainer = ({ children }: { children: React.ReactNode }) => {
-  const { isDark } = useColorMode();
-  const colors = isDark ? darkThemeColors : lightThemeColors;
+  const { isDarkMode } = useColorMode();
+
+  const colors = isDarkMode ? darkThemeColors : lightThemeColors;
   const theme = { ...defaultTheme, colors };
 
   return (

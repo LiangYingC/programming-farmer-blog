@@ -1,12 +1,24 @@
 import { FC, createContext, useState, useEffect, useMemo, useCallback, useContext } from 'react';
+import {
+  checkIsUserPreferLightModeOnOS,
+  setItemToLocalStorage,
+  getItemFromLocalStorage,
+} from '@lib/window';
+
+enum ColorModeEnum {
+  dark = 'dark',
+  light = 'light',
+}
+
+const COLOR_MODE_STORAGE_KEY = 'colorMode';
 
 interface ColorModeState {
-  isDark: boolean;
+  isDarkMode: boolean;
   toggleColorMode: { (): void } | null;
 }
 
 const ColorModeIntialContext: ColorModeState = {
-  isDark: true,
+  isDarkMode: true,
   toggleColorMode: null,
 };
 
@@ -23,26 +35,47 @@ export const useColorMode = () => {
 };
 
 export const ColorModeProvider: FC = ({ children }) => {
-  const [isDark, setIsDark] = useState(true);
+  const [colorMode, setColorMode] = useState(ColorModeEnum.dark);
+  const isDarkMode = colorMode === ColorModeEnum.dark;
+
+  const initColorModeFromStorage = (colorModeFromStorage: string) => {
+    const isSelectedDarkModeLastTime = colorModeFromStorage === ColorModeEnum.dark;
+    isSelectedDarkModeLastTime
+      ? setColorMode(ColorModeEnum.dark)
+      : setColorMode(ColorModeEnum.light);
+  };
+
+  const initColorModeFromUserPreferModeOnOS = () => {
+    const isUserPreferLightMode = checkIsUserPreferLightModeOnOS();
+    if (isUserPreferLightMode) {
+      setColorMode(ColorModeEnum.light);
+    }
+  };
 
   useEffect(() => {
-    // Detect whether the user is using the light mode in the os system
-    // Ref https://css-tricks.com/a-complete-guide-to-dark-mode-on-the-web/#os-level
-    if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-      setIsDark(false);
-    }
+    const colorModeFromStorage = getItemFromLocalStorage(COLOR_MODE_STORAGE_KEY);
+
+    colorModeFromStorage !== null
+      ? initColorModeFromStorage(colorModeFromStorage)
+      : initColorModeFromUserPreferModeOnOS();
   }, []);
 
+  useEffect(() => {
+    setItemToLocalStorage({ key: COLOR_MODE_STORAGE_KEY, value: colorMode });
+  }, [colorMode]);
+
   const toggleColorMode = useCallback(() => {
-    setIsDark(prev => !prev);
+    setColorMode(prev => {
+      return prev === ColorModeEnum.dark ? ColorModeEnum.light : ColorModeEnum.dark;
+    });
   }, []);
 
   const context = useMemo(
     () => ({
-      isDark,
+      isDarkMode,
       toggleColorMode,
     }),
-    [isDark, toggleColorMode]
+    [isDarkMode, toggleColorMode]
   );
 
   return <ColorModeContext.Provider value={context}>{children}</ColorModeContext.Provider>;
