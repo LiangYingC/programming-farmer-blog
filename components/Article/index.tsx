@@ -12,11 +12,7 @@ interface CodeBlockProps {
 
 const CodeBlock: FC<CodeBlockProps> = ({ language, value }) => {
   return (
-    <SyntaxHighlighter
-      language={language}
-      style={atomOneDark}
-      customStyle={{ background: '#090c14' }}
-    >
+    <SyntaxHighlighter language={language} style={atomOneDark}>
       {value}
     </SyntaxHighlighter>
   );
