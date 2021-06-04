@@ -90,6 +90,7 @@ declare module '@emotion/react' {
       bgColor2: string;
       bgColor3: string;
       heightLightColor: string;
+      anchorInsetShadow: string;
     };
   }
 }

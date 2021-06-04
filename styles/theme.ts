@@ -85,6 +85,7 @@ export const darkThemeColors = {
   bgColor2: '#202226',
   bgColor3: '#1b1c21',
   heightLightColor: '#ffd479',
+  anchorInsetShadow: 'rgb(255, 255, 255, 0.3);',
 };
 
 export const lightThemeColors = {
@@ -99,6 +100,7 @@ export const lightThemeColors = {
   bgColor2: '#eeeeee',
   bgColor3: '',
   heightLightColor: '#efb540',
+  anchorInsetShadow: 'rgb(0, 0, 0, 0.1);',
 };
 
 type DefaultTheme = typeof defaultTheme;
