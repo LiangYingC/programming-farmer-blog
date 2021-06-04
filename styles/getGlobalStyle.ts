@@ -94,6 +94,7 @@ const getGlobalStyle = (theme: Theme) => {
     ul,
     ol {
       padding-left: 25px;
+      word-break: break-word;
     }
 
     em {
