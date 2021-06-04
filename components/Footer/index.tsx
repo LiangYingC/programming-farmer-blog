@@ -27,7 +27,7 @@ const mobileFooterConfig = [
 
 /**
  * If the Link child is a function component, need to use React.forwardRef to solve “Warning: Function components cannot be given refs.”
- * https://nextjs.org/docs/api-reference/next/link#if-the-child-is-a-function-component
+ * ref : https://nextjs.org/docs/api-reference/next/link#if-the-child-is-a-function-component
  */
 const IconBtn = forwardRef<HTMLAnchorElement, { iconElemenet: ReactNode; href: string }>(
   function IconBtn({ iconElemenet, href }, ref) {
