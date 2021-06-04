@@ -14,7 +14,7 @@ category: javaScript
 
 概念如下圖：
 
-![Primitive type data and Object data](/article/javaScript/javaScript-shallow-copy-deep-copy/01.png)
+![Primitive type data and Object data](/article/javaScript/javascript-shallow-copy-deep-copy/01.png)
 
 轉換成程式中的表現行為如下：
 
@@ -58,7 +58,7 @@ _p.s 本文的附圖都是便於理解抽象原理所做，實際在記憶體運
 
 當 `Original Object data` 與 `Cloned Object data` 中，**有任何一層的資料地址相同，背後指向的值相同，兩個物件的操作會互相影響**，就為**淺拷貝(shadow copy)**。
 
-![shadow copy 1](/article/javaScript/javaScript-shallow-copy-deep-copy/02.png)
+![shadow copy 1](/article/javaScript/javascript-shallow-copy-deep-copy/02.png)
 
 ```javascript
 /*** 淺拷貝：直接複製 ***/
@@ -83,7 +83,7 @@ console.log(originalData.obj.secondLayerNum);
 
 需要注意的是「只要有任何一層的資料地址相同」，換句話說就是「只要並非兩個完完全全獨立的 `Object data`」，就依然是淺拷貝。
 
-![shadow copy 2](/article/javaScript/javaScript-shallow-copy-deep-copy/03.png)
+![shadow copy 2](/article/javaScript/javascript-shallow-copy-deep-copy/03.png)
 _p.s 概念示意圖，地址並非直接存在 obj 中，而是 obj 變數會對應一個地址_
 
 上面看完原理概念圖，接著就在程式中，實踐這種「第一層不會互相影響，但第二層後會互相影響」的淺拷貝吧！
@@ -207,7 +207,7 @@ console.log(originalData[1].secondLayerNum);
 
 當 `Original Object data` 與 `Cloned Object data` ，**是兩個完全獨立，每一層的資料地址都不同，相互不影響的深層物件**，就為**深拷貝(shadow copy)**。
 
-![deep copy](/article/javaScript/javaScript-shallow-copy-deep-copy/04.png)
+![deep copy](/article/javaScript/javascript-shallow-copy-deep-copy/04.png)
 _p.s 概念示意圖，地址並非直接存在 obj 中，而是 obj 變數會對應一個地址_
 
 有哪些方式可以達成深拷貝呢？
@@ -216,7 +216,7 @@ _p.s 概念示意圖，地址並非直接存在 obj 中，而是 obj 變數會�
 
 `JSON.stringify/parse` 常見於處理 Local Storge、Session Storage 等 Storage 的儲存操作，其實也可以用來實踐深拷貝。
 
-主要是用 `JSON.stringify` 先把物件轉成字串，再用 `JSON.parse` 把字串轉為物件即可。
+主要是用 `JSON.stringify` 先把物件轉字串，再用 `JSON.parse` 把字串轉物件即可。
 
 ```javascript
 /*** 深拷貝：JSON.stringify/parse ***/
@@ -237,7 +237,7 @@ console.log(originalData.obj.secondLayerNum);
 // 100 => 第二層「沒有」被 clonedData 影響
 ```
 
-但需要特別注意有些值經過 `JSON.stringify/parse` 處理後，會產生變化：
+但需要特別注意有些值經過 `JSON.stringify/parse` 處理後，會產生變化，導致非預期的結果發生：
 
 - undefined : 會`連同 key 一起消失`。
 - NaN : 會被轉成 `null`。
@@ -331,7 +331,7 @@ console.log(originalData.obj.secondLayerNum);
 
 用一張圖簡易地總結淺深拷貝的概念：
 
-![shadow copy and deep copy](/article/javaScript/javaScript-shallow-copy-deep-copy/05.png)
+![shadow copy and deep copy](/article/javaScript/javascript-shallow-copy-deep-copy/05.png)
 
 - **淺拷貝(shadow copy)** : 原始物件資料與複製物件資料「並非完全獨立」，可能第一層就有指向相同地址的資料，也可能第二層才有指向相同地址的資料。彼此資料內容的改變可能會互相影響。
 - **深拷貝(deep copy)** : 原始物件資料與複製物件資料「完全獨立」，沒有任何一層資料指向相同的地址。彼此資內容料的改變不會互相影響。
