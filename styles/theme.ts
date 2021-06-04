@@ -74,32 +74,30 @@ export const defaultTheme = {
 };
 
 export const darkThemeColors = {
-  textColor1: '#f9f9f9',
-  textColor2: '#e5e5e5',
-  textColor3: '#eeeeee',
-  textColor4: '#dddddd',
-  textColor5: '#cccccc',
-  textColor6: '#bbbbbb',
-  textBgColor: 'hsla(0, 0%, 100%, 0.1)',
-  bgColor1: '#282b30',
-  bgColor2: '#202226',
-  bgColor3: '#1b1c21',
-  heightLightColor: '#ffd479',
+  primaryText: '#f9f9f9',
+  secondText: '#eeeeee',
+  thirdText: '#dddddd',
+  bodyBg: '#282b30',
+  navigationBg: '#202226',
+  btnBg: '#202226',
+  preElementBg: '#1b1c21',
+  codeElementBg: '#454545',
+  colorModeIcon: '#ffd479',
+  divideLine: '#bbbbbb',
   anchorInsetShadow: 'rgb(255, 255, 255, 0.3);',
 };
 
 export const lightThemeColors = {
-  textColor1: '#333333',
-  textColor2: '',
-  textColor3: '',
-  textColor4: '',
-  textColor5: '',
-  textColor6: '',
-  textBgColor: '',
-  bgColor1: '#fcfcfc',
-  bgColor2: '#eeeeee',
-  bgColor3: '',
-  heightLightColor: '#efb540',
+  primaryText: '#333333',
+  secondText: '#444444',
+  thirdText: '#555555',
+  bodyBg: '#fcfcfc',
+  navigationBg: '#ffffff',
+  btnBg: '#ffffff',
+  preElementBg: '#1b1c21',
+  codeElementBg: '#e5e5e5',
+  colorModeIcon: '#f2bd54',
+  divideLine: '#555555',
   anchorInsetShadow: 'rgb(0, 0, 0, 0.1);',
 };
 
@@ -107,16 +105,16 @@ type DefaultTheme = typeof defaultTheme;
 
 export interface Theme extends DefaultTheme {
   colors: {
-    textColor1: string;
-    textColor2: string;
-    textColor3: string;
-    textColor4: string;
-    textColor5: string;
-    textColor6: string;
-    textBgColor: string;
-    bgColor1: string;
-    bgColor2: string;
-    bgColor3: string;
-    heightLightColor: string;
+    primaryText: string;
+    secondText: string;
+    thirdText: string;
+    bodyBg: string;
+    navigationBg: string;
+    btnBg: string;
+    preElementBg: string;
+    codeElementBg: string;
+    colorModeIcon: string;
+    divideLine: string;
+    anchorInsetShadow: string;
   };
 }

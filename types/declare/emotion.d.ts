@@ -79,17 +79,16 @@ declare module '@emotion/react' {
       desktopL: string;
     };
     colors: {
-      textColor1: string;
-      textColor2: string;
-      textColor3: string;
-      textColor4: string;
-      textColor5: string;
-      textColor6: string;
-      textBgColor: string;
-      bgColor1: string;
-      bgColor2: string;
-      bgColor3: string;
-      heightLightColor: string;
+      primaryText: string;
+      secondText: string;
+      thirdText: string;
+      divideLine: string;
+      bodyBg: string;
+      navigationBg: string;
+      btnBg: string;
+      preElementBg: string;
+      codeElementBg: string;
+      colorModeIcon: string;
       anchorInsetShadow: string;
     };
   }
