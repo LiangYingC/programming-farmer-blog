@@ -86,9 +86,9 @@ export const SocialLink = styled.div`
 
 const ButtonBase = styled.div`
   letter-spacing: ${({ theme }) => theme.letterSpacings.wide};
-  border: 1px solid ${({ theme }) => theme.colors.textColor1};
+  border: 1px solid ${({ theme }) => theme.colors.primaryText};
   border-radius: ${({ theme }) => theme.borderRadius.sm};
-  background-color: ${({ theme }) => theme.colors.bgColor2};
+  background-color: ${({ theme }) => theme.colors.btnBg};
   cursor: pointer;
   transform: scale(1);
   transition: 0.2s;
@@ -153,24 +153,24 @@ const socialLinks = [
 ];
 
 const HomePage: FC = () => {
-  const { isDark } = useColorMode();
+  const { isDarkMode } = useColorMode();
 
-  const initImageState = isDark ? myImages.dark : myImages.light;
+  const initImageState = isDarkMode ? myImages.dark : myImages.light;
 
   const [imageState, setImageState] = useState(initImageState);
 
   useEffect(() => {
-    if (isDark) {
+    if (isDarkMode) {
       setImageState(myImages.dark);
     } else {
       setImageState(myImages.light);
     }
-  }, [isDark]);
+  }, [isDarkMode]);
 
   return (
     <Layout
       pageType="website"
-      pageTitle="城市碼農 | LiangC "
+      pageTitle="城市碼農 | LiangC | 技術部落格"
       pageDesc="曾為農夫、農產品品管、線上課程品管，現為前端工程師，喜歡栽培和成長，在城市裡耕耘程式，期望栽種有價值的產品。"
       pageURL="https://www.programfarmer.com/"
     >

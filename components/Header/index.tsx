@@ -14,7 +14,7 @@ import {
 } from '@components/Header/indexStyle';
 
 const Header: FC = () => {
-  const { isDark, toggleColorMode } = useColorMode();
+  const { isDarkMode, toggleColorMode } = useColorMode();
   const { isHideNavBar, isShowHeaderBgColor } = useNavScrollHandler();
 
   const handleToggleColorMode = () => {
@@ -35,7 +35,7 @@ const Header: FC = () => {
           </NavItem>
         </Nav>
         <ColorModeBtn onClick={handleToggleColorMode}>
-          <ColorModeIcon>{isDark ? <IoMdSunny /> : <IoMdMoon />}</ColorModeIcon>
+          <ColorModeIcon>{isDarkMode ? <IoMdSunny /> : <IoMdMoon />}</ColorModeIcon>
         </ColorModeBtn>
       </InnerWrapper>
     </HeaderWrapper>

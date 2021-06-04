@@ -28,7 +28,7 @@ export const Infos = styled.div`
   margin-bottom: 10px;
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.colors.textColor1};
+  color: ${({ theme }) => theme.colors.primaryText};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
     margin-bottom: 5px;
@@ -40,10 +40,10 @@ export const Category = styled.span`
   padding: 3px 10px;
   display: inline-block;
   font-size: ${({ theme }) => theme.fontSizes.sm};
-  color: ${({ theme }) => theme.colors.textColor1};
+  color: ${({ theme }) => theme.colors.primaryText};
   text-align: center;
   letter-spacing: ${({ theme }) => theme.letterSpacings.wide};
-  border: 2px solid ${({ theme }) => theme.colors.textColor1};
+  border: 2px solid ${({ theme }) => theme.colors.primaryText};
   border-radius: ${({ theme }) => theme.borderRadius.xs};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
@@ -75,7 +75,7 @@ export const Brief = styled.p`
   font-size: ${({ theme }) => theme.fontSizes.md};
   letter-spacing: ${({ theme }) => theme.letterSpacings.wider};
   line-height: ${({ theme }) => theme.lineHeights.base};
-  color: ${({ theme }) => theme.colors.textColor4};
+  color: ${({ theme }) => theme.colors.thirdText};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
     font-size: ${({ theme }) => theme.fontSizes.sm};

@@ -12,13 +12,14 @@ export const HeaderWrapper = styled.header<{
   height: 70px;
   width: 100%;
   background-color: ${({ isShowHeaderBgColor, theme }) =>
-    isShowHeaderBgColor ? theme.colors.bgColor2 : 'transparent'};
+    isShowHeaderBgColor ? theme.colors.navigationBg : 'transparent'};
+  box-shadow: 0 1px 5px 0 rgb(0, 0, 0, 0.1);
   transition: 0.2s;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
     top: ${({ isHide }) => (isHide ? '-45px' : '0px')};
     height: 50px;
-    background-color: ${({ theme }) => theme.colors.bgColor2};
+    background-color: ${({ theme }) => theme.colors.navigationBg};
   }
 `;
 
@@ -88,8 +89,9 @@ export const ColorModeBtn = styled.div`
 
 export const ColorModeIcon = styled.div`
   font-size: ${({ theme }) => theme.fontSizes['4xl']};
-  color: ${({ theme }) => theme.colors.heightLightColor};
+  color: ${({ theme }) => theme.colors.colorModeIcon};
   transition: 0.25s;
+  cursor: pointer;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
     font-size: ${({ theme }) => theme.fontSizes['3xl']};
@@ -106,6 +108,7 @@ export const MobileHeaderWrapper = styled.header<{
   transform: translateX(-50%);
   height: 55px;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.bgColor2};
+  background-color: ${({ theme }) => theme.colors.navigationBg};
+  box-shadow: 0 1px 5px 0 rgb(0, 0, 0, 0.5);
   transition: 0.2s;
 `;

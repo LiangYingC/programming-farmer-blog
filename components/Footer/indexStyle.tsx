@@ -17,7 +17,7 @@ export const CopyrightWrap = styled.div`
   align-items: center;
   font-size: ${({ theme }) => theme.fontSizes.sm};
   letter-spacing: ${({ theme }) => theme.letterSpacings.wide};
-  color: ${({ theme }) => theme.colors.textColor6};
+  color: ${({ theme }) => theme.colors.divideLine};
 `;
 
 export const CopyrightIcon = styled.span`
@@ -37,7 +37,8 @@ export const MobileFooterWrapper = styled.footer`
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    background-color: ${({ theme }) => theme.colors.bgColor2};
+    background-color: ${({ theme }) => theme.colors.navigationBg};
+    box-shadow: 0 -1px 6px 0 rgb(0, 0, 0, 0.2);
   }
 `;
 
@@ -46,4 +47,5 @@ export const FooterIcon = styled.a`
   top: 3px;
   left: 0px;
   font-size: ${({ theme }) => theme.fontSizes['3xl']};
+  padding: 15px;
 `;

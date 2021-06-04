@@ -15,8 +15,8 @@ const getGlobalStyle = (theme: Theme) => {
       font-family: 'HelveticaNeue', Helvetica, Arial, 'Lucida Grande', sans-serif;
       width: 100vw;
       height: auto;
-      color: ${theme.colors.textColor2};
-      background-color: ${theme.colors.bgColor1};
+      color: ${theme.colors.primaryText};
+      background-color: ${theme.colors.bodyBg};
       transition-duration: 0.2s;
       transition-property: background-color, color;
     }
@@ -24,7 +24,7 @@ const getGlobalStyle = (theme: Theme) => {
     h1 {
       font-size: ${theme.fontSizes['6xl']};
       font-weight: ${theme.fontWeights.extrabold};
-      color: ${theme.colors.textColor1};
+      color: ${theme.colors.primaryText};
       letter-spacing: ${theme.letterSpacings.widest};
       line-height: ${theme.lineHeights.short};
 
@@ -41,7 +41,7 @@ const getGlobalStyle = (theme: Theme) => {
       margin: 30px 0px;
       font-size: ${theme.fontSizes['4xl']};
       font-weight: ${theme.fontWeights.bold};
-      color: ${theme.colors.textColor1};
+      color: ${theme.colors.primaryText};
       letter-spacing: ${theme.letterSpacings.widest};
       line-height: ${theme.lineHeights.short};
 
@@ -55,7 +55,7 @@ const getGlobalStyle = (theme: Theme) => {
       margin: 20px 0px;
       font-size: ${theme.fontSizes['2xl']};
       font-weight: ${theme.fontWeights.semibold};
-      color: ${theme.colors.textColor1};
+      color: ${theme.colors.primaryText};
       letter-spacing: ${theme.letterSpacings.wider};
       line-height: ${theme.lineHeights.short};
 
@@ -67,7 +67,7 @@ const getGlobalStyle = (theme: Theme) => {
     p {
       margin: 25px 0px;
       font-size: ${theme.fontSizes.lg};
-      color: ${theme.colors.textColor1};
+      color: ${theme.colors.primaryText};
       letter-spacing: ${theme.letterSpacings.wider};
       line-height: ${theme.lineHeights.tall};
 
@@ -94,6 +94,7 @@ const getGlobalStyle = (theme: Theme) => {
     ul,
     ol {
       padding-left: 25px;
+      word-break: break-word;
     }
 
     em {
@@ -106,7 +107,7 @@ const getGlobalStyle = (theme: Theme) => {
 
     a {
       display: inline-block;
-      color: ${theme.colors.textColor1};
+      color: ${theme.colors.primaryText};
       text-decoration: none;
       cursor: pointer;
 
@@ -123,7 +124,7 @@ const getGlobalStyle = (theme: Theme) => {
     hr {
       margin: 24px auto;
       border: none;
-      border-top: 1px dashed ${theme.colors.textColor6};
+      border-top: 1px dashed ${theme.colors.divideLine};
       opacity: 0.5;
     }
 
@@ -133,7 +134,7 @@ const getGlobalStyle = (theme: Theme) => {
       font-size: ${theme.fontSizes.lg};
       line-height: ${theme.lineHeights.base};
       border-radius: ${theme.borderRadius.sm};
-      background-color: ${theme.colors.bgColor3} !important;
+      background-color: ${theme.colors.preElementBg} !important;
 
       @media (max-width: ${theme.breakpoints.tabletS}) {
         font-size: ${theme.fontSizes.md};
@@ -142,9 +143,9 @@ const getGlobalStyle = (theme: Theme) => {
 
     p > code,
     li > code {
-      padding: 1px 6px 2px 6px;
-      color: ${theme.colors.textColor1};
-      background-color: ${theme.colors.textBgColor};
+      padding: 0px 6px 1px 6px;
+      color: ${theme.colors.primaryText};
+      background-color: ${theme.colors.codeElementBg};
       letter-spacing: ${theme.letterSpacings.wide};
       border-radius: ${theme.borderRadius.xs};
     }
