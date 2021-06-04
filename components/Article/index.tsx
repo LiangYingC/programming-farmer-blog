@@ -33,7 +33,21 @@ const Article: FC<ArticleProps> = ({ content, pageTitle, pageDesc, pageURL }) =>
   return (
     <Layout pageTitle={pageTitle} pageDesc={pageDesc} pageType="article" pageURL={pageURL}>
       <ArticleWrapper>
-        <ReactMarkdown escapeHtml={false} source={content} renderers={{ code: CodeBlock }} />
+        <ReactMarkdown
+          escapeHtml={false}
+          source={content}
+          renderers={{
+            code: CodeBlock,
+            link: function customAnchorElement({ href, children }) {
+              // ref : https://github.com/remarkjs/react-markdown/issues/12
+              return (
+                <a href={href} target="_blank" rel="noreferrer noopener">
+                  {children}
+                </a>
+              );
+            },
+          }}
+        />
       </ArticleWrapper>
     </Layout>
   );
