@@ -13,6 +13,8 @@ interface LayoutProps {
 }
 
 const Layout: FC<LayoutProps> = ({ children, pageTitle, pageDesc, pageURL, pageType }) => {
+  const isHomePage = pageURL === 'https://www.programfarmer.com';
+
   return (
     <>
       <Head>
@@ -32,6 +34,13 @@ const Layout: FC<LayoutProps> = ({ children, pageTitle, pageDesc, pageURL, pageT
         <meta name="twitter:url" content={pageURL} key="twitterPageUrl" />
         <meta name="twitter:image" content="/assets/icons/icon-384x384.png" key="twitterImage" />
         <meta name="twitter:creator" content="@LiangCh95173853" key="twitterCreator" />
+        {isHomePage && (
+          <meta
+            name="google-site-verification"
+            content="_56OsPYwyzuO5DhzeVWWNACHMlX2yABiQCw7FpDZcqI"
+            key="googleSearchConsole"
+          />
+        )}
       </Head>
       <Header />
       <Content>{children}</Content>
