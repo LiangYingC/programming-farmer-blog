@@ -1,6 +1,6 @@
 ---
 title: JS 中的淺拷貝 (Shadow copy) 與深拷貝 (Deep copy) 原理與實作
-date: 2021-05-31
+date: 2021-06-01
 description: 在 JS 中 Object 資料型別的複製變數時，是複製地址(address)而非原始值(value)，所以操作複製出的新變數時，容易更動到原始變數，反之亦然，因此容易造成非預期的 Bug 發生。為了解決這類問題，就必須了解 Object 資料型別的兩種拷貝方式：淺拷貝(Shadow copy)與深拷貝(Deep copy)。
 category: javaScript
 ---
