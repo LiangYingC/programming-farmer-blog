@@ -153,10 +153,13 @@ const createElement = React.createElement;
 const helloElement = createElement('span', { key: '1', className: 'word' }, 'Hello');
 const worldElement = createElement('span', { key: '2', className: 'word' }, 'World !');
 
-const containerElement = createElement('div', {
-  className: 'container',
-  children: [helloElement, ' ', worldElement],
-});
+const containerElement = createElement(
+  'div',
+  {
+    className: 'container',
+  },
+  [helloElement, ' ', worldElement]
+);
 ```
 
 理解如何用 React Raw API `ceateElement` 創建 element 後，接著進入到 `JSX`。
