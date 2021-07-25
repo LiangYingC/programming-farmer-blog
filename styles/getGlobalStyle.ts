@@ -149,6 +149,18 @@ const getGlobalStyle = (theme: Theme) => {
       letter-spacing: ${theme.letterSpacings.wide};
       border-radius: ${theme.borderRadius.xs};
     }
+
+    blockquote {
+      margin: 0;
+      padding-left: 25px;
+      font-style: italic;
+      border-left: solid ${theme.colors.primaryText} 5px;
+
+      @media (max-width: ${theme.breakpoints.tabletS}) {
+        padding-left: 15px;
+        border-left: solid white 4px;
+      }
+    }
   `;
 
   return globalStyle;
