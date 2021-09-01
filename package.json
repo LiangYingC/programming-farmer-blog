@@ -26,6 +26,7 @@
     "framer-motion": "^3.2.2-rc.1",
     "gray-matter": "^4.0.2",
     "next": "^10.0.6",
+    "next-sitemap": "^1.6.164",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
@@ -46,7 +47,6 @@
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "next-sitemap": "^1.6.164",
     "prettier": "^2.2.1",
     "typescript": "^4.1.3"
   }
