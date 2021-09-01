@@ -9,7 +9,7 @@
     "tsc": "tsc --pretty --noEmit",
     "create-sitemap": "next-sitemap",
     "dev": "export NODE_ENV=development && npm run create-sitemap && next dev -p 3000",
-    "build": "npm run create-sitemap && next build",
+    "build": "next build",
     "start": "next start"
   },
   "keywords": [
