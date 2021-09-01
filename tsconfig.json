@@ -16,7 +16,7 @@
     "moduleResolution": "node", // 決定如何處理 module。不設置的話，找 declaration files 的時候 ts 不會在 node_modules 中找
     "resolveJsonModule": true, // 可以透過 import 導入 .json 文件
     "noEmit": true, // 不生成輸出文件
-    "isolatedModules": true,
+    "isolatedModules": true, // 將每個文件作為單獨的模塊
     "forceConsistentCasingInFileNames": true, // 禁止對同一份文件，使用大小寫不一致的引用
     "allowJs": true,
     "baseUrl": ".",
@@ -32,6 +32,6 @@
       "@hooks/*": ["hooks/*"]
     }
   },
-  "include": ["./**/*.ts", "./**/*.tsx", "next-env.d.ts"],
+  "include": ["./**/*.ts", "./**/*.tsx", "next-env.d.ts", "next-sitemap.js"],
   "exclude": ["node_modules"]
 }
