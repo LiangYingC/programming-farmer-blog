@@ -6,6 +6,7 @@ module.exports = {
   changefreq: 'always',
   priority: 0.7,
   sitemapSize: 5000,
+  sourceDir: '.next',
   generateRobotsTxt: true,
   exclude: ['/server-sitemap.xml'],
   robotsTxtOptions: {
