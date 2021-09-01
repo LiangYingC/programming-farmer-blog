@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url><loc>https://www.programfarmer.com</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.020Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/react</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/javaScript</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/style</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/cryptography</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/react/react-depth-jsx</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/javaScript/javascript-browser-event-loop</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/javaScript/javascript-parseInt-parseFloat-Number</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/javaScript/javascript-shallow-copy-deep-copy</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/javaScript/javascript-var-let-const-for-loop</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/style/css-float-and-flex</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+<url><loc>https://www.programfarmer.com/articles/cryptography/basic-cryptography-encode</loc><changefreq>always</changefreq><priority>0.7</priority><lastmod>2021-09-01T18:16:53.021Z</lastmod></url>
+</urlset>

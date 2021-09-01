@@ -7,8 +7,6 @@ node_modules
 
 # production
 /build
-/public/robots.txt
-/public/sitemap.xml
 
 # environment variables files
 .env.local
