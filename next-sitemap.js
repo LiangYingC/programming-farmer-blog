@@ -3,13 +3,9 @@ const siteURL = process.env.SITE_URL;
 // Document : https://www.npmjs.com/package/next-sitemap
 module.exports = {
   siteUrl: siteURL,
-  changefreq: 'always',
+  changefreq: 'weekly',
   priority: 0.7,
   sitemapSize: 5000,
   sourceDir: '.next',
-  generateRobotsTxt: true,
-  exclude: ['/server-sitemap.xml'],
-  robotsTxtOptions: {
-    additionalSitemaps: [`${siteURL}/server-sitemap.xml`],
-  },
+  generateRobotsTxt: false,
 };
