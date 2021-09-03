@@ -4,6 +4,7 @@ node_modules
 # build output files
 /.next/
 /out/
+/public/sitemap.xml
 
 # production
 /build
