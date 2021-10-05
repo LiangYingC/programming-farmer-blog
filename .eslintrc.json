@@ -39,8 +39,8 @@
   "rules": {
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 0, // Can use JSX without import React
-    "react-hooks/rules-of-hooks": "error", // If break rules-of-hooks, will show error
-    "react-hooks/exhaustive-deps": "warn", // If break exhaustive-deps, will show warn
+    "react-hooks/rules-of-hooks": "error", 
+    "react-hooks/exhaustive-deps": "warn", 
     "jsx-a11y/anchor-is-valid": "off", // Have href attribute is 「 not 」 required on an anchor (<a>), so Link can use (<Link> will generates href attribute).
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
