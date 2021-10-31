@@ -17,7 +17,7 @@ category: javaScript
 4. `Event Loop` 的運作流程？
 5. 如何避免 `Event` 處理成本高時，造成的卡頓問題？
 
-最後一個段落，還會提供幾題混雜 `setTimeout` / `promise` 的範例，來練習測驗是否真正理解程式運作流程哦（也是面試可能遇到的考題ＸＤ）。
+最後一個段落，還會提供幾題混雜 `setTimeout` / `Promise` 的範例，來練習測驗是否真正理解程式運作流程哦（也是面試可能遇到的考題ＸＤ）。
 
 接著就先開始理解第一個觀念： `Call Stack`。
 
@@ -61,7 +61,7 @@ fn3();
 
 _p.s. 事實上 `Call Stack` 第一步該為「**執行全域環境 (Global execution context)**」其後才會開始堆疊每個 `function` 的執行環境。_
 
-利用 loupe 這套工具，就能更加具體、視覺化地理解整個運作流程：
+利用 [loupe](http://latentflip.com/loupe) 這套工具，就能更加具體、視覺化地理解整個運作流程：
 
 ![Call Stack on Loupe](/article/javaScript/javascript-browser-event-loop/01.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3Rpb24gZm4xKCkgewogICAgY29uc29sZS5sb2coJ2ZuMScpOwp9CgpmdW5jdGlvbiBmbjIoKSB7CiAgICBmbjEoKTsKICAgIGNvbnNvbGUubG9nKCdmbjInKTsKfQoKZnVuY3Rpb24gZm4zKCkgewogICAgZm4yKCk7CiAgICBjb25zb2xlLmxvZygnZm4zJyk7Cn0KCmZuMygpOyA%3D!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
