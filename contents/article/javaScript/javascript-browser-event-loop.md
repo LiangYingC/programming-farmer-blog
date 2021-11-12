@@ -17,7 +17,7 @@ category: javaScript
 4. `Event Loop` 的運作流程？
 5. 如何避免 `Event` 處理成本高時，造成的卡頓問題？
 
-最後一個段落，還會提供幾題混雜 `setTimeout` / `promise` 的範例，來練習測驗是否真正理解程式運作流程哦（也是面試可能遇到的考題ＸＤ）。
+最後一個段落，還會提供幾題混雜 `setTimeout` / `Promise` 的範例，來練習測驗是否真正理解程式運作流程哦（也是面試可能遇到的考題ＸＤ）。
 
 接著就先開始理解第一個觀念： `Call Stack`。
 
@@ -27,7 +27,7 @@ category: javaScript
 
 `JavaScript` 是單線程 (Single Thread) 的語言，一次僅能執行一項任務。可以結合 `Call Stack(執行堆疊)` 的運作概念來理解這件事情。
 
-`Call Stack` 或成稱作 `Execution stack`是一個紀錄著目前程式執行狀態的空間。在 `JavaScript`運行時，會將所執行到的任務，先移入到 `Call Stack` 中最上方，待執行完畢後，才會將該項任務移出。
+`Call Stack` 或稱作 `Execution stack`是一個紀錄著目前程式執行狀態的空間。在 `JavaScript` 運行時，會將所執行到的任務，先移入到 `Call Stack` 中最上方，待執行完畢後，才會將該項任務移出。
 
 透過下方這段程式碼的運行，來理解 `Call Stack`：
 
@@ -61,7 +61,7 @@ fn3();
 
 _p.s. 事實上 `Call Stack` 第一步該為「**執行全域環境 (Global execution context)**」其後才會開始堆疊每個 `function` 的執行環境。_
 
-利用 loupe 這套工具，就能更加具體、視覺化地理解整個運作流程：
+利用 [loupe](http://latentflip.com/loupe) 這套工具，就能更加具體、視覺化地理解整個運作流程：
 
 ![Call Stack on Loupe](/article/javaScript/javascript-browser-event-loop/01.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3Rpb24gZm4xKCkgewogICAgY29uc29sZS5sb2coJ2ZuMScpOwp9CgpmdW5jdGlvbiBmbjIoKSB7CiAgICBmbjEoKTsKICAgIGNvbnNvbGUubG9nKCdmbjInKTsKfQoKZnVuY3Rpb24gZm4zKCkgewogICAgZm4yKCk7CiAgICBjb25zb2xlLmxvZygnZm4zJyk7Cn0KCmZuMygpOyA%3D!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
@@ -202,7 +202,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=CmNvbn
 - 發布 Event 事件 => callback event (onClick、onScroll 等等)
 - 獲取網路資源 => callback event (XHR 後的 callback fn)
 
-_p.s. `Task` 其實就是仿間常聽聞的 `Macrotask`，本文從此開始也會用 `Task` 表述大型任務。_
+_p.s. `Task` 其實就是坊間常聽聞的 `Macrotask`，本文從此開始也會用 `Task` 表述大型任務。_
 
 這些 `Task` 被觸發後，會排入特定類別的 `Task Queue` 中，例如：`setTimeout、setInterval` 的 callback 會被排入 `Timer Queue`、`Event 事件`的 callback 會被排入 `DOM Event Queue` 中。
 
@@ -385,7 +385,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=CgokLm
 
 因此運用 `setTimeout` 的非同步概念，是有機會解決(或減緩)第一個問題。
 
-_p.s. 延伸的概念及為 Debounce & Throttle，有興趣可以再 Google。_
+_p.s. 關於這種頻繁觸發的 event，延伸的概念即為 Debounce 和 Throttle，有興趣可以再 Google。_
 
 ### 事件任務處理成本過高
 
