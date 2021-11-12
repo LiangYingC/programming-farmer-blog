@@ -15,12 +15,12 @@
   "plugins": ["@typescript-eslint", "react-hooks", "prettier"],
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
-    "plugin:jsx-a11y/recommended", // Uses the recommended rules from the @eslint-plugin-jsx-a11y
+    "plugin:react/recommended",
+    "plugin:jsx-a11y/recommended", 
     "plugin:import/errors",
     "plugin:import/warnings",
-    "plugin:react-hooks/recommended", // Uses the recommended rules from the @eslint-plugin-react-hooks to make better hooks.
-    "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    "plugin:react-hooks/recommended", 
+    "plugin:@typescript-eslint/recommended", 
     "prettier/@typescript-eslint", // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
     "plugin:prettier/recommended" // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
@@ -51,7 +51,7 @@
     "@typescript-eslint/no-use-before-define": "error",
     "no-console": "off",
     "prettier/prettier": [
-      // Can replace @eslint-plugin-reactp rules. Ref : https://github.com/prettier/eslint-plugin-prettier#options
+      // Can replace @eslint-plugin-react rules. Ref : https://github.com/prettier/eslint-plugin-prettier#options
       "error",
       { "singleQuote": true },
       {
