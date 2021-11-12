@@ -385,7 +385,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=CgokLm
 
 因此運用 `setTimeout` 的非同步概念，是有機會解決(或減緩)第一個問題。
 
-_p.s. 關於這種頻繁觸發的 event，延伸的概念即為 Debounce 和 Throttle，有興趣可以再 Google。_
+_p.s. 關於如何處理這種頻繁觸發的 event，延伸的概念為 Debounce 和 Throttle，有興趣可以再 Google。_
 
 ### 事件任務處理成本過高
 
