@@ -27,7 +27,7 @@ category: javaScript
 
 `JavaScript` 是單線程 (Single Thread) 的語言，一次僅能執行一項任務。可以結合 `Call Stack(執行堆疊)` 的運作概念來理解這件事情。
 
-`Call Stack` 或稱作 `Execution stack`是一個紀錄著目前程式執行狀態的空間。在 `JavaScript` 運行時，會將所執行到的任務，先移入到 `Call Stack` 中最上方，待執行完畢後，才會將該項任務移出。
+`Call Stack` 或稱作 `Execution Stack`是一個紀錄著目前程式執行狀態的空間。在 `JavaScript` 運行時，會將所執行到的任務，先移入到 `Call Stack` 中最上方，待執行完畢後，才會將該項任務移出。
 
 透過下方這段程式碼的運行，來理解 `Call Stack`：
 
