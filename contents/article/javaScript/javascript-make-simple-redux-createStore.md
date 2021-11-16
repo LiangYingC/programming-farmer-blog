@@ -464,8 +464,8 @@ createStore(reducer, preloadedState) {
 
 可以透過創建 `currentListeners` 與 `nextListeners` 達成這個目的：
 
-- currentListeners : 正在被 for 迴圈執行的 listeners
-- nextListeners : 會被 subscribe 及 unsubscribe 改變的 listeners
+- currentListeners : stable, 正在被 for 迴圈執行的 listeners
+- nextListeners : unstable, 會被 subscribe 及 unsubscribe 改變的 listeners
 
 ```javascript
 createStore(reducer, preloadedState) {
