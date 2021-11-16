@@ -35,7 +35,7 @@ category: javaScript
 _p.s 如果想要加上 Middleware 會在 Action 到 Reducer 間處理，此文不會探討_
 
 - Store : Redux 的核心，擁有集中管理資料狀態的 Store State（會是一個 object），以及會接收外部的 Reducer 提供給 dispatch 後使用，最後對外會提供 `getState`、`dispatch`、`subscribe` 等 API 供外部使用。
-- Dispatcher : 會接收 Action，這個 Action 包含著要改變的類型 Action Type 以及要改變的資料 Action Payload。
+- Dispatcher : 會接收 Action，這個 Action 包含著要改變的類型 Action Type 以及要改變的資料 Action Payload。如果 store 中的資料發生了變化，只會有一種可能，就是由 dispatcher 派發 action 來觸發的結果。
 - Reducer : 會接收 Dispatcher 派發的 Action，經由對應的 Action Type 進行資料更新後，會回傳新的 Store State。
 
 將 Redux 概念轉換成實際的程式碼使用，大概念看過即可，不用管細節：
@@ -102,6 +102,8 @@ store.subscribe(() => {
 5. store 提供的 `subscribe` API，能傳入 callback function，在 dispatch 更新 store state 後執行。
 
 接著就開始參考 Redux 原始碼中的 pattern，實作 `createStore`。
+
+_p.s. 特別注意的是使用 redux 是會有成本的，例如：程式碼數量增加、需要額外維護 reducer、需要學習 redux 的運作等，因此通常是資料流複雜度高的專案才會考慮使用。_
 
 <hr>
 
