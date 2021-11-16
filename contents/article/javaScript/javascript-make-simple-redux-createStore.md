@@ -637,7 +637,7 @@ createStore 的核心在於單一控管的 sore state，且提供下列三個 AP
 
 ## 回顧整個 createStore 程式碼
 
-整段程式碼如下，會有註解解釋，如果想要沒有註解的版本，可以直接[到 Github 上觀看](https://github.com/LiangYingC/Implement-Simple-Redux/blob/master/redux.js)，有幫助的話歡迎給星星ＸＤ
+整段程式碼如下，會有註解解釋，如果想要沒有註解的版本，可以直接[到 Github 上觀看](https://github.com/LiangYingC/Implement-Simple-Redux/blob/master/createStore.js)，有幫助的話歡迎給星星ＸＤ
 
 ```javascript
 createStore(reducer, preloadedState) {
