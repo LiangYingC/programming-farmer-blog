@@ -4,6 +4,10 @@ export const articleCategoryPaths = [
     path: '/react',
   },
   {
+    name: 'redux',
+    path: '/redux',
+  },
+  {
     name: 'javaScript',
     path: '/javaScript',
   },
