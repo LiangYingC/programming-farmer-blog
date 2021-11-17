@@ -2,7 +2,7 @@
 title: 理解 Redux 原始碼：來實作 Redux createStore 的 getState、dispatch、subscribe 吧
 date: 2021-11-21
 description: 很好奇 redux 是如何在程式中實踐狀態統一控管以及單向資料流的概念，於是決定閱讀 Redux 的原始碼，並解實作簡單的 createStore function，會聚焦在 getState、dispatch、subscribe API。
-category: javaScript
+category: redux
 ---
 
 ## 前言
@@ -29,11 +29,11 @@ category: javaScript
 
 可以從下面這張圖了解當有 Store 當作集中式資料狀態庫時的好處。
 
-![with and without Redux](/article/javaScript/javascript-make-simple-redux-createStore/01.png)
+![with and without Redux](/article/redux/redux-make-createStore-getState-dispatch-subscribe/01.png)
 
 除了「集中式」之外，Redux 還有一個關鍵是基於 Flux 實踐的「單向資料流」更新資料方式，如此能讓資料的改變更安全、可預期地被控管，概念如下圖：
 
-![redux flow](/article/javaScript/javascript-make-simple-redux-createStore/02.png)
+![redux flow](/article/redux/redux-make-createStore-getState-dispatch-subscribe/02.png)
 _如果想要加上 Middleware 會在 Action 到 Reducer 間處理，此文不會探討_
 
 - Store : Redux 的核心，擁有集中管理資料狀態的 Store State（會是一個 object），以及會接收外部的 Reducer 提供給 dispatch 後使用，最後對外會提供 `getState`、`dispatch`、`subscribe` 等 API 供外部使用。
@@ -643,7 +643,7 @@ createStore 的核心在於單一控管的 sore state，且提供下列三個 AP
 
 ## 回顧整個 createStore 程式碼
 
-整段程式碼如下，會有註解解釋，如果想要沒有註解的版本，可以直接[到 Github 上觀看](https://github.com/LiangYingC/Implement-Simple-Redux/blob/master/createStore.js)，有幫助的話歡迎給星星ＸＤ
+整段程式碼如下，會有註解解釋，如果想要沒有註解的版本，可以直接[點此到 Github 上觀看](https://github.com/LiangYingC/Implement-Simple-Redux/blob/master/createStore.js)，有幫助的話歡迎給星星ＸＤ
 
 ```javascript
 createStore(reducer, preloadedState) {
