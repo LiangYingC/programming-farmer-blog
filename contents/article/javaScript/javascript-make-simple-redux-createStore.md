@@ -19,6 +19,8 @@ category: javaScript
 
 ## Redux 是什麼？
 
+在進入實作 Redux `createStore` 前，先快速複習 Redux 是什麼以及想解決的問題。
+
 **Redux 是一個基於 Flux 流程概念實踐的集中式資料狀態管理的工具**，可以使用在 JavaScript 開發的應用程式中，因此並不限定於 React 或任一框架。
 
 為什麼會需要這個「集中式」的資料狀態管理工具？
@@ -32,11 +34,11 @@ category: javaScript
 除了「集中式」之外，Redux 還有一個關鍵是基於 Flux 實踐的「單向資料流」更新資料方式，如此能讓資料的改變更安全、可預期地被控管，概念如下圖：
 
 ![redux flow](/article/javaScript/javascript-make-simple-redux-createStore/02.png)
-_p.s 如果想要加上 Middleware 會在 Action 到 Reducer 間處理，此文不會探討_
+_如果想要加上 Middleware 會在 Action 到 Reducer 間處理，此文不會探討_
 
 - Store : Redux 的核心，擁有集中管理資料狀態的 Store State（會是一個 object），以及會接收外部的 Reducer 提供給 dispatch 後使用，最後對外會提供 `getState`、`dispatch`、`subscribe` 等 API 供外部使用。
-- Dispatcher : 會接收 Action，這個 Action 包含著要改變的類型 Action Type 以及要改變的資料 Action Payload。如果 store 中的資料發生了變化，只會有一種可能，就是由 dispatcher 派發 action 來觸發的結果。
-- Reducer : 會接收 Dispatcher 派發的 Action，經由對應的 Action Type 進行資料更新後，會回傳新的 Store State。
+- Dispatcher : 會接收 Action，這個 Action 包含著要改變的類型 Action Type 以及要改變的資料 Action Payload。**如果 store 中的資料發生了變化，只會有一種可能，就是由 dispatcher 派發 action 來觸發的結果**。
+- Reducer : 會接收 Dispatcher 派發的 Action，經由對應的 Action Type 進行資料更新後，會回傳新的 Store State。**reducer 是個 pure function**。
 
 將 Redux 概念轉換成實際的程式碼使用，大概念看過即可，不用管細節：
 
@@ -45,13 +47,15 @@ _p.s 如果想要加上 Middleware 會在 Action 到 Reducer 間處理，此文�
 // => 這篇文章就是要來實作的 createStore function
 const { createStore } = Redux;
 
-// 自定義 reducer
+// 自定義的 reducer
 const reducer = (state, action) => {
   switch (action.type) {
+    // 如果接收到 PLUS_POINTS 的 action.type，就增加 points
     case 'PLUS_POINTS':
       return {
         points: state.points + action.payload,
       };
+    // 如果接收到 MINUS_POINTS 的 action.type，就減少 points
     case 'MINUS_POINTS':
       return {
         points: state.points === 0 ? state.points : state.points - action.payload,
@@ -61,7 +65,7 @@ const reducer = (state, action) => {
   }
 };
 
-// 將自定義的 reducer 傳入 createStore 中，創建 store
+// 將自定義的 reducer 傳入 Redux 提供的 createStore 中創建 store
 // store 會提供 getState、dispatch、subscribe API
 const preloadedState = {
   points: 0,
@@ -69,7 +73,7 @@ const preloadedState = {
 const store = createStore(reducer, preloadedState);
 
 // 當 plus 按鈕被點擊時，就 dispatch 一個 action，type 是 'PLUS_POINTS', payload 是 100
-// 這個 action 會被 dispatch 派發到 reducer，進行 points + 100 的操作，返還新的 state
+// 這個 action 會被 dispatch 到 reducer，進行 points + 100 的操作，返還新的 state
 document.getElementById('plus-points-btn').addEventListener('click', () => {
   store.dispatch({
     type: 'PLUS_POINTS',
@@ -78,7 +82,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 });
 
 // 當 minus 按鈕被點擊時，就 dispatch 一個 action，type 是 'MINUS_POINTS', payload 是 100
-// 這個 action 會被 dispatth 派發到 reducer，進行 points - 100 的操作，返還新的 state
+// 這個 action 會被 dispatth 到 reducer，進行 points - 100 的操作，返還新的 state
 document.getElementById('minus-points-btn').addEventListener('click', () => {
   store.dispatch({
     type: 'MINUS_POINTS',
@@ -103,7 +107,9 @@ store.subscribe(() => {
 
 接著就開始參考 Redux 原始碼中的 pattern，實作 `createStore`。
 
-_p.s. 特別注意的是使用 redux 是會有成本的，例如：程式碼數量增加、需要額外維護 reducer、需要學習 redux 的運作等，因此通常是資料流複雜度高的專案才會考慮使用。_
+_註 1：特別注意的是使用 redux 是會有成本的，例如：程式碼數量增加、需要額外維護 reducer、需要學習 redux 的運作等，因此通常是資料流複雜度高的專案才會考慮使用。_
+
+_註 2：如果更嚴謹的定義 Redux，需包含 3 個要件為 Single source of truth​、State is read-only​（only change by dispatching）、Changes are made with pure functions，可參考 [Redux 文件](https://redux.js.org/understanding/thinking-in-redux/three-principles)。_
 
 <hr>
 
