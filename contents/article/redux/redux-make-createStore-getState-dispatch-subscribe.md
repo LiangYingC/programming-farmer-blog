@@ -7,7 +7,7 @@ category: redux
 
 ## 前言
 
-雖然在先前工作中，比較常用到 Context API 以及 useReducer 處理狀態管理，然而依然很好奇 Redux 是如何在程式中實踐狀態統一控管以及單向資料流的概念，加上看過谷哥在 ModernWeb'21 上分享的 [挑戰 40 分鐘實作簡易版 Redux 佐設計模式](https://modernweb.ithome.com.tw/session-inner#448) 於是就決定來閱讀 Redux Source Code，並參考谷哥的做法，實作簡易的 createStore function，主要會先聚焦在其中的 `getState`、`dispatch` 以及 `subscribe` API。
+雖然在先前工作中，比較常用到 Context API 以及 useReducer 處理狀態管理，然而依然很好奇 Redux 是如何在程式中實踐「狀態統一控管」以及「單向資料流」的概念，加上看過谷哥在 ModernWeb'21 上分享的 [挑戰 40 分鐘實作簡易版 Redux 佐設計模式](https://modernweb.ithome.com.tw/session-inner#448) 於是決定來閱讀 Redux Source Code，並參考谷哥的做法，實作簡易的 createStore function，主要會先聚焦在其中的 `getState`、`dispatch` 以及 `subscribe` API。
 
 期許閱讀完這篇後，能理解：
 
@@ -25,25 +25,33 @@ category: redux
 
 為什麼會需要這個「集中式」的資料狀態管理工具？
 
-主要是因為在前端的複雜性越來越高，且時常同一類型的資料可能散落在不同的區塊元件中，**如果分開管理資料可能會造成資料狀態不一致的狀況**，例如：通常在應用程式中，使用者的資料，如姓名、大頭照、信箱等，會用在不同的區塊元件中，如果沒有集中式統一管理資料，就可能會造成 A 區塊元件中的信箱資料被更新，但 B 區塊元件中信箱資料卻還是過去的狀態（甚至重新整理頁面依然如此）。
+主要是因為在前端的複雜性越來越高，且時常同一類型的資料可能散落在不同的區塊元件中，**如果分開管理資料可能會造成資料狀態不一致的狀況，於是透過集中管理資料的方式來解決這個問題**。
 
-可以從下面這張圖了解當有 Store 當作集中式資料狀態庫時的好處。
+例如：通常在應用程式中，使用者的資料，如姓名、大頭照、信箱等，會用在不同的區塊元件中，如果沒有集中統一管理資料，就可能會造成 A 區塊元件中的信箱資料被更新，但 B 區塊元件中信箱資料卻還是過去的狀態（甚至重新整理頁面依然如此）。如果集中管理統一管理資料，亦即使用者的資料來源只有一處，就能解決這個問題。
+
+可以從下圖直觀地了解有 Store State 當作集中式資料狀態庫時的好處。
 
 ![with and without Redux](/article/redux/redux-make-createStore-getState-dispatch-subscribe/01.png)
 
-除了「集中式」之外，Redux 還有一個關鍵是基於 Flux 實踐的「單向資料流」更新資料方式，如此能讓資料的改變更安全、可預期地被控管，概念如下圖：
+除了「集中式」之外，Redux 還有一個關鍵是基於 Flux 實踐的「單向資料流」更新資料方式，簡言之就是**限制更新 Store State 的方式，只能透過下圖單向的流程來執行，藉此讓資料的改變更安全、可預期地被控管**，概念如下圖：
 
 ![redux flow](/article/redux/redux-make-createStore-getState-dispatch-subscribe/02.png)
-_如果想要加上 Middleware 會在 Action 到 Reducer 間處理，此文不會探討_
+_p.s.如果想要加上 Middleware 會在 Action 到 Reducer 間處理，此文不會探討_
 
-- Store : Redux 的核心，擁有集中管理資料狀態的 Store State（會是一個 object），以及會接收外部的 Reducer 提供給 dispatch 後使用，最後對外會提供 `getState`、`dispatch`、`subscribe` 等 API 供外部使用。
-- Dispatcher : 會接收 Action，這個 Action 包含著要改變的類型 Action Type 以及要改變的資料 Action Payload。**如果 store 中的資料發生了變化，只會有一種可能，就是由 dispatcher 派發 action 來觸發的結果**。
-- Reducer : 會接收 Dispatcher 派發的 Action，經由對應的 Action Type 進行資料更新後，會回傳新的 Store State。**reducer 是個 pure function**。
+- Store :
+  - Redux 的核心，可以比喻為一個容器，擁有唯一的資料中心 Store State（是個 object）以及提供 `getState`、`dispatch`、`subscribe` 等 API 供外部使用。
+  - 在創建 Store 時，會接收外部定義的 Reducer 提供給更新資料時使用。
+- Dispatcher :
+  - 會接收 Action，這個 Action 包含著更新資料的方式 Action Type 以及更新資料時所用的值 Action Payload。
+  - 如果 Store 中的資料發生了變化，只會有一種可能，就是由 Dispatcher 派發 Action 所觸發的結果。
+- Reducer :
+  - 會接收 Dispatcher 派發的 Action，經由對應的 Action Type 進行資料更新後，會回傳新的 Store State。
+  - Reducer 是個 pure function，由外部定義，會在創建 Store 時傳入。
 
-將 Redux 概念轉換成實際的程式碼使用，大概念看過即可，不用管細節：
+將 Redux 概念轉成實際的程式碼如下，大概念看過即可，不用在意細節：
 
 ```javascript
-// 從 Redux 套件中取出創建 store 的 createStore function
+// 從 redux 套件中取出用來創建 store 的 createStore function
 // => 本文就是要實作這個 createStore function
 import { createStore } from 'redux';
 
@@ -65,34 +73,36 @@ const reducer = (state, action) => {
   }
 };
 
-// 將自定義的 reducer 傳入 Redux 提供的 createStore 中創建 store
+// 將自定義的 reducer 傳入 createStore 中，藉此創建 store
 // store 會提供 getState、dispatch、subscribe API
 const preloadedState = {
   points: 0,
 };
 const store = createStore(reducer, preloadedState);
 
-// 當 plus 按鈕被點擊時，就 dispatch 一個 action，type 是 'PLUS_POINTS', payload 是 100
-// 這個 action 會被 dispatch 到 reducer，進行 points + 100 的操作，返還新的 state
+// 當 plus 按鈕被點擊時，就觸發 callback，目標是增加 100 points
 document.getElementById('plus-points-btn').addEventListener('click', () => {
+  // 透過 dispatch { type: 'PLUS_POINTS', payload: 100 } 的 action
+  // 將 store state 中的 points 增加 100
   store.dispatch({
     type: 'PLUS_POINTS',
     payload: 100,
   });
 });
 
-// 當 minus 按鈕被點擊時，就 dispatch 一個 action，type 是 'MINUS_POINTS', payload 是 100
-// 這個 action 會被 dispatth 到 reducer，進行 points - 100 的操作，返還新的 state
+// 當 minus 按鈕被點擊時，就觸發 callback，目標是減少 100 points
 document.getElementById('minus-points-btn').addEventListener('click', () => {
+  // 透過 dispatch { type: 'MINUS_POINTS', payload: 100 } 的 action
+  // 將 store state 中的 points 減少 100
   store.dispatch({
     type: 'MINUS_POINTS',
     payload: 100,
   });
 });
 
-// 當 state 資料有被更新時，就要將 UI 畫面更新
-// subscribe 可以傳入一個 callback function，會自動在資料改變後執行
+// 透過 subscribe 訂閱，當資料有被更新時，就會觸發傳入的 callback
 store.subscribe(() => {
+  // 透過 getState 取出最新的 points 並 render 到畫面上
   document.getElementById('display-points-automatically').textContent = store.getState().points;
 });
 ```
@@ -100,7 +110,7 @@ store.subscribe(() => {
 從上述 Redux 快速的導覽中，可以歸納本文要實作 createStore 需注意的幾個重點：
 
 1. store 是資料狀態管理中心，透過呼叫 `createStore(reducer, preloadedState)` 創建。
-2. reducer 是外部定義好，接著傳入給 store 使用的，並不需要在 createStore 中實作。
+2. reducer 是外部定義好，接著傳入給 store 使用的，不需要在 createStore 中實作。
 3. store 提供 `getState` API，能提取目前的 store state。
 4. store 提供 `dispatch` API，能傳入 action 並且送到 reducer 內更新 store state。
 5. store 提供 `subscribe` API，能傳入 callback function，在 dispatch 更新 store state 後執行。
@@ -109,7 +119,7 @@ store.subscribe(() => {
 
 _註 1：特別注意的是使用 redux 是會有成本的，例如：程式碼數量增加、需要額外維護 reducer、需要學習 redux 的運作等，因此通常是資料流複雜度高的專案才會考慮使用。_
 
-_註 2：如果更嚴謹的定義 Redux，需包含 3 個要件為 **Single source of truth​、State is read-only​（only change by dispatching）、Changes are made with pure functions**，可參考 [Redux 文件](https://redux.js.org/understanding/thinking-in-redux/three-principles)。_
+_註 2：更嚴謹的定義 Redux，需包含 3 個要件為 **Single source of truth​、State is read-only​（only change by dispatching）、Changes are made with pure functions**，可參考 [Redux 文件](https://redux.js.org/understanding/thinking-in-redux/three-principles)。_
 
 <hr>
 
