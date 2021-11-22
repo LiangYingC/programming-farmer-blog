@@ -1,6 +1,8 @@
 # Programming-Farmer-Blog
 
-[Programming-Farmer-Blog](https://www.programfarmer.com/) is my personal technical blog built with Next.js.
+[Programming-Farmer-Blog](https://www.programfarmer.com/) 是我的技術部落格，歡迎閱讀。
+
+如果發現部落格文章內容有誤，或有任何想進一步討論的內容，都非常歡迎[開 Issue 討論](https://github.com/LiangYingC/Programming-Farmer-Blog/issues)，感謝！
 
 ## Articles
 
@@ -11,6 +13,10 @@
 - [JS 變數傳遞探討：pass by value 、 pass by reference 還是 pass by sharing？](https://www.programfarmer.com/articles/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing)
 - [parseInt / parseFloat / Number，將字串轉型為數字的方法比較](https://www.programfarmer.com/articles/javaScript/javascript-parseInt-parseFloat-Number)
 - [JS 宣告變數， var 與 let / const 差異](https://www.programfarmer.com/articles/javaScript/javascript-var-let-const-for-loop)
+
+### Redux
+
+- [理解 Redux 原始碼：來實作 Redux createStore 的 getState、dispatch、subscribe 吧](https://www.programfarmer.com/articles/redux/redux-make-createStore-getState-dispatch-subscribe)
 
 ### React
 
