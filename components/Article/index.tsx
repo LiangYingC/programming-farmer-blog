@@ -44,6 +44,17 @@ const Article: FC<ArticleProps> = ({ content, pageTitle, pageDesc, pageURL }) =>
             },
           }}
         />
+        <p>
+          如果發現部落格文章內容有誤，或有任何想進一步討論的內容，都非常歡迎
+          <a
+            href="https://github.com/LiangYingC/Programming-Farmer-Blog/issues"
+            target="_blank"
+            rel="noreferrer"
+          >
+            點此前往開 Issues 討論
+          </a>
+          ，感謝！
+        </p>
       </ArticleWrapper>
     </Layout>
   );
