@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { debounce } from '@lib/debounce';
+import throttle from '@lib/throttle';
 
 const initScrollState = {
   lastPositionY: 0,
@@ -80,11 +80,11 @@ const useNavScrollHandler = () => {
       };
     });
 
-    const handleScrollWithDebouce = debounce(handleScroll, 10);
-    window.addEventListener('scroll', handleScrollWithDebouce.on);
+    const handleScrollWithThrottle = throttle(handleScroll, 10);
+    window.addEventListener('scroll', handleScrollWithThrottle.on);
 
     return () => {
-      window.removeEventListener('scroll', handleScrollWithDebouce.on);
+      window.removeEventListener('scroll', handleScrollWithThrottle.on);
     };
   }, []);
 

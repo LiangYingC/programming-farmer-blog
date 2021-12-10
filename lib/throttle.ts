@@ -1,14 +1,16 @@
-export const debounce = (func: () => void, debounceTime: number) => {
+const throttle = (func: () => void, delayTime: number) => {
   let timer: ReturnType<typeof setTimeout>;
   return {
     on: () => {
       clearTimeout(timer);
       timer = setTimeout(() => {
         func();
-      }, debounceTime);
+      }, delayTime);
     },
     off: () => {
       clearTimeout(timer);
     },
   };
 };
+
+export default throttle;
