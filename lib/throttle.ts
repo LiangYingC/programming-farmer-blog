@@ -1,16 +1,21 @@
-const throttle = (func: () => void, delayTime: number) => {
+function throttle(func: () => void, delayTime: number) {
   let timer: ReturnType<typeof setTimeout>;
-  return {
-    on: () => {
+  let last: number | null = null;
+
+  return function () {
+    const now = +new Date();
+
+    if (last && now < last + delayTime) {
       clearTimeout(timer);
-      timer = setTimeout(() => {
+      timer = setTimeout(function () {
         func();
+        last = now;
       }, delayTime);
-    },
-    off: () => {
-      clearTimeout(timer);
-    },
+    } else {
+      last = now;
+      func();
+    }
   };
-};
+}
 
 export default throttle;

@@ -80,11 +80,11 @@ const useNavScrollHandler = () => {
       };
     });
 
-    const handleScrollWithThrottle = throttle(handleScroll, 10);
-    window.addEventListener('scroll', handleScrollWithThrottle.on);
+    const handleScrollWithThrottle = throttle(handleScroll, 15);
+    window.addEventListener('scroll', handleScrollWithThrottle);
 
     return () => {
-      window.removeEventListener('scroll', handleScrollWithThrottle.on);
+      window.removeEventListener('scroll', handleScrollWithThrottle);
     };
   }, []);
 
