@@ -3,7 +3,7 @@ import ReactMarkdown from 'react-markdown/with-html';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import Layout from '@components/Layout';
-import { ArticleWrapper } from '@components/Article/indexStyle';
+import { ArticleWrapper, GoIssueWrapper } from '@components/Article/indexStyle';
 
 interface CodeBlockProps {
   language: string;
@@ -44,7 +44,7 @@ const Article: FC<ArticleProps> = ({ content, pageTitle, pageDesc, pageURL }) =>
             },
           }}
         />
-        <p>
+        <GoIssueWrapper>
           如果發現部落格文章內容有誤，或有任何想進一步討論的內容，都非常歡迎
           <a
             href="https://github.com/LiangYingC/Programming-Farmer-Blog/issues"
@@ -54,7 +54,7 @@ const Article: FC<ArticleProps> = ({ content, pageTitle, pageDesc, pageURL }) =>
             點此前往開 Issues 討論
           </a>
           ，感謝！
-        </p>
+        </GoIssueWrapper>
       </ArticleWrapper>
     </Layout>
   );
