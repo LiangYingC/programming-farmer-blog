@@ -9,11 +9,12 @@ category: sourceCode
 
 雖然在先前工作中，比較常用到 Context API 以及 useReducer 處理狀態管理，然而依然很好奇 Redux 是如何在程式中實踐「狀態統一控管」以及「單向資料流」的概念，加上看過谷哥在 ModernWeb'21 上分享的 [挑戰 40 分鐘實作簡易版 Redux 佐設計模式](https://modernweb.ithome.com.tw/session-inner#448) 於是決定來閱讀 Redux Source Code，並參考谷哥的做法，實作簡易的 createStore function，主要會先聚焦在其中的 `getState`、`dispatch` 以及 `subscribe` API。
 
-期許閱讀完這篇後，能理解：
+期許閱讀完這篇後，能達成：
 
-- Redux 是什麼？主要解決什麼問題？
+- 理解 Redux 是什麼，以及主要想解決的問題
 - 理解並實作 createStore 中的 getState、dispatch、subscribe
 - 理解 subscribe 會遇到什麼 bugs，如何藉由 currentListners、nextListners、ensureCanMutateNextListeners 解決
+- 能動手實作 basic createStore function
 
 <hr>
 
@@ -52,7 +53,7 @@ _p.s.如果想要加上 Middleware 會在 Action 到 Reducer 間處理，此文�
 
 ```javascript
 // 從 redux 套件中取出用來創建 store 的 createStore function
-// => 本文就是要實作這個 createStore function
+// => 本文就是要實作這個 createStore function ！
 import { createStore } from 'redux';
 
 // 自定義的 reducer
@@ -66,7 +67,7 @@ const reducer = (state, action) => {
     // 如果接收到 MINUS_POINTS 的 action.type，就減少 points
     case 'MINUS_POINTS':
       return {
-        points: state.points === 0 ? state.points : state.points - action.payload,
+        points: state.points - action.payload,
       };
     default:
       return state;
@@ -118,7 +119,7 @@ store.subscribe(() => {
 
 接著就開始參考 Redux Source Code 中的 pattern，實作 `createStore`。
 
-_註 1：特別注意的是使用 redux 是會有成本的，例如：程式碼數量增加、需要額外維護 reducer、需要學習 redux 的運作等，因此通常是資料流複雜度高的專案才會考慮使用。_
+_註 1：使用 redux 是會有成本的，例如：程式碼數量增加、需要額外維護 reducer、需要學習 redux 的運作等，因此通常是資料流複雜度高的專案才會考慮使用。_
 
 _註 2：更嚴謹的定義 Redux，需包含 3 個要件為 **Single source of truth​、State is read-only​（only change by dispatching）、Changes are made with pure functions**，可參考 [Redux 文件](https://redux.js.org/understanding/thinking-in-redux/three-principles)。_
 
@@ -624,13 +625,13 @@ createStore(reducer, preloadedState) {
 
 ## 回顧最初的幾個閱讀文章目標
 
-來回答文章最初的幾個問題：
+來回文章最初幾個希望閱讀後，能理解的項目：
 
-### 【Redux 是什麼？主要解決什麼問題？】
+### 1. 理解 Redux 是什麼，以及主要想解決的問題
 
 Redux 是一個基於 Flux 流程概念實踐的集中式資料狀態管理的工具，最主要的目的是統一管理資料，避免資料狀態不一致的問題，且也利用單向資料流的方式控管資料狀態，讓資料變動更可預期與維護。
 
-### 【理解並實作 createStore 中的 getState、dispatch、subscribe】
+### 2. 理解並實作 createStore 中的 getState、dispatch、subscribe】
 
 createStore 的核心在於單一控管的 sore state，且提供下列三個 API :
 
@@ -640,7 +641,7 @@ createStore 的核心在於單一控管的 sore state，且提供下列三個 AP
 
 實作程式碼的統整會放在下方「recap 整個 createSote 程式碼」段落。
 
-### 【理解 subscribe 會遇到什麼 bugs，如何藉由 currentListners、nextListners、ensureCanMutateNextListeners 解決】
+### 3. 理解 subscribe 會遇到什麼 bugs，如何藉由 currentListners、nextListners、ensureCanMutateNextListeners 解決
 
 如果不特別處理，在 subscribe 傳入的 listner callback 中執行另一個 subscribe 或 unsubscribe 可能遇到非預期 bugs。
 
@@ -650,13 +651,17 @@ createStore 的核心在於單一控管的 sore state，且提供下列三個 AP
 - nextListners : 創建 nextListners，當 subscribe / unsubscribe 時，會針對 nextListners 新增或移除 listner。
 - ensureCanMutateNextListeners : 因為 listners 是 array，為了確保 currentListners 與 nextListners 不同，因此在 nextListners 操作前，會先執行 ensureCanMutateNextListeners function。
 
-實作程式碼的統整會放在下方「recap 整個 createSote 程式碼」段落。
+### 4. 能動手實作 basic createStore function
+
+可以試著自己實作，印象會更深刻！如果卡住，再來回顧本文或者 Redux Source Code。
+
+實作的完整程式碼，會放在下方「recap 整個 createSote 程式碼」段落。
 
 <hr>
 
 ## 回顧整個 createStore 程式碼
 
-整段程式碼如下，會有註解解釋，如果想要沒有註解的版本，可以直接[點此到 Github 上觀看](https://github.com/LiangYingC/Implement-Simple-Redux/blob/master/createStore.js)，有幫助的話歡迎給星星ＸＤ
+整段程式碼如下，會有註解解釋，如果想要沒有註解的版本，可以直接[點此到 Github 上觀看](https://github.com/LiangYingC/Implement-Simple-Redux/blob/master/createStore.js)。
 
 ```javascript
 createStore(reducer, preloadedState) {
@@ -768,7 +773,7 @@ createStore(reducer, preloadedState) {
 }
 ```
 
-雖然並沒有做出最完整的 `createStore`，像是沒實作 enhancer、replaceReducer、observable 等等，但透過實作 getState、dispatch、subscribe，已經能理解核心的 Redux 運作，也知道它是如何透過 closure、listeners 等模式，去封裝並實踐集中式管理資料以及監聽資料變化等概念，整體而言很有趣呀。
+雖然並沒有做出最完整的 `createStore`，像是沒實作 enhancer 相關功能，但透過實作 getState、dispatch、subscribe，已經能理解核心的 Redux 運作，也知道它是如何透過 closure、listeners 等模式，去封裝並實踐集中式管理資料以及監聽資料變化等概念，整體而言很有趣呀。
 
 <hr>
 
