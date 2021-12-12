@@ -1,4 +1,4 @@
-import { FC, createContext, useState, useEffect, useMemo, useCallback, useContext } from 'react';
+import { FC, createContext, useState, useEffect, useCallback, useContext } from 'react';
 import {
   checkIsUserPreferLightModeOnOS,
   setItemToLocalStorage,
@@ -70,13 +70,10 @@ export const ColorModeProvider: FC = ({ children }) => {
     });
   }, []);
 
-  const context = useMemo(
-    () => ({
-      isDarkMode,
-      toggleColorMode,
-    }),
-    [isDarkMode, toggleColorMode]
-  );
+  const context = {
+    isDarkMode,
+    toggleColorMode,
+  };
 
   return <ColorModeContext.Provider value={context}>{children}</ColorModeContext.Provider>;
 };
