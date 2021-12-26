@@ -1,6 +1,6 @@
 ---
 title: 理解 Redux 原始碼：來實作 Redux createStore 的 getState、dispatch、subscribe 吧
-date: 2021-11-30
+date: 2021-12-01
 description: 很好奇 redux 是如何在程式中實踐狀態統一控管以及單向資料流的概念，於是決定閱讀 Redux 的原始碼，並解實作簡單的 createStore function，會聚焦在 getState、dispatch、subscribe API。
 category: sourceCode
 ---
@@ -94,12 +94,12 @@ export default createStore;
 
 ```javascript
 /*** createStore.js file ***/
-createStore(reducer, preloadedState) {
+function createStore(reducer, preloadedState) {
   let currentState = preloadedState;
 
   function getState() {
     return currentState;
-  };
+  }
 
   // 將內部的 getState function 提供給外部使用
   const store = {
@@ -107,7 +107,7 @@ createStore(reducer, preloadedState) {
   };
 
   return store;
-};
+}
 
 export default createStore;
 ```
@@ -124,7 +124,7 @@ export default createStore;
 
 ```javascript
 /*** createStore.js file ***/
-createStore(preloadedState) {
+function createStore(preloadedState) {
   let currentState = preloadedState;
 
   function getState() {...};
@@ -233,7 +233,7 @@ store.dispatch({
 /*** createStore.js file ***/
 
 // 新增 reducer 參數，由外部定義後傳入
-createStore(reducer, preloadedState) {
+function createStore(reducer, preloadedState) {
   let currentState = preloadedState;
   let currentReducer = reducer;
 
@@ -286,7 +286,7 @@ export default createStore;
 ```javascript
 /*** createStore.js file ***/
 
-createStore(reducer, preloadedState) {
+function createStore(reducer, preloadedState) {
   let currentState = preloadedState;
   let currentReducer = reducer;
   // 新增 isDispatching flag 去判斷是否正在執行 reducer
@@ -297,34 +297,32 @@ createStore(reducer, preloadedState) {
     // 在 reducer 內不能使用 store.getState()
     // => isDispatching = true 要噴錯誤訊息
     if (isDispatching) {
-        throw new Error(
-          "You may not call store.getState() while the reducer is executing. " +
-            "The reducer has already received the state as an argument. " +
-            "Get the state from the top reducer instead of reading it from the store."
-        );
-      }
+      throw new Error(
+        'You may not call store.getState() while the reducer is executing. ' +
+          'The reducer has already received the state as an argument. ' +
+          'Get the state from the top reducer instead of reading it from the store.'
+      );
+    }
 
-      return currentState;
-  };
+    return currentState;
+  }
 
   function dispatch(action) {
     // 在 reducer 內不能使用 store.dispatch()
     // => isDispatching = true 要噴錯誤訊息
     if (isDispatching) {
-        throw new Error(
-          "Reducers may not dispatch actions when isDispatching."
-        );
+      throw new Error('Reducers may not dispatch actions when isDispatching.');
     }
 
     try {
-        // 將 isDispatching 轉為 true 並執行 reducer
-        isDispatching = true;
-        currentState = currentReducer(currentState, action);
+      // 將 isDispatching 轉為 true 並執行 reducer
+      isDispatching = true;
+      currentState = currentReducer(currentState, action);
     } finally {
-        // reducer 執行結束時，將 isDispatching 轉為 false
-        isDispatching = false;
+      // reducer 執行結束時，將 isDispatching 轉為 false
+      isDispatching = false;
     }
-  };
+  }
 
   const store = {
     getState,
@@ -332,7 +330,7 @@ createStore(reducer, preloadedState) {
   };
 
   return store;
-};
+}
 
 export default createStore;
 ```
@@ -368,7 +366,7 @@ store.subscribe(() => {
 
 ```javascript
 /*** createStore.js file ***/
-createStore(reducer, preloadedState) {
+function createStore(reducer, preloadedState) {
   let currentState = preloadedState;
   let currentReducer = reducer;
   let isDispatching = false;
@@ -421,7 +419,7 @@ export default createStore;
 
 ```javascript
 /*** createStore.js file ***/
-createStore(reducer, preloadedState) {
+function createStore(reducer, preloadedState) {
   ...
 
   function subscribe(listenerCb) {
@@ -466,7 +464,7 @@ export default createStore;
 
 ```javascript
 /*** createStore.js file ***/
-createStore(reducer, preloadedState) {
+function createStore(reducer, preloadedState) {
   ...
   // 將 listener 改為 listeners = []
   let listeners = [];
@@ -533,7 +531,7 @@ const unsubscribe2 = store.subscribe(() => {
 
 ```javascript
 /*** createStore.js file ***/
-createStore(reducer, preloadedState) {
+function createStore(reducer, preloadedState) {
   ...
   function dispatch(action) {
     ...
@@ -559,7 +557,7 @@ export default createStore;
 
 ```javascript
 /*** createStore.js file ***/
-createStore(reducer, preloadedState) {
+function createStore(reducer, preloadedState) {
   ...
   // 將 listeners 改為 currentListeners 及 nextListeners
   let currentListeners = [];
@@ -608,7 +606,7 @@ export default createStore;
 
 ```javascript
 /*** createStore.js file ***/
-createStore(reducer, preloadedState) {
+function createStore(reducer, preloadedState) {
   ...
   let currentListeners = [];
   let nextListeners = currentListeners;
@@ -673,7 +671,7 @@ export default createStore;
 
 ```javascript
 /*** createStore.js file ***/
-createStore(reducer, preloadedState) {
+function createStore(reducer, preloadedState) {
   ...
   // 給予一串隨機的字串
   const randomString = () =>
@@ -744,7 +742,7 @@ createStore 的核心在於單一控管的 sore state，且提供下列三個 AP
 
 ```javascript
 /*** createStore.js file ***/
-createStore(reducer, preloadedState) {
+function createStore(reducer, preloadedState) {
   // currentState 就是核心的 store state，初始的 preloadedState 由外部傳入
   let currentState = preloadedState;
   // currentReducer 就是更新 state 會使用的 reducer，由外部傳入
@@ -766,9 +764,9 @@ createStore(reducer, preloadedState) {
   function getState() {
     if (isDispatching) {
       throw new Error(
-        "You may not call store.getState() while the reducer is executing. " +
-          "The reducer has already received the state as an argument. " +
-          "Get the state from the top reducer instead of reading it from the store."
+        'You may not call store.getState() while the reducer is executing. ' +
+          'The reducer has already received the state as an argument. ' +
+          'Get the state from the top reducer instead of reading it from the store.'
       );
     }
 
@@ -778,9 +776,7 @@ createStore(reducer, preloadedState) {
   // 外部透過 store.dispatch(action) 改變 store state
   function dispatch(action) {
     if (isDispatching) {
-      throw new Error(
-        "Reducers may not dispatch actions when isDispatching."
-      );
+      throw new Error('Reducers may not dispatch actions when isDispatching.');
     }
 
     try {
@@ -803,9 +799,9 @@ createStore(reducer, preloadedState) {
   function subscribe(listener) {
     if (isDispatching) {
       throw new Error(
-        "You may not call store.subscribe() while the reducer is executing. " +
-          "If you would like to be notified after the store has been updated, " +
-          "subscribe from a component and invoke store.getState() in the callback to access the latest state."
+        'You may not call store.subscribe() while the reducer is executing. ' +
+          'If you would like to be notified after the store has been updated, ' +
+          'subscribe from a component and invoke store.getState() in the callback to access the latest state.'
       );
     }
 
@@ -822,7 +818,7 @@ createStore(reducer, preloadedState) {
 
       if (isDispatching) {
         throw new Error(
-          "You may not unsubscribe from a store listener while the reducer is executing. "
+          'You may not unsubscribe from a store listener while the reducer is executing. '
         );
       }
 
@@ -835,8 +831,7 @@ createStore(reducer, preloadedState) {
     };
   }
 
-  const randomString = () =>
-    Math.random().toString(36).substring(7).split("").join(".");
+  const randomString = () => Math.random().toString(36).substring(7).split('').join('.');
 
   // initialize，透過 randomString() 避免與外部使用者定義的 INIT action type 撞名
   dispatch({
@@ -850,7 +845,7 @@ createStore(reducer, preloadedState) {
   };
 
   return store;
-};
+}
 
 export default createStore;
 ```
