@@ -150,11 +150,11 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 其實前面所述之內容，已經包含 `Event Loop` 的概念。
 
-概觀來說，「 所謂的 `Event Loop`，就是事件任務在 `Call Stack` 與 `Callback Queue` 間，非同步執行的循環機制。」這邊提及概觀，意思是還有細節的 `Task(Macrotask)`、`Microtask` 尚未說明，會在之後詳細介紹。
+概觀來說，「 所謂的 `Event Loop`，就是事件任務在 `Call Stack` 與 `Callback Queue` 間，非同步執行的循環機制。」這邊僅提及概觀，意思是還有細節的 `Task(Macrotask)`、`Microtask` 尚未說明，會在之後詳細介紹。
 
 ![Call Stack + Web APIs + Callback Queue + Event Loop](/article/javaScript/javascript-browser-event-loop/04.png)
 
-需要強調一點，就是 `JavaScript` 語言本身沒有 `Event Loop`，而是要搭配「執行環境」後，才會有 `Event Loop` 機制。像是 `Browser` 或 `Node` 的執行環境下，就會有各自的 `Event Loop` 機制。
+需要強調一點，就是 `JavaScript` 語言本身沒有 `Event Loop`，而是要搭配「執行環境」後，才會有 `Event Loop` 機制。像是 `Browser` 或 `Node.js` 的執行環境下，就會有各自的 `Event Loop` 機制。
 
 到此稍微整理重點：
 
@@ -179,7 +179,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 ![Browser Event Loop Example with onClick](/article/javaScript/javascript-browser-event-loop/06.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=CmNvbnNvbGUubG9nKCd0b3AnKTsKCiQub24oJ2J1dHRvbicsICdjbGljaycsIGZ1bmN0aW9uIG9uQ2xpY2soKXsKICAgICAgICBjb25zb2xlLmxvZygnQ2xpY2snKTsKfSk7CiAKIGNvbnNvbGUubG9nKCdib3R0b20nKTsKIAoKIAoKCgoKCg%3D%3D!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
 
-可已看到每次點擊 Click 按鈕後，事件會先交由 `Web API` ，接著再進入到 `Callback Queue` 與 `Call Stack` 中，運行 `Event Loop` 機制。
+可以看到每次點擊 Click 按鈕後，事件會先交由 `Web API` ，接著再進入到 `Callback Queue` 與 `Call Stack` 中，運行 `Event Loop` 機制。
 
 <hr>
 
@@ -198,15 +198,15 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=CmNvbn
 - 解析 HTML
 - 執行 JavaScript 主線程式 (mainline)、script
 - 更換 URL
-- setTimeout、setInterval => callback event（傳入的第一個 callback fn）
+- setTimeout、setInterval => callback event（傳入的第一個 cb fn 參數）
 - 發布 Event 事件 => callback event (onClick、onScroll 等等)
 - 獲取網路資源 => callback event (XHR 後的 callback fn)
 
 _p.s. `Task` 其實就是坊間常聽聞的 `Macrotask`，本文從此開始也會用 `Task` 表述大型任務。_
 
-這些 `Task` 被觸發後，會排入特定類別的 `Task Queue` 中，例如：`setTimeout、setInterval` 的 callback 會被排入 `Timer Queue`、`Event 事件`的 callback 會被排入 `DOM Event Queue` 中。
+這些 `Task` 被觸發後，會排入特定類別的 `Task Queue` 中，例如：`setTimeout`、`setInterval` 的 callback 會被排入 `Timer Queue`、Event 事件的 callback 會被排入 `DOM Event Queue` 中。
 
-這種不同類型的 `Queue`，可以讓事件迴圈能根據不同任務的類型，調整執行的優先權。例如：對於處理使用者輸入，這類強調立即反應的任務，可能就會給予較高的優先權。不過不同瀏覽器實作出來的結果都會不同，因此可以說是由瀏覽器決定何種類型會最先被執行。
+這種不同類型的 `Queue`，可以讓事件迴圈根據不同任務的類型，調整執行的優先權。例如：對於處理使用者輸入，這類強調立即反應的任務，可能就會給予較高的優先權。不過不同瀏覽器實作出來的結果都會不同，因此可以說是由瀏覽器決定何種類型會最先被執行。
 
 意思是，**不同類型的大型任務，其處理優先順序，並沒有保證誰先觸發誰就先執行，這都還是要看瀏覽器如何實作**。
 
@@ -223,11 +223,11 @@ _p.s. `Task` 其實就是坊間常聽聞的 `Macrotask`，本文從此開始也�
 - Promise then callback ([executor 是同步的](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Promise))
 - MutationObserver callback
 
-在此將先關注於實作上最常用到的 `Promise`。
+在此先關注實作上最常用到的 `Promise`。
 
-`Microtask` 通常不會有 `Task` 那麼耗損效能，通常也都會盡量儘早執行，執行的時機，會在一個 `Task` 之後 `Call Stack` 為空時。
+`Microtask` 通常不會有 `Task` 那麼耗損效能，會盡量儘早執行，執行的時機，是在一個 `Task` 執行之後 `Call Stack` 為空時進行。
 
-記得先前有提及還有些 `Event Loop` 的細部的任務運作沒提嗎？
+還記得先前提過還有些 `Event Loop` 的細節的任務運作沒介紹嗎？
 
 沒錯，就是 `Microtask` 的概念，加入後，概念圖如下：
 
@@ -554,7 +554,7 @@ fn3();
 1. 一開始運行的 `mainline script` 本身就是 `Task`，`Task` 開始運行。
 2. 觸發 `fn3` 開始執行，接著印出 `c`。
 3. 觸發 `setTimeout`，`fn1` 會經由 `Web API` 被丟到 `Task Queue` 中。
-4. 觸發 `promise`，`console.log(resolve)` 這個 callback 被丟到 `Microtask Queue` 中。
+4. 觸發 `promise`，`console.log(resolve)` 被丟到 `Microtask Queue` 中。
 5. 觸發 `fn2` 開始執行，接著印出 `b`。
 6. 結束主線程的 `Task`，開始執行 `Microtask`，執行 `console.log(resolve)`，印出 `d`。
 7. 進入下一輪 Event Loop，找到 `Task Queue` 中有 `fn1`，執行印出 `a`。
