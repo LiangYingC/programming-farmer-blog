@@ -52,7 +52,7 @@ const getGlobalStyle = (theme: Theme) => {
     }
 
     h3 {
-      margin: 20px 0px;
+      margin: 25px 0px;
       font-size: ${theme.fontSizes['2xl']};
       font-weight: ${theme.fontWeights.semibold};
       color: ${theme.colors.primaryText};
@@ -62,6 +62,11 @@ const getGlobalStyle = (theme: Theme) => {
       @media (max-width: ${theme.breakpoints.tabletS}) {
         font-size: ${theme.fontSizes.xl};
       }
+    }
+
+    strong {
+      margin: 0 1px;
+      letter-spacing: ${theme.letterSpacings.wide};
     }
 
     p {
