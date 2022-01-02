@@ -733,7 +733,6 @@ import catchErrMiddleware from './catchErrMiddleware.js';
 ......
 
 const store = createStore(reducer, preloadedState);
-const next = store.dispatch;
 
 // 全部的 Middleware 由其他檔案引入
 // 且傳入 store 給各個 Middleware 使用
@@ -741,6 +740,7 @@ const logger = loggerMiddleware(store);
 const timeRecord = timeRecordMiddleware(store);
 const catchErr = catchErrMiddleware(store);
 
+const next = store.dispatch;
 store.dispatch = catchErr(timeRecord(logger(next)));
 
 document.getElementById('plus-points-btn').addEventListener('click', () => {
@@ -754,5 +754,108 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ```
 
 到此為止，算是已實踐了 `Middleware` 的完整概念，接著開始優化與封裝。
+
+<hr>
+
+## Encapsulation of Middleware logic : applyMiddleware
+
+假定「有無數個 `Middleware` 時」，程式碼的複雜性和細節會很多，因此可以試著將重複的內容以及部分細節封裝，使用 `Redux` 的開發者，僅需要關注到使用哪些 `Middleware` 即可。
+
+```javascript
+/*** index.js file ***/
+import createStore from "./createStoreDemo.js";
+import loggerMiddleware from './loggerMiddleware.js';
+import timeRecordMiddleware from './timeRecordMiddleware.js';
+import catchErrMiddleware from './catchErrMiddleware.js';
+
+......
+
+const store = createStore(reducer, preloadedState);
+
+// 隨著 Middleware 越來越多，下面這幾行可考慮封裝
+const logger = loggerMiddleware(store);
+const timeRecord = timeRecordMiddleware(store);
+const catchErr = catchErrMiddleware(store);
+...
+
+// 隨著 Middleware 越來越多，下面這兩行可考慮封裝
+const next = store.dispatch;
+store.dispatch = catchErr(timeRecord(logger(...)));
+
+document.getElementById('plus-points-btn').addEventListener('click', () => {
+  store.dispatch({
+    type: 'PLUS_POINTS',
+    payload: 100,
+  });
+});
+
+......
+```
+
+確定上述程式碼中有機會被封裝的部分後，接著來思考封裝的方式，這時候，回想起來目前在做的事情，其實就是擴展 `dispatch`，而 `dispatch` 存在於 `createStore` 中，因此可以試著「透過更新 `createStore`，在更新過程中做將 `dispatch` 重新封裝，最後 return 回 `dispatch` 已被擴展後的 `newCreateStore`」，就有機會達到封裝細節的目標。
+
+程式碼實踐概念如下：
+
+```javascript
+/*** index.js file ***/
+import createStore from "./createStoreDemo.js";
+import loggerMiddleware from './loggerMiddleware.js';
+import timeRecordMiddleware from './timeRecordMiddleware.js';
+import catchErrMiddleware from './catchErrMiddleware.js';
+
+......
+
+// 期望可以創建一個新的 newCreateStore，並已處理好 Middlewares 相關細節
+// 開發者使用 Redux 時，只需關注傳入什麼 Middlewares 即可
+const newCreateStore = applyMiddleware(exceptionMiddleware, timeMiddleware, loggerMiddleware, ...)(createStore);
+
+// 期望藉由 newCreateStore 創建「dispatch 已經被擴展」的 store
+const store = newCreateStore(reducer, preloadedState);
+
+document.getElementById('plus-points-btn').addEventListener('click', () => {
+  store.dispatch({
+    type: 'PLUS_POINTS',
+    payload: 100,
+  });
+});
+
+......
+```
+
+上述程式碼中，最關鍵的角色正是 `applyMiddleware` 函式中封裝的邏輯，基本上它必須要滿足：
+
+1. Input 可以傳入多個 `middlewares`
+2. Output 會返回可傳入原始新的 `createStore` 的函式(先稱為 `rewriteCreateStoreFunc`)
+3. 執行 `rewriteCreateStoreFunc` 後，會返回 `newCreateStore`，`newCreateStore` 創建的 `store` 已具備擴展功能的新 `dispatch`
+
+`applyMiddleware` 程式邏輯如下：
+
+```javascript
+/*** applyMiddleware.js file ***/
+
+// applyMiddleware input 可以傳入多個 middlewares
+const applyMiddleware = function (...middlewares) {
+
+  // 會 return 可傳入舊 createStore、返還新 createStore 的 rewriteCreateStoreFunc
+  return function rewriteCreateStoreFunc(createStore) {
+
+    // 執行 rewriteCreateStoreFunc 後，會回傳 newCreateStore
+    return function newCreateStore(reducer, preloadedState) {
+
+      // 1. 執行一些邏輯，創建出擴展後的 dispatch
+      ......
+
+      // 2. 更新 store.dispatch
+      store.dispatch = dispatch;
+
+      // 3. 回傳新的 store，此時 store.dispatch 已有擴展後的功能
+      return store;
+    };
+
+  };
+};
+
+export default applyMiddleware;
+```
 
 #### 【 參考資料 】
