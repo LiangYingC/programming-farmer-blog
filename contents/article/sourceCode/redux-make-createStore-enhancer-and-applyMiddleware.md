@@ -7,13 +7,14 @@ category: sourceCode
 
 ## 前言
 
-延續上篇分享的 [理解 Redux 原始碼：來實作 createStore 的 getState, dispatch, subscribe 吧](/articles/sourceCode/redux-make-createStore-getState-dispatch-subscribe)，這次將更深入探討 Redux Source Code 中，關於 Middleware 的部分，像是：`applyMiddleware` 以及 `createStore` 傳入的 `enhancer` 等等。
+延續上篇分享的 [理解 Redux 原始碼：來實作 createStore 的 getState, dispatch, subscribe 吧](/articles/sourceCode/redux-make-createStore-getState-dispatch-subscribe)，這次將更深入探討 Redux Source Code 中，關於 `Middleware` 的部分，像是：`applyMiddleware` 以及 `createStore` 傳入的 `enhancer` 等等。
 
 期許閱讀完這篇後，能達成：
 
-- 理解 Redux Middleware 想達成的目標，以及能實作自己的 Middleware
-- 理解 applyMiddleware
-- 理解 createStore enhancer 參數
+- 理解 `Middleware` 想達成的目標
+- 能實作自己客製化的 `Middleware`
+- 理解 `applyMiddleware`
+- 理解 `createStore enhancer` 參數
 
 本文將會接續上篇文章的程式碼結果(已經實作完基本的 `createStore` )，持續開發擴展 `Redux` 功能，最後就會實作出 `Redux Middleware` 的概念。
 
@@ -317,7 +318,7 @@ store.subscribe(() => {
 
 <hr>
 
-## First Middleware: Log preState and newState
+## 第一個需求: Log preState and newState
 
 現在有個需求，需要記錄下每次更新前的 state、更新後的 state，可以怎麼做？以程式運行面來說，就是要在**每次 dipatch 時，印出 preState、newState**。
 
@@ -410,7 +411,7 @@ document.getElementById('minus-points-btn').addEventListener('click', () => {
 
 <hr>
 
-## Second Middleware: Catch error
+## 第二個需求: Catch error
 
 接著有下個需求，我們希望在每個 `dispatch` 的過程中，如果有錯誤，就 `catch` 並且 `log`，可以怎麼做？
 
@@ -645,7 +646,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 <hr>
 
-## Third Middleware : Record time
+## 第三個需求: Record time
 
 第三個需求是在 log preState 之前，先印出當前時間，以先前的結構實踐看看：
 
@@ -757,7 +758,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 <hr>
 
-## Encapsulation of Middleware logic : applyMiddleware
+## 實作 applyMiddleware，封裝 Middlewares 的細節邏輯
 
 假定「有無數個 `Middleware` 時」，程式碼的複雜性和細節會很多，因此可以試著將重複的內容以及部分細節封裝，使用 `Redux` 的開發者，僅需要關注到使用哪些 `Middleware` 即可。
 
@@ -799,6 +800,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ```javascript
 /*** index.js file ***/
 import createStore from "./createStoreDemo.js";
+import applyMiddleware from "./applyMiddleware.js";
 import loggerMiddleware from './loggerMiddleware.js';
 import timeRecordMiddleware from './timeRecordMiddleware.js';
 import catchErrMiddleware from './catchErrMiddleware.js';
@@ -857,5 +859,350 @@ const applyMiddleware = function (...middlewares) {
 
 export default applyMiddleware;
 ```
+
+接著關注 return 的 `newCreateStore` 中的細節邏輯的實踐：
+
+```javascript
+/*** applyMiddleware.js file ***/
+const applyMiddleware = function (...middlewares) {
+  return function rewriteCreateStoreFunc(createStore) {
+    return function newCreateStore(reducer, preloadedState) {
+
+        // 1. 使用原始的 createStore 創建原始的 store
+        const store = createStore(reducer, preloadedState);
+        
+        // 2. 創建 middleware chain，將每個 middleware 都傳入 store 參數
+        // 相當於先前的 logger = loggerMiddleware(store)、timeRecord = timeRecordMiddleware(store)、catchErr = catchErrMiddleware(store)，返還 [catchErr, timeRecord, logger] 
+        const middlewareChain = middlewares.map(middleware => middleware(store));
+
+      
+        // 3. 宣告 dispatch，並先紀錄原始的 dispatch
+        // 相當於先前的 next = store.dispatch
+        let dispatch = store.dispatch;
+       
+      
+        // 4. 擴展 dispatch，將 middlewares 的功能封裝其中
+        // 相當於先前的 catchErr(timeRecord(logger(next)))
+        middlewareChain.reverse().map(middleware => {
+            dispatch = middleware(dispatch);
+        });
+        
+        // 5. 更新 store.dispatch
+        // 相當於先前的 store.dispatch = catchErr(timeRecord(logger(next)))
+        store.dispatch = dispatch;
+        return store;
+    };
+  };
+};
+
+export default applyMiddleware;
+```
+
+至此，已實踐整個 `applyMiddleware` 的函式，還可做些小優化：
+
+### 一、用箭頭函式的寫法，讓寫法更簡潔
+
+```javascript
+/*** applyMiddleware.js file ***/
+const applyMiddleware = function (...middlewares) {
+  // 用箭頭函式讓 currying 寫法更簡潔
+  return (createStore) => (reducer, preloadedState) => {
+
+        const store = createStore(reducer, preloadedState);
+        let dispatch = store.dispatch;
+        
+        const middlewareChain = middlewares.map(middleware => middleware(store));
+        middlewareChain.reverse().map(middleware => {
+            dispatch = middleware(dispatch);
+        });
+      
+        store.dispatch = dispatch;
+        return store;
+    };
+  };
+};
+
+export default applyMiddleware;
+```
+
+### 二、用 React 封裝的 `compose`，讓寫法更簡潔
+
+```javascript
+/*** compose.js file ***/
+
+// React 封裝的 compose function
+function compose(...funcs) {
+  if (funcs.length === 0) {
+    return (arg) => arg;
+  }
+
+  if (funcs.length === 1) {
+    return funcs[0];
+  }
+
+  return funcs.reduce(
+    (a, b) =>
+      (...args) =>
+        a(b(...args))
+  );
+}
+
+export default compose;
+```
+
+```javascript
+/*** applyMiddleware.js file ***/
+import compose from './compose.js'
+
+const applyMiddleware = function (...middlewares) {
+  return (createStore) => (reducer, preloadedState) => {
+
+        const store = createStore(reducer, preloadedState);
+        let dispatch = store.dispatch;
+        
+        const middlewareChain = middlewares.map(middleware => middleware(store));
+        // 用 compose 取代先前 map 的寫法，創建 catchErr(timeRecord(logger(...))) 的結構，讓程式更簡潔
+        dispatch = compose(...middlewareChain)(store.dispatch);
+      
+        store.dispatch = dispatch;
+        return store;
+    };
+  };
+};
+
+export default applyMiddleware;
+```
+
+### 三、避免 Middleware 使用 subscribe
+
+如果按造最少修改原則，`Middleware` 僅能修改 `dispatch`，並且過程中能取得 `getState` 使用，然而，不該動 `subscribe`，因此可以針對 `applyMiddleware` 做進一步調整避免 `Middleware` 使用 `subscribe` :
+
+```javascript
+/*** applyMiddleware.js file ***/
+import compose from './compose.js'
+
+const applyMiddleware = function (...middlewares) {
+  return (createStore) => (reducer, preloadedState) => {
+
+        const store = createStore(reducer, preloadedState);
+        let dispatch = store.dispatch;
+
+        // 透過 storeForMiddleware，限制 middleware 只能用 getState，但無法使用 subscribe
+        const storeForMiddleware = { getState: store.getState };
+        const middlewareChain = middlewares.map(middleware => middleware(storeForMiddleware));
+        dispatch = compose(...middlewareChain)(store.dispatch);
+      
+        store.dispatch = dispatch;
+        return store;
+    };
+  };
+};
+
+export default applyMiddleware;
+```
+
+到此，完成 `applyMiddleware` 的寫法優化，在 `index.js` 中可以這樣使用：
+
+```javascript
+/*** index.js file ***/
+import createStore from "./createStoreDemo.js";
+import applyMiddleware from "./applyMiddleware.js";
+import loggerMiddleware from './loggerMiddleware.js';
+import timeRecordMiddleware from './timeRecordMiddleware.js';
+import catchErrMiddleware from './catchErrMiddleware.js';
+
+......
+
+// 透過 applyMiddleware 創建 newCreateStore，藉此使用 Middlewares
+const newCreateStore = applyMiddleware(
+  catchErrMiddleware,
+  timeRecordMiddleware,
+  loggerMiddleware
+)(createStore);
+
+// 透過 newCreateStore 創建「dispatch 已經被擴展」的 store
+const store = newCreateStore(reducer, preloadedState);
+
+document.getElementById('plus-points-btn').addEventListener('click', () => {
+  store.dispatch({
+    type: 'PLUS_POINTS',
+    payload: 100,
+  });
+});
+
+......
+```
+
+<hr>
+
+## 整合 createStore 與 newCreateStore
+
+目前 `createStore` 有兩種狀況：
+- 當有用到 `Middlewares` 時，開發者要自行創建 `newCreateStore`，並使用之。
+- 當沒有用到 `Middlewares` 時，開發者要直接使用原始的 `createStore` 即可。
+
+因此可以優化 `createStore.js`，讓開發者無需關注這個問題：
+
+```javascript
+/*** createStore.js file ***/
+
+// 多傳入第三個參數 rewriteCreateStoreFunc
+function createStore(reducer, preloadedState, rewriteCreateStoreFunc) {
+    // 如果有 rewriteCreateStoreFunc，就使用新版本的 createStore
+    if(rewriteCreateStoreFunc){
+       const newCreateStore = rewriteCreateStoreFunc(createStore);
+       return newCreateStore(reducer, preloadedState);
+    };
+    
+    // 不然就照正常的流程走
+    ......
+}
+
+export default createStore;
+```
+
+在 `index.js` 中，無論是否用 `Middlewares` 都只需使用 `createStore`。
+
+```javascript
+/*** index.js file ***/
+import createStore from "./createStoreDemo.js";
+import applyMiddleware from "./applyMiddleware.js";
+import loggerMiddleware from './loggerMiddleware.js';
+import timeRecordMiddleware from './timeRecordMiddleware.js';
+import catchErrMiddleware from './catchErrMiddleware.js';
+
+......
+
+// 透過 applyMiddleware 創建 rewriteCreateStoreFunc
+const rewriteCreateStoreFunc = applyMiddleware(
+  catchErrMiddleware,
+  timeRecordMiddleware,
+  loggerMiddleware
+);
+
+// 使用 createStore 並傳入第三個參數 rewriteCreateStoreFunc
+const store = createStore(reducer, preloadedState, rewriteCreateStoreFunc);
+
+document.getElementById('plus-points-btn').addEventListener('click', () => {
+  store.dispatch({
+    type: 'PLUS_POINTS',
+    payload: 100,
+  });
+});
+
+......
+```
+
+最後，將 `rewriteCreateStoreFunc` 改名為 `enhancer`：
+
+```javascript
+/*** createStore.js file ***/
+function createStore(reducer, preloadedState, enhancer) {
+    // 如果有 enhancer，就使用新版本的 createStore
+    if(rewriteCreateStoreFunc){
+       const newCreateStore = enhancer(createStore);
+       return newCreateStore(reducer, preloadedState);
+    };
+    
+    // 不然就照正常的流程走
+    ......
+}
+
+export default createStore;
+```
+
+```javascript
+/*** index.js file ***/
+import createStore from "./createStoreDemo.js";
+import applyMiddleware from "./applyMiddleware.js";
+import loggerMiddleware from './loggerMiddleware.js';
+import timeRecordMiddleware from './timeRecordMiddleware.js';
+import catchErrMiddleware from './catchErrMiddleware.js';
+
+......
+
+// 透過 applyMiddleware 創建 enhancer
+const enhancer = applyMiddleware(
+  catchErrMiddleware,
+  timeRecordMiddleware,
+  loggerMiddleware
+);
+
+// 使用 createStore 並傳入第三個參數 enhancer
+const store = createStore(reducer, preloadedState, enhancer);
+
+document.getElementById('plus-points-btn').addEventListener('click', () => {
+  store.dispatch({
+    type: 'PLUS_POINTS',
+    payload: 100,
+  });
+});
+
+......
+```
+
+到此就完成 Reduxe Source Code 與 `Middleware` 有關的邏輯概念實作！
+
+<hr>
+
+## 回顧本文重點項目
+
+文章最初有設定幾個閱讀完後，期待的收穫：
+
+### 一、理解 Middleware 想達成的目標
+
+就這個項目，來好好地統整 `Redux Middleware` 的定義：
+
+**透過 Redux Middleware 的機制，開發者可以擴展 Dispatcher 的功能，達成在 Action 被指派後到 Reducer 執行前，或者在 Reducer 執行後，進行額外的操作處理**，例如：把更新前後的資料狀態印出來觀察、呼叫 API 更新資料等等，概念如下圖。
+
+![redux flow](/article/sourceCode/redux-make-createStore-enhancer-and-applyMiddleware/01.gif)
+
+特別注意的是，`Middleware` 並非一次只能使用一個，如果有多個 `Middlewares` 的情況，概念上就會像接力一樣，前一個 `Middleware` 會透過 `next` 將 `action` 交給下一個 `Middleware`，直到最後一個 `Middleware` 執行完畢後，才會觸發到 `reducer`。
+
+以上這段說明，如果沒有實際把 `Redux Middleware` 程式碼實作出來，其實不好理解，但實作過一次後，就蠻清楚在說什麼。
+
+
+### 二、能實作自己客製化的 Middleware
+
+回顧實踐的 `loggerMiddleware`、`catchErrMiddleware`：
+
+```javascript
+/*** loggerMiddleware.js file ***/
+const loggerMiddleware = store => next => action => {
+  console.log({ preState: store.getState() });
+  next(action);
+  console.log({ newState: store.getState() });
+};
+
+export default loggerMiddleware;
+```
+
+```javascript
+/*** catchErrMiddleware.js file ***/
+const catchErrMiddleware = store => next => action => {
+  try {
+    next(action);
+  } catch (err) {
+    console.log({ errLog: err });
+  }
+};
+```
+
+可發現 `Middleware` 函式的形式就是：
+
+```javascript
+const middleware = store => next => action => {
+  // can do some logic
+  next(action);
+  // can do some logic
+};
+```
+
+因此可以依據這樣的形式製作屬於自己的 `Middleware`，例如：
+
+
+
+
+
 
 #### 【 參考資料 】
