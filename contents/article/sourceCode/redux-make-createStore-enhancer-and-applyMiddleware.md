@@ -13,8 +13,8 @@ category: sourceCode
 
 - 理解 `Middleware` 想達成的目標
 - 能實作自己客製化的 `Middleware`
-- 理解 `applyMiddleware`
-- 理解 `createStore enhancer` 參數
+- 理解並實作 `applyMiddleware`
+- 理解並實作 `createStore` 傳入的第三個參數 `enhancer`
 
 本文將會接續上篇文章的程式碼結果(已經實作完基本的 `createStore` )，持續開發擴展 `Redux` 功能，最後就會實作出 `Redux Middleware` 的概念。
 
@@ -867,30 +867,27 @@ export default applyMiddleware;
 const applyMiddleware = function (...middlewares) {
   return function rewriteCreateStoreFunc(createStore) {
     return function newCreateStore(reducer, preloadedState) {
+      // 1. 使用原始的 createStore 創建原始的 store
+      const store = createStore(reducer, preloadedState);
 
-        // 1. 使用原始的 createStore 創建原始的 store
-        const store = createStore(reducer, preloadedState);
-        
-        // 2. 創建 middleware chain，將每個 middleware 都傳入 store 參數
-        // 相當於先前的 logger = loggerMiddleware(store)、timeRecord = timeRecordMiddleware(store)、catchErr = catchErrMiddleware(store)，返還 [catchErr, timeRecord, logger] 
-        const middlewareChain = middlewares.map(middleware => middleware(store));
+      // 2. 創建 middleware chain，將每個 middleware 都傳入 store 參數
+      // 相當於先前的 logger = loggerMiddleware(store)、timeRecord = timeRecordMiddleware(store)、catchErr = catchErrMiddleware(store)，返還 [catchErr, timeRecord, logger]
+      const middlewareChain = middlewares.map(middleware => middleware(store));
 
-      
-        // 3. 宣告 dispatch，並先紀錄原始的 dispatch
-        // 相當於先前的 next = store.dispatch
-        let dispatch = store.dispatch;
-       
-      
-        // 4. 擴展 dispatch，將 middlewares 的功能封裝其中
-        // 相當於先前的 catchErr(timeRecord(logger(next)))
-        middlewareChain.reverse().map(middleware => {
-            dispatch = middleware(dispatch);
-        });
-        
-        // 5. 更新 store.dispatch
-        // 相當於先前的 store.dispatch = catchErr(timeRecord(logger(next)))
-        store.dispatch = dispatch;
-        return store;
+      // 3. 宣告 dispatch，並先紀錄原始的 dispatch
+      // 相當於先前的 next = store.dispatch
+      let dispatch = store.dispatch;
+
+      // 4. 擴展 dispatch，將 middlewares 的功能封裝其中
+      // 相當於先前的 catchErr(timeRecord(logger(next)))
+      middlewareChain.reverse().map(middleware => {
+        dispatch = middleware(dispatch);
+      });
+
+      // 5. 更新 store.dispatch
+      // 相當於先前的 store.dispatch = catchErr(timeRecord(logger(next)))
+      store.dispatch = dispatch;
+      return store;
     };
   };
 };
@@ -910,12 +907,12 @@ const applyMiddleware = function (...middlewares) {
 
         const store = createStore(reducer, preloadedState);
         let dispatch = store.dispatch;
-        
+
         const middlewareChain = middlewares.map(middleware => middleware(store));
         middlewareChain.reverse().map(middleware => {
             dispatch = middleware(dispatch);
         });
-      
+
         store.dispatch = dispatch;
         return store;
     };
@@ -933,18 +930,14 @@ export default applyMiddleware;
 // React 封裝的 compose function
 function compose(...funcs) {
   if (funcs.length === 0) {
-    return (arg) => arg;
+    return arg => arg;
   }
 
   if (funcs.length === 1) {
     return funcs[0];
   }
 
-  return funcs.reduce(
-    (a, b) =>
-      (...args) =>
-        a(b(...args))
-  );
+  return funcs.reduce((a, b) => (...args) => a(b(...args)));
 }
 
 export default compose;
@@ -959,11 +952,11 @@ const applyMiddleware = function (...middlewares) {
 
         const store = createStore(reducer, preloadedState);
         let dispatch = store.dispatch;
-        
+
         const middlewareChain = middlewares.map(middleware => middleware(store));
         // 用 compose 取代先前 map 的寫法，創建 catchErr(timeRecord(logger(...))) 的結構，讓程式更簡潔
         dispatch = compose(...middlewareChain)(store.dispatch);
-      
+
         store.dispatch = dispatch;
         return store;
     };
@@ -991,7 +984,7 @@ const applyMiddleware = function (...middlewares) {
         const storeForMiddleware = { getState: store.getState };
         const middlewareChain = middlewares.map(middleware => middleware(storeForMiddleware));
         dispatch = compose(...middlewareChain)(store.dispatch);
-      
+
         store.dispatch = dispatch;
         return store;
     };
@@ -1038,6 +1031,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ## 整合 createStore 與 newCreateStore
 
 目前 `createStore` 有兩種狀況：
+
 - 當有用到 `Middlewares` 時，開發者要自行創建 `newCreateStore`，並使用之。
 - 當沒有用到 `Middlewares` 時，開發者要直接使用原始的 `createStore` 即可。
 
@@ -1053,7 +1047,7 @@ function createStore(reducer, preloadedState, rewriteCreateStoreFunc) {
        const newCreateStore = rewriteCreateStoreFunc(createStore);
        return newCreateStore(reducer, preloadedState);
     };
-    
+
     // 不然就照正常的流程走
     ......
 }
@@ -1103,7 +1097,7 @@ function createStore(reducer, preloadedState, enhancer) {
        const newCreateStore = enhancer(createStore);
        return newCreateStore(reducer, preloadedState);
     };
-    
+
     // 不然就照正常的流程走
     ......
 }
@@ -1161,7 +1155,6 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 以上這段說明，如果沒有實際把 `Redux Middleware` 程式碼實作出來，其實不好理解，但實作過一次後，就蠻清楚在說什麼。
 
-
 ### 二、能實作自己客製化的 Middleware
 
 回顧實踐的 `loggerMiddleware`、`catchErrMiddleware`：
@@ -1198,11 +1191,31 @@ const middleware = store => next => action => {
 };
 ```
 
-因此可以依據這樣的形式製作屬於自己的 `Middleware`，例如：
+基本上滿足 2 個條件：
 
+1. 使用 Currying 概念，並可傳入 `store`、`next`、`action`
+2. 使用 `next(action)` ，藉此接續下個 `middleware` or 觸發原始的 `dispatch`
 
+就能製作出客製化的 `Middleware`，例如知名的 `Redux-Thunk`：
 
+```javascript
+const thunkMiddleware = ({ dispatch, getState }) => next => action => {
+  // The thunk middleware looks for any functions that were passed to `store.dispatch`.
+  // If this "action" is really a function, call it and return the result.
+  if (typeof action === 'function') {
+    // Inject the store's `dispatch` and `getState` methods
+    return action(dispatch, getState);
+  }
 
+  // Otherwise, pass the action down the middleware chain as usual
+  return next(action);
+};
 
+export default thunkMiddleware;
+```
+
+### 三、理解並實作 applyMiddleware
+
+### 四、理解並實作 createStore 傳入的第三個參數 enhancer
 
 #### 【 參考資料 】
