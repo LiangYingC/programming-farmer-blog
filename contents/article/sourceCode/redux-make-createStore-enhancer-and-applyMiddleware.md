@@ -1216,6 +1216,16 @@ export default thunkMiddleware;
 
 ### 三、理解並實作 applyMiddleware
 
+`applyMiddleware` 基本上就是封裝整合 `Middlewares` 產生出新 `dispatch` 的步驟細節，最後會直接返回一個名為 `enhancer` 的函式。
+
+```javascript
+```
+
 ### 四、理解並實作 createStore 傳入的第三個參數 enhancer
+
+透過 `createStore(reducer, preloadedState, enhancer)`，將創建出的 `store`，其 `store.dispatch` 已含有 Middlewares 功能。
+
+```javascript
+```
 
 #### 【 參考資料 】
