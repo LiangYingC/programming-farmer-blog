@@ -267,7 +267,7 @@ export default createStore;
 
 ```javascript
 /*** index.js file ***/
-import { createStore } from './createStore.js';
+import createStore from './createStore.js';
 
 // 自定義 reducer
 const reducer = (state, action) => {
@@ -722,6 +722,7 @@ const catchErrMiddleware = store => next => action => {
     console.log({ errLog: err });
   }
 };
+export default catchErrMiddleware;
 ```
 
 ```javascript
@@ -922,12 +923,12 @@ const applyMiddleware = function (...middlewares) {
 export default applyMiddleware;
 ```
 
-### 二、用 React 封裝的 `compose`，讓寫法更簡潔
+### 二、用 Redux 封裝的 `compose`，讓寫法更簡潔
 
 ```javascript
 /*** compose.js file ***/
 
-// React 封裝的 compose function
+// Redux 自己封裝的 compose function
 function compose(...funcs) {
   if (funcs.length === 0) {
     return arg => arg;
@@ -1093,7 +1094,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 /*** createStore.js file ***/
 function createStore(reducer, preloadedState, enhancer) {
     // 如果有 enhancer，就使用新版本的 createStore
-    if(rewriteCreateStoreFunc){
+    if(enhancer){
        const newCreateStore = enhancer(createStore);
        return newCreateStore(reducer, preloadedState);
     };
@@ -1179,6 +1180,7 @@ const catchErrMiddleware = store => next => action => {
     console.log({ errLog: err });
   }
 };
+export default catchErrMiddleware;
 ```
 
 可發現 `Middleware` 函式的形式就是：
@@ -1216,16 +1218,280 @@ export default thunkMiddleware;
 
 ### 三、理解並實作 applyMiddleware
 
-`applyMiddleware` 基本上就是封裝整合 `Middlewares` 產生出新 `dispatch` 的步驟細節，最後會直接返回一個名為 `enhancer` 的函式。
+`applyMiddleware` 基本上就是封裝整合 `Middlewares` 產生出新 `dispatch` 的步驟細節，最後會直接返回一個可傳入 `createStore` 以及 `reducer, preloadedState` 的函式（通常會被命名成 `enhancer`）。
 
 ```javascript
+/*** applyMiddleware.js ***/
+import compose from './compose.js'
+
+// input 為傳入多個 middlewares
+const applyMiddleware = function (...middlewares) {
+  // output 為可傳入 createStore 與 reducer, preloadedState 的函式
+  return (createStore) => (reducer, preloadedState) => {
+
+        const store = createStore(reducer, preloadedState);
+        let dispatch = store.dispatch;
+
+        const middlewareChain = middlewares.map(middleware => middleware(store));
+        dispatch = compose(...middlewareChain)(store.dispatch);
+
+        store.dispatch = dispatch;
+        return store; // 此 store 的 dispatch 已封裝 middlewares 的功能
+    };
+  };
+};
+
+export default applyMiddleware;
+```
+
+使用起來如下：
+
+```javascript
+......
+
+// 透過 applyMiddleware 創建 enhancer
+const enhancer = applyMiddleware(catchErrMiddleware, timeRecordMiddleware, loggerMiddleware);
+
+......
+
 ```
 
 ### 四、理解並實作 createStore 傳入的第三個參數 enhancer
 
-透過 `createStore(reducer, preloadedState, enhancer)`，將創建出的 `store`，其 `store.dispatch` 已含有 Middlewares 功能。
+`enhancer` 為透過 `applyMiddleware` 返回的函式，可以傳入 `createStore` 中，執行 `createStore(reducer, preloadedState, enhancer)` 後，將創建出 `store`，其 `store.dispatch` 已含有 Middlewares 功能。
 
 ```javascript
+......
+
+// 透過 applyMiddleware 創建 enhancer
+const enhancer = applyMiddleware(catchErrMiddleware, timeRecordMiddleware, loggerMiddleware);
+// 使用 createStore 並傳入第三個參數 enhancer
+const store = createStore(reducer, preloadedState, enhancer);
+
+......
+```
+
+從 `createStore.js` 中，可以看出如果 `enhancer` 存在，那就會執行之：
+
+```javascript
+/*** createStore.js file ***/
+function createStore(reducer, preloadedState, enhancer) {
+    // 如果有 enhancer，就使用新版本的 createStore
+    if(enhancer){
+       const newCreateStore = enhancer(createStore);
+       return newCreateStore(reducer, preloadedState);
+    };
+
+    // 不然就照正常的流程走
+    ......
+}
+
+export default createStore;
+```
+
+<hr>
+
+## 總結所有的程式碼
+
+這次實作的核心程式碼如下：
+
+```javascript
+/*** loggerMiddleware.js file ***/
+const loggerMiddleware = store => next => action => {
+  console.log({ preState: store.getState() });
+  next(action);
+  console.log({ newState: store.getState() });
+};
+export default loggerMiddleware;
+```
+
+```javascript
+/*** timeRecordMiddleware.js file ***/
+const timeRecordMiddleware = store => next => action => {
+  console.log({ time: new Date().getTime() });
+  next(action);
+};
+export default timeRecordMiddleware;
+```
+
+```javascript
+/*** catchErrMiddleware.js file ***/
+const catchErrMiddleware = store => next => action => {
+  try {
+    next(action);
+  } catch (err) {
+    console.log({ errLog: err });
+  }
+};
+export default catchErrMiddleware;
+```
+
+```javascript
+/*** applyMiddleware.js file ***/
+import compose from './compose.js'
+
+const applyMiddleware = function (...middlewares) {
+  return (createStore) => (reducer, preloadedState) => {
+
+        const store = createStore(reducer, preloadedState);
+        let dispatch = store.dispatch;
+
+        const storeForMiddleware = { getState: store.getState };
+        const middlewareChain = middlewares.map(middleware => middleware(storeForMiddleware));
+        dispatch = compose(...middlewareChain)(store.dispatch);
+
+        store.dispatch = dispatch;
+        return store;
+    };
+  };
+};
+
+export default applyMiddleware;
+```
+
+```javascript
+/*** createStore.js file ***/
+function createStore(reducer, preloadedState, enhancer) {
+    // 如果有 enhancer，就使用新版本的 createStore
+    if(enhancer){
+       const newCreateStore = enhancer(createStore);
+       return newCreateStore(reducer, preloadedState);
+    };
+
+    // 不然就照正常的流程走
+    let currentState = preloadedState;
+    let currentReducer = reducer;
+    let currentListeners = [];
+    let nextListeners = currentListeners;
+    let isDispatching = false;
+
+    function ensureCanMutateNextListeners() {
+      if (nextListeners === currentListeners) {
+        nextListeners = currentListeners.slice();
+      }
+    }
+
+    function getState() {
+      if (isDispatching) {
+        throw new Error(...);
+      }
+
+      return currentState;
+    }
+
+    function dispatch(action) {
+      if (isDispatching) {
+        throw new Error(...);
+      }
+
+      try {
+        isDispatching = true;
+        currentState = currentReducer(currentState, action);
+      } finally {
+        isDispatching = false;
+      }
+
+      const listeners = (currentListeners = nextListeners);
+      for (let i = 0; i < listeners.length; i++) {
+        const listener = listeners[i];
+        listener();
+      }
+    }
+
+    function subscribe(listener) {
+      if (isDispatching) {
+        throw new Error(...);
+      }
+
+      let isSubscribed = true;
+
+      ensureCanMutateNextListeners();
+      nextListeners.push(listener);
+
+      return function unsubscribe(listener) {
+        if (!isSubscribed) return;
+
+        if (isDispatching) {
+          throw new Error(...);
+        }
+
+        ensureCanMutateNextListeners();
+        const index = nextListeners.indexOf(listener);
+        nextListeners.splice(index, 1);
+
+        isSubscribed = false;
+      };
+    }
+
+    const randomString = () => Math.random().toString(36).substring(7).split('').join('.');
+
+    dispatch({
+      type: `INIT${randomString()}`,
+    });
+
+    const store = {
+      getState,
+      dispatch,
+      subscribe,
+    };
+
+    return store;
+}
+
+export default createStore;
+```
+
+```javascript
+/*** index.js file ***/
+import createStore from './createStore.js';
+import applyMiddleware from './applyMiddleware.js';
+import loggerMiddleware from './loggerMiddleware.js';
+import timeRecordMiddleware from './timeRecordMiddleware.js';
+import catchErrMiddleware from './catchErrMiddleware.js';
+
+// 自定義 reducer
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'PLUS_POINTS':
+      return {
+        points: state.points + action.payload,
+      };
+    case 'MINUS_POINTS':
+      return {
+        points: state.points - action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+// 透過 applyMiddleware 創建 enhancer
+const enhancer = applyMiddleware(catchErrMiddleware, timeRecordMiddleware, loggerMiddleware);
+
+// 使用 createStore 並傳入第三個參數 enhancer
+const preloadedState = {
+  points: 0,
+};
+const store = createStore(reducer, preloadedState, enhancer);
+
+document.getElementById('plus-points-btn').addEventListener('click', () => {
+  store.dispatch({
+    type: 'PLUS_POINTS',
+    payload: 100,
+  });
+});
+
+document.getElementById('minus-points-btn').addEventListener('click', () => {
+  store.dispatch({
+    type: 'MINUS_POINTS',
+    payload: 100,
+  });
+});
+
+store.subscribe(() => {
+  const points = store.getState().points;
+  document.getElementById('display-points-automatically').textContent = points;
+});
 ```
 
 #### 【 參考資料 】
