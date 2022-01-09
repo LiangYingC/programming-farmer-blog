@@ -1,7 +1,7 @@
 ---
-title: 理解 Redux 原始碼：來實作 Middleware 相關功能吧，如：applyMiddleware
+title: 理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧
 date: 2021-12-30
-description: 上篇 Redux 系列文章製作完 createStore 中的 getState、dispatch、subscribe 後，這篇進階到實作 Redux Middleware 相關的功能，如 createStore 傳入的 enhancer 以及 applyMiddleware 等，更深入探討 Redux 吧。
+description: 接續上篇 Redux 系列文章，已實作完 createStore 中的 getState、dispatch、subscribe 後，這篇將進階到實作 Redux Middleware 相關的功能，如 applyMiddleware 以及 createStore 傳入的 enhancer 等。帶著好奇心，更深入探討 Redux 吧。
 category: sourceCode
 ---
 
@@ -34,13 +34,13 @@ JavaScript 中，函式為一等公民，意思是函式**能被作為函式的�
 - return function 的 function
 
 ```javascript
-/*** 1. listener function can be a argument of subscribe function. ***/
+/* 1. listener function can be a argument of subscribe function. */
 function subscribe(listener) {
   let isSubscribed = true;
 
   listeners.push(listener);
 
-  /*** 2. subscribe function can return unsubscribe function ***/
+  /* 2. subscribe function can return unsubscribe function */
   return function unsubscribe() {
     if (!isSubscribed) {
       return;
@@ -58,17 +58,17 @@ function subscribe(listener) {
 
 Currying 算是基於 HOF 所衍生出的概念之一，定義為：**把帶有多個參數的函式，轉換成一次帶一個參數的多個連續函式**。
 
-光看定義不易懂，直接看案例比較具體：
+光看定義不易懂，直接看案例更具體：
 
 ```javascript
-/*** Without Currying ***/
+/* Without Currying */
 function add(x, y) {
   return x + y;
 }
 
 const result = add(5, 10); // 一個步驟算出結果
 
-/*** With Currying ***/
+/* With Currying */
 function add(x) {
   return function (y) {
     return x + y;
@@ -81,7 +81,7 @@ const result = add(5)(10); // 兩個步驟算出結果
 將 Currying 的函式改寫成箭頭函式會更簡潔：
 
 ```javascript
-/*** Currying concept by arrow function ***/
+/* Currying concept by arrow function */
 const add = x => y => x + y;
 
 const result = add(5)(10); // 兩個步驟算出結果
@@ -89,10 +89,10 @@ const result = add(5)(10); // 兩個步驟算出結果
 
 好處是**可以將每個步驟做成獨立功能並重新命名，增加獨立性與可讀性**。
 
-舉實際程式碼案例：實作取得 9 折的優惠價格，非 Currying 與 Currying 的比較如下。
+舉實際程式碼案例：實作取得 9 折的優惠價格，非 Currying 與 Currying 的比較如下：
 
 ```javascript
-/*** Without Currying ***/
+/* Without Currying */
 
 function getDiscountPrice(price, discount) {
   return price * discount;
@@ -100,7 +100,7 @@ function getDiscountPrice(price, discount) {
 
 const price = getDiscountPrice(100, 0.9);
 
-/*** With Currying ***/
+/* With Currying */
 
 const getDiscountPrice = discount => price => price * discount;
 
@@ -172,8 +172,8 @@ const compose = (...fns) => x => fns.reduceRight((prev, fn) => fn(prev), x);
 
 在開始實作需求前，先快速回憶上篇寫完的程式碼，分別有兩份 js 檔案：
 
-1. `createStore.js` : 創建並 export createStore function，裡面已實作 store.getState、store.dispatch、store.subscribe 方法。
-2. `index.js` : 應用程式(App)的程式碼，裡面會 import 已實作的 createStore，使用它來創建 store。
+1. **createStore.js** : 創建並 `export default createStore`，透過 `createStore` 可創建 `store`，裡面已實作 `store.getState`、`store.dispatch`、`store.subscribe` 方法。
+2. **index.js** : 應用程式(App)的程式碼，裡面會 `import` 已實作的 `createStore`，使用它來創建 `store`。
 
 ```javascript
 /*** createStore.js file ***/
@@ -327,7 +327,7 @@ store.subscribe(() => {
 1. 在 `store.dispatch(action)` 前，`console.log({ preState })`。
 2. 在 `store.dispatch(action)` 後，`console.log({ newState })`。
 
-`index.js file` 程式改動如下：
+`index.js` 程式改動如下：
 
 ```javascript
 /*** index.js file ***/
@@ -488,11 +488,11 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-目前這樣寫，會個問題就是：假設再來 10 個需求，那麼 `dispatch` 是否會變得異常龐大難以維護 ? 於是乎朝著**關注點分離**的方式著手試著將不同的功能，各自拆分成 function 控管。
+目前這樣寫，會個問題就是：假設再來 10 個需求，那麼 `dispatch` 是否會變得異常龐大難以維護 ? 於是朝著**關注點分離**的方向思考，著手試著將不同的功能，各自拆分成獨立函式控管。
 
-以現有的例子而言，就會替 log state 與 try catch err 創建各自獨立的 function 控管，並可藉由組合的方式，實踐需求的串連。
+以現有的例子而言，就會替 log state 與 try catch err 創建各自獨立的函式控管，並可藉由組合的方式，實踐需求的串連。
 
-步驟一：抽出 log state 功能，獨立成 `loggerMiddleware` function。
+步驟一：抽出 log state 功能，獨立成 `loggerMiddleware` 函式。
 
 ```javascript
 /*** index.js file ***/
@@ -527,7 +527,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-步驟二：抽出 catch err 功能，獨立成 `catchErrMiddleware` function。
+步驟二：抽出 catch err 功能，獨立成 `catchErrMiddleware` 函式。
 
 ```javascript
 /*** index.js file ***/
@@ -642,7 +642,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-到此為止，算是完成多個 `Middleware` 的串接，也做到基本的關注點分離和擴展彈性。
+到此為止，已完成多個 `Middlewares` 的串接，也做到基本的關注點分離和擴展彈性。
 
 <hr>
 
@@ -677,7 +677,7 @@ const catchErrMiddleware = next => action => {
 };
 
 const next = store.dispatch;
-// 藉此達成 catchErrMiddleware、timeRecordMiddleware、loggerMiddleware 功能串接
+// 達成 catchErrMiddleware、timeRecordMiddleware、loggerMiddleware 功能串接
 store.dispatch = catchErrMiddleware(timeRecordMiddleware(loggerMiddleware(next)));
 
 document.getElementById('plus-points-btn').addEventListener('click', () => {
@@ -690,7 +690,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-因為發現 `Middleware` 越來越多了，會想要把 `Middleware` 各自獨立成一個 js 檔案，要達成這件事情，就要把 `store` 當成參數傳入各個 `Middleware` 中，因此演變成：
+因為發現 `Middleware` 越來越多了，會想要把每個 `Middleware` 各自獨立成一個 js 檔案，要達成這件事情，就要把 `store` 當成參數傳入各個 `Middleware` 中，因此變成：
 
 ```javascript
 /*** loggerMiddleware.js file ***/
@@ -736,7 +736,7 @@ import catchErrMiddleware from './catchErrMiddleware.js';
 
 const store = createStore(reducer, preloadedState);
 
-// 全部的 Middleware 由其他檔案引入
+// 全部的 Middlewares 由其他檔案引入
 // 且傳入 store 給各個 Middleware 使用
 const logger = loggerMiddleware(store);
 const timeRecord = timeRecordMiddleware(store);
@@ -755,13 +755,13 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-到此為止，算是已實踐了 `Middleware` 的完整概念，接著開始優化與封裝。
+到此為止，算是透過需求的實踐，間接達成實作 `Redux Middlewares` 的完整概念，最後會再定義 `Redux Middlewares`，現在先接續目前程式碼，做更多的優化與封裝。
 
 <hr>
 
-## 實作 applyMiddleware，封裝 Middlewares 的細節邏輯
+## 實作 applyMiddleware 函式，封裝 Middlewares 的細節邏輯
 
-假定「有無數個 `Middleware` 時」，程式碼的複雜性和細節會很多，因此可以試著將重複的內容以及部分細節封裝，使用 `Redux` 的開發者，僅需要關注到使用哪些 `Middleware` 即可。
+假定「有無數個 `Middleware` 時」，程式碼的複雜性和細節會很多，因此可以試著將重複的內容以及部分細節封裝，讓使用 `Redux` 的開發者，僅需要關注到使用哪些 `Middlewares` 即可。
 
 ```javascript
 /*** index.js file ***/
@@ -794,7 +794,9 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-確定上述程式碼中有機會被封裝的部分後，接著來思考封裝的方式，這時候，回想起來目前在做的事情，其實就是擴展 `dispatch`，而 `dispatch` 存在於 `createStore` 中，因此可以試著「透過更新 `createStore`，在更新過程中做將 `dispatch` 重新封裝，最後 return 回 `dispatch` 已被擴展後的 `newCreateStore`」，就有機會達到封裝細節的目標。
+確定上述程式碼中有機會被封裝的部分後，接著來思考封裝的方式。
+
+綜合來看，目前在做的事情，其實就是「擴展 `dispatch`」，而 `dispatch` 存在於 `createStore` 中，因此可以試著「透過更新 `createStore`，在更新過程中，將 `dispatch` 重新封裝，最後 return 回 `dispatch` 已被擴展後的 `newCreateStore`」，就有機會達到封裝細節的目標。
 
 程式碼實踐概念如下：
 
@@ -825,10 +827,10 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-上述程式碼中，最關鍵的角色正是 `applyMiddleware` 函式中封裝的邏輯，基本上它必須要滿足：
+其中最關鍵的角色正是 `applyMiddleware` 函式中封裝的邏輯，基本上它要滿足：
 
 1. Input 可以傳入多個 `middlewares`
-2. Output 會返回可傳入原始新的 `createStore` 的函式(先稱為 `rewriteCreateStoreFunc`)
+2. Output 會返回可傳入原始新的 `createStore` 的函式 (先稱為 `rewriteCreateStoreFunc`)
 3. 執行 `rewriteCreateStoreFunc` 後，會返回 `newCreateStore`，`newCreateStore` 創建的 `store` 已具備擴展功能的新 `dispatch`
 
 `applyMiddleware` 程式邏輯如下：
@@ -845,7 +847,7 @@ const applyMiddleware = function (...middlewares) {
     // 執行 rewriteCreateStoreFunc 後，會回傳 newCreateStore
     return function newCreateStore(reducer, preloadedState) {
 
-      // 1. 執行一些邏輯，創建出擴展後的 dispatch
+      // 1. 執行些邏輯，創建出擴展 Middlewares 功能的 dispatch
       ......
 
       // 2. 更新 store.dispatch
@@ -903,7 +905,7 @@ export default applyMiddleware;
 ```javascript
 /*** applyMiddleware.js file ***/
 const applyMiddleware = function (...middlewares) {
-  // 用箭頭函式讓 currying 寫法更簡潔
+  // 用箭頭函式讓 Currying 寫法更簡潔
   return (createStore) => (reducer, preloadedState) => {
 
         const store = createStore(reducer, preloadedState);
@@ -928,7 +930,7 @@ export default applyMiddleware;
 ```javascript
 /*** compose.js file ***/
 
-// Redux 自己封裝的 compose function
+// Redux 封裝的 compose，概念似本文初介紹的 compose
 function compose(...funcs) {
   if (funcs.length === 0) {
     return arg => arg;
@@ -955,7 +957,7 @@ const applyMiddleware = function (...middlewares) {
         let dispatch = store.dispatch;
 
         const middlewareChain = middlewares.map(middleware => middleware(store));
-        // 用 compose 取代先前 map 的寫法，創建 catchErr(timeRecord(logger(...))) 的結構，讓程式更簡潔
+        // 用 compose 取代先前 map 的寫法，創建 catchErr(timeRecord(logger(...)))，讓程式更簡潔
         dispatch = compose(...middlewareChain)(store.dispatch);
 
         store.dispatch = dispatch;
@@ -969,7 +971,7 @@ export default applyMiddleware;
 
 ### 三、避免 Middleware 使用 subscribe
 
-如果按造最少修改原則，`Middleware` 僅能修改 `dispatch`，並且過程中能取得 `getState` 使用，然而，不該動 `subscribe`，因此可以針對 `applyMiddleware` 做進一步調整避免 `Middleware` 使用 `subscribe` :
+如果造最少修改原則，`Middleware` 應僅能修改 `dispatch`，頂多過程中能取得 `getState` 使用，但不該動 `subscribe`，因此可針對 `applyMiddleware` 做進一步調整避免 `Middleware` 使用 `subscribe` :
 
 ```javascript
 /*** applyMiddleware.js file ***/
@@ -1043,13 +1045,13 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 // 多傳入第三個參數 rewriteCreateStoreFunc
 function createStore(reducer, preloadedState, rewriteCreateStoreFunc) {
-    // 如果有 rewriteCreateStoreFunc，就使用新版本的 createStore
+    // 如果有 rewriteCreateStoreFunc，就使用新版的 createStore
     if(rewriteCreateStoreFunc){
        const newCreateStore = rewriteCreateStoreFunc(createStore);
        return newCreateStore(reducer, preloadedState);
     };
 
-    // 不然就照正常的流程走
+    // 不然就照原始 createStore 流程走
     ......
 }
 
@@ -1093,13 +1095,13 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ```javascript
 /*** createStore.js file ***/
 function createStore(reducer, preloadedState, enhancer) {
-    // 如果有 enhancer，就使用新版本的 createStore
+    // 如果有 enhancer，就使用新版的 createStore
     if(enhancer){
        const newCreateStore = enhancer(createStore);
        return newCreateStore(reducer, preloadedState);
     };
 
-    // 不然就照正常的流程走
+    // 不然就照原始 createStore 流程走
     ......
 }
 
@@ -1136,17 +1138,17 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-到此就完成 Reduxe Source Code 與 `Middleware` 有關的邏輯概念實作！
+到此就大致完成 Reduxe Source Code 中，與 `Middleware` 有關的邏輯概念實作！
 
 <hr>
 
-## 回顧本文重點項目
+## 回顧本文幾個重點項目
 
-文章最初有設定幾個閱讀完後，期待的收穫：
+文章最初有設定幾個閱讀完後，期待的收穫，來一一回顧：
 
 ### 一、理解 Middleware 想達成的目標
 
-就這個項目，來好好地統整 `Redux Middleware` 的定義：
+藉由這個項目，來統整 `Redux Middleware` 的定義：
 
 **透過 Redux Middleware 的機制，開發者可以擴展 Dispatcher 的功能，達成在 Action 被指派後到 Reducer 執行前，或者在 Reducer 執行後，進行額外的操作處理**，例如：把更新前後的資料狀態印出來觀察、呼叫 API 更新資料等等，概念如下圖。
 
@@ -1154,11 +1156,11 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 特別注意的是，`Middleware` 並非一次只能使用一個，如果有多個 `Middlewares` 的情況，概念上就會像接力一樣，前一個 `Middleware` 會透過 `next` 將 `action` 交給下一個 `Middleware`，直到最後一個 `Middleware` 執行完畢後，才會觸發到 `reducer`。
 
-以上這段說明，如果沒有實際把 `Redux Middleware` 程式碼實作出來，其實不好理解，但實作過一次後，就蠻清楚在說什麼。
+以上這段說明，如果沒有實際把 `Redux Middleware` 程式碼實作出來，其實不好理解，但實作過一次後，就更容易清楚多個 `Middlewares` 的情境。
 
 ### 二、能實作自己客製化的 Middleware
 
-回顧實踐的 `loggerMiddleware`、`catchErrMiddleware`：
+回顧實踐的 `loggerMiddleware`、`catchErrMiddleware` 結構：
 
 ```javascript
 /*** loggerMiddleware.js file ***/
@@ -1201,6 +1203,7 @@ const middleware = store => next => action => {
 就能製作出客製化的 `Middleware`，例如知名的 `Redux-Thunk`：
 
 ```javascript
+/*** Redux-Thunk source code ***/
 const thunkMiddleware = ({ dispatch, getState }) => next => action => {
   // The thunk middleware looks for any functions that were passed to `store.dispatch`.
   // If this "action" is really a function, call it and return the result.
@@ -1218,7 +1221,7 @@ export default thunkMiddleware;
 
 ### 三、理解並實作 applyMiddleware
 
-`applyMiddleware` 基本上就是封裝整合 `Middlewares` 產生出新 `dispatch` 的步驟細節，最後會直接返回一個可傳入 `createStore` 以及 `reducer, preloadedState` 的函式（通常會被命名成 `enhancer`）。
+`applyMiddleware` 基本上就是封裝 `Middlewares` 與 `dispatch` 兩者整合的細節，最後會直接返回一個可傳入 `createStore` 以及 `reducer, preloadedState` 的函式（通常會被命名成 `enhancer`）。
 
 ```javascript
 /*** applyMiddleware.js ***/
@@ -1258,7 +1261,7 @@ const enhancer = applyMiddleware(catchErrMiddleware, timeRecordMiddleware, logge
 
 ### 四、理解並實作 createStore 傳入的第三個參數 enhancer
 
-`enhancer` 為透過 `applyMiddleware` 返回的函式，可以傳入 `createStore` 中，執行 `createStore(reducer, preloadedState, enhancer)` 後，將創建出 `store`，其 `store.dispatch` 已含有 Middlewares 功能。
+`enhancer` 為執行 `applyMiddleware(...middlewares)` 返回的函式，可以傳入 `createStore` 中，執行 `createStore(reducer, preloadedState, enhancer)` 後，將創建出 `store`，其 `store.dispatch` 已含有 `Middlewares` 功能。
 
 ```javascript
 ......
@@ -1276,13 +1279,13 @@ const store = createStore(reducer, preloadedState, enhancer);
 ```javascript
 /*** createStore.js file ***/
 function createStore(reducer, preloadedState, enhancer) {
-    // 如果有 enhancer，就使用新版本的 createStore
+    // 如果有 enhancer，就使用新版的 createStore
     if(enhancer){
        const newCreateStore = enhancer(createStore);
        return newCreateStore(reducer, preloadedState);
     };
 
-    // 不然就照正常的流程走
+    // 不然就照原始 createStore 流程走
     ......
 }
 
@@ -1332,14 +1335,19 @@ import compose from './compose.js'
 
 const applyMiddleware = function (...middlewares) {
   return (createStore) => (reducer, preloadedState) => {
-
+        // 1.使用原始的 createStore 創建原始的 store
         const store = createStore(reducer, preloadedState);
+        // 2.紀錄原始的 dispatch
         let dispatch = store.dispatch;
 
+        // 3.封裝給 Middleware 用的 store
         const storeForMiddleware = { getState: store.getState };
+        // 4.創建 middleware chain，將每個 middleware 都傳入 store 參數
         const middlewareChain = middlewares.map(middleware => middleware(storeForMiddleware));
+        // 5.擴展 dispatch，將 middlewares 的功能封裝其中
         dispatch = compose(...middlewareChain)(store.dispatch);
 
+        // 6.更新 store.dispatch
         store.dispatch = dispatch;
         return store;
     };
@@ -1352,82 +1360,14 @@ export default applyMiddleware;
 ```javascript
 /*** createStore.js file ***/
 function createStore(reducer, preloadedState, enhancer) {
-    // 如果有 enhancer，就使用新版本的 createStore
+    // 如果有 enhancer，就使用新版的 createStore
     if(enhancer){
        const newCreateStore = enhancer(createStore);
        return newCreateStore(reducer, preloadedState);
     };
 
-    // 不然就照正常的流程走
-    let currentState = preloadedState;
-    let currentReducer = reducer;
-    let currentListeners = [];
-    let nextListeners = currentListeners;
-    let isDispatching = false;
-
-    function ensureCanMutateNextListeners() {
-      if (nextListeners === currentListeners) {
-        nextListeners = currentListeners.slice();
-      }
-    }
-
-    function getState() {
-      if (isDispatching) {
-        throw new Error(...);
-      }
-
-      return currentState;
-    }
-
-    function dispatch(action) {
-      if (isDispatching) {
-        throw new Error(...);
-      }
-
-      try {
-        isDispatching = true;
-        currentState = currentReducer(currentState, action);
-      } finally {
-        isDispatching = false;
-      }
-
-      const listeners = (currentListeners = nextListeners);
-      for (let i = 0; i < listeners.length; i++) {
-        const listener = listeners[i];
-        listener();
-      }
-    }
-
-    function subscribe(listener) {
-      if (isDispatching) {
-        throw new Error(...);
-      }
-
-      let isSubscribed = true;
-
-      ensureCanMutateNextListeners();
-      nextListeners.push(listener);
-
-      return function unsubscribe(listener) {
-        if (!isSubscribed) return;
-
-        if (isDispatching) {
-          throw new Error(...);
-        }
-
-        ensureCanMutateNextListeners();
-        const index = nextListeners.indexOf(listener);
-        nextListeners.splice(index, 1);
-
-        isSubscribed = false;
-      };
-    }
-
-    const randomString = () => Math.random().toString(36).substring(7).split('').join('.');
-
-    dispatch({
-      type: `INIT${randomString()}`,
-    });
+    // 不然就照原始 createStore 流程走
+    ......
 
     const store = {
       getState,
@@ -1465,33 +1405,38 @@ const reducer = (state, action) => {
   }
 };
 
-// 透過 applyMiddleware 創建 enhancer
+// 透過 applyMiddleware，傳入多個 middlewares 創建 enhancer
 const enhancer = applyMiddleware(catchErrMiddleware, timeRecordMiddleware, loggerMiddleware);
 
-// 使用 createStore 並傳入第三個參數 enhancer
+// 使用 createStore 傳入第三個參數 enhancer，創建 dispatch 已被擴展的 store
 const preloadedState = {
   points: 0,
 };
 const store = createStore(reducer, preloadedState, enhancer);
 
 document.getElementById('plus-points-btn').addEventListener('click', () => {
+  // 此 dispatch 已可觸發 middlewares 相關功能
   store.dispatch({
     type: 'PLUS_POINTS',
     payload: 100,
   });
 });
 
-document.getElementById('minus-points-btn').addEventListener('click', () => {
-  store.dispatch({
-    type: 'MINUS_POINTS',
-    payload: 100,
-  });
-});
-
-store.subscribe(() => {
-  const points = store.getState().points;
-  document.getElementById('display-points-automatically').textContent = points;
-});
+......
 ```
 
+如果比對目前的 Redux Source Code，會發現有些程式不同，因為還有些實作的細節，例如：判斷傳入型別是否正確、避免錯誤使用、程式寫法優化等等的內容，在此無完全實作。
+
+然而整體而言，已實作 `Redux Middleware` 的核心概念，而且是從需求角度出發的思考模式，希望讓閱讀完的你，有更理解 `Redux Middleware` 相關的 Source Code 囉。
+
+<hr>
+
 #### 【 參考資料 】
+
+- [reduxjs/redux repo | Redux 原始碼](https://github.com/reduxjs/redux/tree/master/src)
+- [Middleware | Redux 文件](https://redux.js.org/understanding/history-and-design/middleware)
+- [完全理解 redux（从零实现一个 redux）｜ brickspert](https://mp.weixin.qq.com/s?__biz=MzIxNjgwMDIzMA==&mid=2247484209&idx=1&sn=1a33a2c8cb58ae98e4f8080ab59da06f&scene=21#wechat_redirect)
+- [詳解 Redux Middleware ｜谷哥](https://max80713.medium.com/%E8%A9%B3%E8%A7%A3-redux-middleware-efd6a506357e)
+- [從 source code 來看 Redux 更新 state 的運行機制 | 陳冠霖](https://as790726.medium.com/%E5%BE%9E-source-code-%E4%BE%86%E7%9C%8B-redux-%E7%9A%84%E9%81%8B%E8%A1%8C%E6%A9%9F%E5%88%B6-f5e0adc1b9f6)
+- [[JS] Functional Programming and Currying ｜ PJ](https://pjchender.dev/javascript/js-functional-programming-currying/)
+- [[Day04] Currying, Pointfree, Higher Order Function ｜ 林子暘](https://pjchender.dev/javascript/js-functional-programming-currying/)
