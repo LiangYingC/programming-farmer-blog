@@ -22,6 +22,8 @@ category: sourceCode
 
 ## 複習些 functional programming 的觀念
 
+> 如果熟悉 FP 可跳過這個段落。
+
 如果真的想理解 `Redux Middleware` 以及其 Source Code，就一定要先理解 functional programming 的部分觀念和實作，否則將相當挫折。
 
 因此先複習 functional programming 部分觀念，僅針對與 `Redux Middleware` 有關的部分重點說明，藉此讓接下來實作 `Redux Middleware` 相關功能更加地順利。
@@ -165,6 +167,8 @@ const compose = (...fns) => x => fns.reduceRight((prev, fn) => fn(prev), x);
 <hr>
 
 ## 複習前篇已實作的 createStore.js 與 index.js
+
+> 如果熟悉前篇 `createStore` 內容可跳過這個段落。
 
 接下來，將先不定義或解釋 `Redux Middleware` 是什麼（可先忘掉 `Redux Middleware` 這個詞！），而是從需求開始實作，擴展先前已經完成的程式碼。
 
