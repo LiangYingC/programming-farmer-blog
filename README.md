@@ -14,9 +14,10 @@
 - [parseInt / parseFloat / Number，將字串轉型為數字的方法比較](https://www.programfarmer.com/articles/javaScript/javascript-parseInt-parseFloat-Number)
 - [JS 宣告變數， var 與 let / const 差異](https://www.programfarmer.com/articles/javaScript/javascript-var-let-const-for-loop)
 
-### Redux
+### SourceCode
 
-- [理解 Redux 原始碼：來實作 Redux createStore 的 getState、dispatch、subscribe 吧](https://www.programfarmer.com/articles/redux/redux-make-createStore-getState-dispatch-subscribe)
+- [理解 Redux 原始碼 (一)：來實作 createStore 的 getState、dispatch、subscribe 吧](https://www.programfarmer.com/articles/sourceCode/redux-make-createStore-getState-dispatch-subscribe)
+- [理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](https://www.programfarmer.com/articles/sourceCode/redux-make-createStore-enhancer-and-applyMiddleware)
 
 ### React
 
