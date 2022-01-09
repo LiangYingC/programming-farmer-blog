@@ -911,6 +911,8 @@ store.subscribe(() => {
 
 雖然並沒有做出最完整的 `createStore`，像是沒實作 `enhancer` 相關功能，但透過實作 `getState`、`dispatch`、`subscribe`，已經能理解核心的 Redux 運作，也知道它是如何透過 closure、listeners 等模式，去封裝並實踐集中式管理資料以及監聽資料變化等概念，整體而言很有趣呀。
 
+已完成下篇文章[理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/sourceCode/redux-make-createStore-enhancer-and-applyMiddleware)，歡迎點閱。
+
 <hr>
 
 #### 【 參考資料 】
