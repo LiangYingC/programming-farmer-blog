@@ -1,19 +1,19 @@
 ---
-title: 理解 Redux 原始碼：來實作 Redux createStore 的 getState、dispatch、subscribe 吧
+title: 理解 Redux 原始碼 (一)：來實作 createStore 的 getState、dispatch、subscribe 吧
 date: 2021-12-01
-description: 很好奇 redux 是如何在程式中實踐狀態統一控管以及單向資料流的概念，於是決定閱讀 Redux 的原始碼，並解實作簡單的 createStore function，會聚焦在 getState、dispatch、subscribe API。
+description: 很好奇 Redux 是如何在程式中實踐狀態統一控管以及單向資料流的概念，於是決定閱讀 Redux 的原始碼，並解實作基礎的 createStore function，會聚焦在 getState、dispatch、subscribe API。
 category: sourceCode
 ---
 
 ## 前言
 
-雖然在先前工作中，比較常用到 Context API 以及 useReducer 處理狀態管理，然而依然很好奇 Redux 是如何在程式中實踐「狀態統一控管」以及「單向資料流」的概念，加上看過谷哥在 ModernWeb'21 上分享的 [挑戰 40 分鐘實作簡易版 Redux 佐設計模式](https://modernweb.ithome.com.tw/session-inner#448) 於是決定來閱讀 Redux Source Code，並實作簡易的 createStore function，主要會先聚焦在其中的 `getState`、`dispatch` 以及 `subscribe` API。
+雖然在先前工作中，比較常用到 Context API 以及 useReducer 處理狀態管理，然而依然很好奇 Redux 是如何在程式中實踐「狀態統一控管」以及「單向資料流」的概念，加上看過谷哥在 ModernWeb'21 上分享的 [挑戰 40 分鐘實作簡易版 Redux 佐設計模式](https://modernweb.ithome.com.tw/session-inner#448) 於是決定來閱讀 Redux Source Code，並實作簡易的 `createStore` 函式，主要會聚焦在其中的 `getState`、`dispatch` 以及 `subscribe` API。
 
 期許閱讀完這篇後，能達成：
 
 - 理解 Redux 是什麼，以及主要想解決的問題
-- 理解並實作 createStore 中的 getState、dispatch、subscribe
-- 理解 subscribe 會遇到什麼 bugs，如何藉由 currentListners、nextListners、ensureCanMutateNextListeners 解決
+- 理解並實作 `createStore` 中的 `getState`、`dispatch`、`subscribe`
+- 理解 `subscribe` 會遇到什麼 bugs，如何藉由 `currentListners`、`nextListners`、`ensureCanMutateNextListeners` 解決
 - 能動手實作 basic createStore function
 
 <hr>
