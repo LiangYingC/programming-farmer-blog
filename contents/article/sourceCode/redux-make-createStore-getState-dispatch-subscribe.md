@@ -37,11 +37,10 @@ category: sourceCode
 除了「集中式」之外，Redux 還有一個關鍵是基於 Flux 實踐的「單向資料流」更新資料方式，簡言之就是**限制更新 Store State 的方式，只能透過下圖單向的流程來執行，藉此讓資料的改變更安全、可預期地被控管**，概念如下圖：
 
 ![redux flow](/article/sourceCode/redux-make-createStore-getState-dispatch-subscribe/02.png)
-_p.s.如果想要加上 Middleware 會在 Action 到 Reducer 間處理，此文不會探討_
 
 - Store :
   - Redux 的核心，可比喻為一個容器，擁有唯一的資料中心 `Store State`（是個 object）以及提供 `getState`、`dispatch`、`subscribe` 等 API 供外部使用。
-  - 在創建 `Store` 時，會接收外部定義的 `Reducer` 提供給更新資料時使用。
+  - 在創建 `Store` 時，會接收外部定義的 `Reducer` 函式（定義更新資料的規則），提供給更新資料時執行。
 - Dispatcher :
   - 會接收 `Action`，這個 `Action` 包含著更新資料的方式 `Action Type` 以及更新資料時所用的值 `Action Payload`。
   - 如果 `Store` 中的資料發生了變化，只會有一種可能，就是由 `Dispatcher` 派發 `Action` 所觸發的結果。
@@ -51,8 +50,8 @@ _p.s.如果想要加上 Middleware 會在 Action 到 Reducer 間處理，此文�
 
 上面的觀念大致看過有個概念即可，先記住 Redux 最重要的觀念：
 
-1. 會創建單一的中心資料庫
-2. 修改資料的模式是單向資料流
+1. **會創建單一的中心資料庫**
+2. **修改資料的模式是單向資料流**
 
 接著就開始依據 Redux 原始碼的 pattern，實作 `createStore`。
 
@@ -180,7 +179,7 @@ store.dispatch({
 1. 需要制定更新 `store state` 的規則，且需確保不會有預期外的 side effect。
 2. 需要修改 `store.dispatch`，讓 `dispatch` 能按造制訂出來的規則更新 `store state`。
 
-從第一點開始實作，透過 `reducer` 定義好更新 `store state` 的規則：
+從第一點開始實作，透過名為 `reducer` 的 pure function，定義好更新 `store state` 的規則：
 
 ```javascript
 /*** index.js file ***/
