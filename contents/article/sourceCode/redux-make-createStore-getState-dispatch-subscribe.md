@@ -7,7 +7,7 @@ category: sourceCode
 
 ## 前言
 
-雖然在先前工作中，比較常用到 Context API 以及 useReducer 處理狀態管理，然而依然很好奇 Redux 是如何在程式中實踐「狀態統一控管」以及「單向資料流」的概念，加上看過谷哥在 ModernWeb'21 上分享的 [挑戰 40 分鐘實作簡易版 Redux 佐設計模式](https://modernweb.ithome.com.tw/session-inner#448) 於是決定來閱讀 Redux Source Code，並實作簡易的 `createStore` 函式，主要會聚焦在其中的 `getState`、`dispatch` 以及 `subscribe` API。
+雖然在先前工作中，比較常用到 Context API 以及 useReducer 處理狀態管理，然而依然很好奇 Redux 是如何在程式中實踐「狀態統一控管」以及「單向資料流」的概念，加上看過谷哥在 ModernWeb'21 上分享的 [挑戰 40 分鐘實作簡易版 Redux 佐設計模式](https://modernweb.ithome.com.tw/session-inner#448) 於是決定來閱讀 Redux 原始碼，並實作簡易的 `createStore` 函式，主要會聚焦在其中的 `getState`、`dispatch` 以及 `subscribe` API。
 
 期許閱讀完這篇後，能達成：
 
@@ -49,14 +49,14 @@ _p.s.如果想要加上 Middleware 會在 Action 到 Reducer 間處理，此文�
   - 會接收 `Dispatcher` 派發的 `Action`，經由對應的 `Action Type` 進行資料更新後，會回傳新的 `Store State`。
   - `Reducer` 是個 pure function，由外部定義，會在創建 `Store` 時傳入。
 
-上面的觀念大致理解即可，記得 redux 最重要的觀念：
+上面的觀念大致看過有個概念即可，先記住 Redux 最重要的觀念：
 
 1. 會創建單一的中心資料庫
 2. 修改資料的模式是單向資料流
 
-接著就開始依據 Redux Source Code 的 pattern，實作 `createStore`。
+接著就開始依據 Redux 原始碼的 pattern，實作 `createStore`。
 
-_註 1：使用 redux 是會有成本的，例如：程式碼數量增加、需要額外維護 reducer、需要學習 redux 的運作等，因此通常是資料流複雜度高的專案才會考慮使用。_
+_註 1：使用 Redux 是會有成本的，例如：程式碼數量增加、需要額外維護 Reducer、需要學習 Redux 的運作等，因此通常是資料流複雜度較高的專案才會考慮使用。_
 
 _註 2：更嚴謹的定義 Redux，需包含 3 個要件為 **Single source of truth​、State is read-only​（only change by dispatching）、Changes are made with pure functions**，可參考 [Redux 文件](https://redux.js.org/understanding/thinking-in-redux/three-principles)。_
 
@@ -64,7 +64,7 @@ _註 2：更嚴謹的定義 Redux，需包含 3 個要件為 **Single source of 
 
 ## Step 1 : 實作單一資料庫與 getState API
 
-由於 redux 中的中心資料庫 `store state`，只能透過對外提供的特定 API 操作，因此先宣告 `createStore` function 作為模組使用，可以對外提供特定 API。
+由於 Redux 中的中心資料庫 `store state`，只能透過對外提供的特定 API 操作，因此先宣告 `createStore` 函式作為模組使用，可以對外提供特定 API。
 
 ```javascript
 /*** createStore.js file ***/
@@ -75,7 +75,7 @@ createStore() {
 export default createStore;
 ```
 
-實踐 redux 只有單一中心資料庫的核心概念，因此在 `createStore` 內宣告 `currentState`，並初始為外部傳入的`preloadedState`。
+實踐 Redux 只有單一中心資料庫的核心概念，因此在 `createStore` 內宣告 `currentState`，並初始為外部傳入的 `preloadedState`。
 
 ```javascript
 /*** createStore.js file ***/
@@ -730,7 +730,7 @@ createStore 的核心在於單一控管的 sore state，且提供下列三個 AP
 
 ### 4. 能動手實作 basic createStore function
 
-可以試著自己實作，印象會更深刻！如果卡住，再來回顧本文或者 Redux Source Code。
+可以試著自己實作，印象會更深刻！如果卡住，再來回顧本文或者 Redux 原始碼。
 
 實作的完整程式碼，會放在下方「recap 整個 createSote 程式碼」段落。
 
@@ -918,8 +918,8 @@ store.subscribe(() => {
 #### 【 參考資料 】
 
 - [LiangYingC/Implement-Simple-Redux repo | 我的實作程式碼](https://github.com/LiangYingC/Implement-Simple-Redux)
-- [reduxjs/redux repo | redux 原始碼](https://github.com/reduxjs/redux/tree/master/src)
-- [redux three principles | redux 文件](https://redux.js.org/understanding/thinking-in-redux/three-principles)
+- [reduxjs/redux repo | Redux 原始碼](https://github.com/reduxjs/redux/tree/master/src)
+- [redux three principles | Redux 文件](https://redux.js.org/understanding/thinking-in-redux/three-principles)
 - [挑戰 40 分鐘實作簡易版 Redux 佐設計模式 | 谷哥](https://modernweb.ithome.com.tw/session-inner#448)
 - [完全理解 redux（从零实现一个 redux） ｜ brickspert](https://mp.weixin.qq.com/s?__biz=MzIxNjgwMDIzMA==&mid=2247484209&idx=1&sn=1a33a2c8cb58ae98e4f8080ab59da06f&scene=21#wechat_redirect)
 - [從 source code 來看 Redux 更新 state 的運行機制 | 陳冠霖](https://as790726.medium.com/%E5%BE%9E-source-code-%E4%BE%86%E7%9C%8B-redux-%E7%9A%84%E9%81%8B%E8%A1%8C%E6%A9%9F%E5%88%B6-f5e0adc1b9f6)
