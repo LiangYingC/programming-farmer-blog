@@ -7,7 +7,7 @@ category: sourceCode
 
 ## 前言
 
-延續上篇分享的 [理解 Redux 原始碼：來實作 createStore 的 getState, dispatch, subscribe 吧](/articles/sourceCode/redux-make-createStore-getState-dispatch-subscribe)，這次將更深入探討 Redux Source Code 中，關於 `Middleware` 的部分，像是：`applyMiddleware` 以及 `createStore` 傳入的 `enhancer` 等等。
+延續上篇分享的 [理解 Redux 原始碼：來實作 createStore 的 getState, dispatch, subscribe 吧](/articles/sourceCode/redux-make-createStore-getState-dispatch-subscribe)，這次將更深入探討 Redux 原始碼中，關於 `Middleware` 的部分，像是：`applyMiddleware` 以及 `createStore` 傳入的 `enhancer` 等等。
 
 期許閱讀完這篇後，能達成：
 
@@ -172,7 +172,7 @@ const compose = (...fns) => x => fns.reduceRight((prev, fn) => fn(prev), x);
 
 接下來，將先不定義或解釋 `Redux Middleware` 是什麼（可先忘掉 `Redux Middleware` 這個詞！），而是從需求開始實作，擴展先前已經完成的程式碼。
 
-當隨著本文脈絡，實作出滿足幾個新需求的程式碼後，就會自然地完成趨近 Redux Source Code 的 `Middleware` 功能囉。
+當隨著本文脈絡，實作出滿足幾個新需求的程式碼後，就會自然地完成趨近 Redux 原始碼的 `Middleware` 功能囉。
 
 在開始實作需求前，先快速回憶上篇寫完的程式碼，分別有兩份 js 檔案：
 
@@ -765,7 +765,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 ## 實作 applyMiddleware 函式，封裝 Middlewares 的細節邏輯
 
-假定「有無數個 `Middleware` 時」，程式碼的複雜性和細節會很多，因此可以試著將重複的內容以及部分細節封裝，讓使用 `Redux` 的開發者，僅需要關注到使用哪些 `Middlewares` 即可。
+假定「有無數個 `Middleware` 時」，程式碼的複雜性和細節會很多，因此可以試著將重複的內容以及部分細節封裝，讓使用 `Redux` 的開發者，僅需要關注使用哪些 `Middlewares` 即可。
 
 ```javascript
 /*** index.js file ***/
@@ -1142,7 +1142,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-到此就大致完成 Reduxe Source Code 中，與 `Middleware` 有關的邏輯概念實作！
+到此就大致完成 Redux 原始碼中，與 `Middleware` 有關的邏輯概念實作！
 
 <hr>
 
@@ -1429,7 +1429,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-如果比對目前的 Redux Source Code，會發現有些程式不同，因為還有些實作的細節，例如：判斷傳入型別是否正確、避免錯誤使用、程式寫法優化等等的內容，在此無完全實作。
+如果比對目前的 Redux 原始碼，會發現有些程式不同，因為還有些實作的細節，例如：判斷傳入型別是否正確、避免錯誤使用、程式寫法優化等等的內容，在此無完全實作。
 
 然而整體而言，已實作 `Redux Middleware` 的核心概念，而且是從需求角度出發的思考模式，希望讓閱讀完的你，有更理解 `Redux Middleware` 相關的 Source Code 囉。
 
