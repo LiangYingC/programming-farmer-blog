@@ -22,12 +22,13 @@ const mobileFooterConfig = [
 ];
 
 const Footer: FC = () => {
+  const thisYear = new Date().getFullYear();
   return (
     <>
       <DesktopFooterWrapper>
         <CopyrightWrap>
           <CopyrightIcon>©</CopyrightIcon>
-          <span>{new Date().getFullYear()} LiangC. All rights reserved.</span>
+          <span>{thisYear} LiangC. All rights reserved.</span>
         </CopyrightWrap>
       </DesktopFooterWrapper>
       <MobileFooterWrapper>
