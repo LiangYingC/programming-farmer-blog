@@ -59,8 +59,8 @@ export const SocialLinks = styled.div`
 
   margin-bottom: 20px;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobileL}) {
-    margin-bottom: 10px;
+  @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
+    margin-bottom: 5px;
   }
 `;
 
