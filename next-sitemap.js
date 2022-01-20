@@ -1,8 +1,8 @@
-const siteURL = process.env.SITE_URL;
+const SITE_URL = process.env.SITE_URL;
 
 // Document : https://www.npmjs.com/package/next-sitemap
 module.exports = {
-  siteUrl: siteURL,
+  siteUrl: SITE_URL,
   changefreq: 'weekly',
   priority: 0.7,
   sitemapSize: 5000,
