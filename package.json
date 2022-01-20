@@ -1,7 +1,7 @@
 {
   "name": "programming-farmer-blog",
   "version": "1.0.0",
-  "description": "LiangC's personal website and blog",
+  "description": "LiangC's personal tech blog",
   "main": "index.js",
   "scripts": {
     "format": "prettier --write .",
@@ -13,8 +13,8 @@
     "start": "next start"
   },
   "keywords": [
-    "personal website",
-    "blog"
+    "personal blog",
+    "tech blog"
   ],
   "author": "LiangC",
   "license": "ISC",
