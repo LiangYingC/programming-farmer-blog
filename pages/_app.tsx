@@ -6,7 +6,6 @@ import { defaultTheme, darkThemeColors, lightThemeColors } from '@styles/theme';
 import getGlobalStyle from '@styles/getGlobalStyle';
 
 const GTAGE_ID = process.env.NEXT_PUBLIC_GTAG_ID;
-console.log({ GTAGE_ID });
 
 const ThemeContainer = ({ children }: { children: React.ReactNode }) => {
   const { isDarkMode } = useColorMode();
