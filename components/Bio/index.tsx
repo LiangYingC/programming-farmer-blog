@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useColorMode } from '@contexts/ColorModeContext';
-import { AiFillGithub, AiFillLinkedin } from 'react-icons/ai';
+import { AiFillGithub, AiOutlineTwitter } from 'react-icons/ai';
 import {
   BioWrapper,
   RoundImageWrapper,
@@ -22,10 +22,10 @@ const socialLinks = [
     },
   },
   {
-    site: 'Linkedin',
-    link: 'https://www.linkedin.com/in/chen-liang-ying-4a0873165/',
-    getIcon: function getLinkedinIcon() {
-      return <AiFillLinkedin />;
+    site: 'Twitter',
+    link: 'https://twitter.com/LiangCh95173853',
+    getIcon: function getTwitterIcon() {
+      return <AiOutlineTwitter />;
     },
   },
 ];

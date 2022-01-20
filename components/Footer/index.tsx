@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import Link from 'next/link';
-import { FaReact } from 'react-icons/fa';
-import { IoLogoJavascript, IoLogoCss3 } from 'react-icons/io';
+import { BiHome, BiCategoryAlt } from 'react-icons/bi';
+
 import {
   DesktopFooterWrapper,
   CopyrightWrap,
@@ -12,33 +12,30 @@ import {
 
 const mobileFooterConfig = [
   {
-    name: 'react',
-    component: <FaReact />,
+    link: '/',
+    component: <BiHome />,
   },
   {
-    name: 'javaScript',
-    component: <IoLogoJavascript />,
-  },
-  {
-    name: 'style',
-    component: <IoLogoCss3 />,
+    link: '/category',
+    component: <BiCategoryAlt />,
   },
 ];
 
 const Footer: FC = () => {
+  const thisYear = new Date().getFullYear();
   return (
     <>
       <DesktopFooterWrapper>
         <CopyrightWrap>
           <CopyrightIcon>©</CopyrightIcon>
-          <span>{new Date().getFullYear()} LiangC. All rights reserved.</span>
+          <span>{thisYear} LiangC. All rights reserved.</span>
         </CopyrightWrap>
       </DesktopFooterWrapper>
       <MobileFooterWrapper>
-        {mobileFooterConfig.map(({ name, component }) => {
+        {mobileFooterConfig.map(({ link, component }) => {
           return (
-            <Link key={name} href={`/articles/${name}`}>
-              <FooterIcon href={`/articles/${name}`}>{component}</FooterIcon>
+            <Link key={link} href={`${link}`}>
+              <FooterIcon href={`${link}`}>{component}</FooterIcon>
             </Link>
           );
         })}
