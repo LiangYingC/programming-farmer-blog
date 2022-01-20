@@ -11,7 +11,7 @@ const AllArticlesPage: FC<{ articles: Articles }> = ({ articles }) => {
     <Layout
       pageType="website"
       pageTitle="城市碼農 | LiangC | 所有技術文章"
-      pageDesc="城市碼農技術部落格的所有文章，主題涵蓋 JavaScript、React、Next.js、CSS 等等。"
+      pageDesc="城市碼農技術部落格的所有文章，主題涵蓋 JavaScript、React、Source Code、CSS 等技術文章。"
       pageURL="https://www.programfarmer.com/articles"
     >
       <ArticleList articleIntro={'All Articles'} articles={articles} />
