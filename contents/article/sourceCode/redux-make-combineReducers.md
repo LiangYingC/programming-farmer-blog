@@ -12,7 +12,7 @@ category: sourceCode
 期許閱讀完這篇後，能達成：
 
 - 理解 `combineReducers` 要達成的目的
-- 能實作出 `combineReducers` 相關的程式碼
+- 能實作 `combineReducers` 相關程式碼
 
 <hr>
 
@@ -568,7 +568,7 @@ const reducer = combineReducers({
 });
 ```
 
-### 二、能實作出 `combineReducers` 相關的程式碼
+### 二、能實作 combineReducers 相關程式碼
 
 可以聚焦於理解並實作核心邏輯：**Turns an object whose values are different reducer functions, into a single reducer function**。
 
@@ -606,7 +606,7 @@ function combineReducers(reducers) {
 export default combineReducers;
 ```
 
-以上就是關於 `combineReducers` 的實作和總結，比起前兩篇關於 Basic createStore 、Redux Middleware 都還要單純，重點在於知道 `combineReducers` 要達成的單一目標後，就蠻能知道要如何實作，很適合自己寫寫看當練習。
+以上是關於 `combineReducers` 的實作和總結，比起前兩篇 Basic createStore 、Redux Middleware 都還要單純，重點在於知道 `combineReducers` 要達成的單一目標後，就蠻能知道要如何實作，很適合自己寫寫看當練習。
 
 <hr>
 
