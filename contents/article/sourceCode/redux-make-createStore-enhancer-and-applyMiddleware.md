@@ -1429,9 +1429,11 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-如果比對目前的 Redux 原始碼，會發現有些程式不同，因為還有些實作的細節，例如：判斷傳入型別是否正確、避免錯誤使用、程式寫法優化等等的內容，在此無完全實作。
+比對目前的 Redux 原始碼，會發現有些程式不同，因為還有些實作的細節，例如：判斷傳入型別是否正確、避免錯誤使用、程式寫法優化等等的內容，在此無完全實作。有興趣可以再多去閱讀原始碼。
 
-然而整體而言，已實作 `Redux Middleware` 的核心概念，而且是從需求角度出發的思考模式，希望讓閱讀完的你，有更理解 `Redux Middleware` 相關的 Source Code 囉。
+然而整體而言，已實作 `Redux Middleware` 的核心概念，而且是從需求角度出發的思考模式，希望讓閱讀完的你，有更理解 `Redux Middleware` 相關原始碼囉。
+
+下篇文章會實作 `combineReducers`，相對此篇，非常輕量簡單，有興趣歡迎閱讀：[理解 Redux 原始碼 (三)：來實作 combineReducers 吧](/articles/sourceCode/redux-make-combineReducers)。
 
 <hr>
 
