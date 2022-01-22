@@ -26,18 +26,24 @@ const App = ({ Component, pageProps }: AppProps) => {
     <ColorModeProvider>
       <ThemeContainer>
         <Script
-          strategy="lazyOnload"
+          strategy="afterInteractive"
           src={`https://www.googletagmanager.com/gtag/js?id=${GTAGE_ID}`}
         />
-        <Script id="ga-analytics">
-          {`
+        <Script
+          id="gtag-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-
-            gtag('config', ${GTAGE_ID});
-          `}
-        </Script>
+            
+            gtag('config', '${GTAGE_ID}', {
+              page_path: window.location.pathname,
+            });
+          `,
+          }}
+        />
         <Component {...pageProps} />
       </ThemeContainer>
     </ColorModeProvider>
