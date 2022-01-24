@@ -9,8 +9,7 @@
     "sourceType": "module", // Allows for the use of imports
     "ecmaFeatures": {
       "jsx": true // Allows for the parsing of JSX
-    },
-    "useJSXTextNode": true // If this is false, the parser creates the AST of JSX texts as the legacy style
+    }
   },
   "plugins": ["@typescript-eslint", "react-hooks", "prettier"],
   "extends": [
@@ -55,7 +54,6 @@
     "@typescript-eslint/no-var-requires": "warn",
     "@typescript-eslint/no-empty-function": "warn",
     "@typescript-eslint/no-use-before-define": "error",
-    
     "prettier/prettier": [
       // Can replace @eslint-plugin-react rules. Ref : https://github.com/prettier/eslint-plugin-prettier#options
       "error",
