@@ -41,7 +41,6 @@ const App = ({ Component, pageProps }: AppProps) => {
 
             gtag('config', '${GA_TRACKING_ID}', {
               page_path: window.location.pathname,
-              debug_mode: ${isDev}
             });
           `,
           }}
