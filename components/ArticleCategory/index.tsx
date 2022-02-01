@@ -2,6 +2,7 @@ import { FC } from 'react';
 import Link from 'next/link';
 import { allArticlesPaths } from '@configs/paths';
 import { capitalizeLetter } from '@lib/format';
+import { sendEvent } from '@lib/gtag';
 import {
   GoArticleWapper,
   Title,
@@ -17,7 +18,17 @@ const ArticleCategory: FC = () => {
         {allArticlesPaths.map(({ name, path }) => {
           return (
             <Link key={name} href={`/articles${path}`}>
-              <GoArticlesBtn> {capitalizeLetter(name)}</GoArticlesBtn>
+              <GoArticlesBtn
+                onClick={() => {
+                  sendEvent({
+                    action: 'category_click',
+                    category: 'click',
+                    label: path.replace('/', ''),
+                  });
+                }}
+              >
+                {capitalizeLetter(name)}
+              </GoArticlesBtn>
             </Link>
           );
         })}
