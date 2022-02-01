@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { formatDashDate, capitalizeLetter } from '@lib/format';
+import { sendEvent } from '@lib/gtag';
 import { Articles } from '@myTypes/articles';
 import {
   ArticleIntro,
@@ -25,7 +26,15 @@ const ArticleList: FC<{ articleIntro?: string; articles: Articles }> = ({
 
         return (
           <Link key={title} href={`/articles/${category}/${slug}`}>
-            <ArticleWrapper>
+            <ArticleWrapper
+              onClick={() => {
+                sendEvent({
+                  action: 'article_click',
+                  category: 'click',
+                  label: title,
+                });
+              }}
+            >
               <Infos>
                 <Category>{capitalizeLetter(category)}</Category>
                 <Date>{formattedDate}</Date>
