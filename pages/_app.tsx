@@ -5,7 +5,8 @@ import { ColorModeProvider, useColorMode } from '@contexts/ColorModeContext';
 import { defaultTheme, darkThemeColors, lightThemeColors } from '@styles/theme';
 import getGlobalStyle from '@styles/getGlobalStyle';
 
-const GTAGE_ID = process.env.NEXT_PUBLIC_GTAG_ID;
+const isDev = process.env.SITE_URL === 'http://localhost:3000';
+const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GTAG_ID;
 
 const ThemeContainer = ({ children }: { children: React.ReactNode }) => {
   const { isDarkMode } = useColorMode();
@@ -27,7 +28,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <ThemeContainer>
         <Script
           strategy="afterInteractive"
-          src={`https://www.googletagmanager.com/gtag/js?id=${GTAGE_ID}`}
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
         />
         <Script
           id="gtag-init"
@@ -37,9 +38,10 @@ const App = ({ Component, pageProps }: AppProps) => {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            
-            gtag('config', '${GTAGE_ID}', {
+
+            gtag('config', '${GA_TRACKING_ID}', {
               page_path: window.location.pathname,
+              debug_mode: ${isDev}
             });
           `,
           }}
