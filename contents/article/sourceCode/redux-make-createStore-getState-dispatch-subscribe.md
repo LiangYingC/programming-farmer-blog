@@ -7,14 +7,14 @@ category: sourceCode
 
 ## 前言
 
-雖然在先前工作中，比較常用到 Context API 以及 useReducer 處理狀態管理，然而依然很好奇 Redux 是如何在程式中實踐「狀態統一控管」以及「單向資料流」的概念，加上看過谷哥在 ModernWeb'21 上分享的 [挑戰 40 分鐘實作簡易版 Redux 佐設計模式](https://modernweb.ithome.com.tw/session-inner#448) 於是決定來閱讀 Redux 原始碼，並實作簡易的 `createStore` 函式，主要會聚焦在其中的 `getState`、`dispatch` 以及 `subscribe` API。
+雖然在先前工作中，較常使用 Context API 以及 `useReducer` 處理狀態管理，然而依然很好奇 Redux 是如何在程式中實踐「狀態統一控管」以及「單向資料流」的概念，加上看過谷哥在 ModernWeb'21 上分享的 [挑戰 40 分鐘實作簡易版 Redux 佐設計模式](https://modernweb.ithome.com.tw/session-inner#448) 於是決定閱讀 Redux 原始碼，並實作簡易的 `createStore` 函式，主要會聚焦在其中的 `getState`、`dispatch` 以及 `subscribe` API。
 
-期許閱讀完這篇後，能達成：
+期許閱讀完本文後，能達成：
 
 - 理解 Redux 是什麼，以及主要想解決的問題
-- 理解並實作 `createStore` 中的 `getState`、`dispatch`、`subscribe`
-- 理解 `subscribe` 會遇到什麼 bugs，如何藉由 `currentListners`、`nextListners`、`ensureCanMutateNextListeners` 解決
-- 能動手實作 basic createStore function
+- 理解 `createStore` 中的 `getState`、`dispatch`、`subscribe`
+- 理解 `subscribe` 遇到什麼 bugs，如何藉由 `currentListners`、`nextListners`、`ensureCanMutateNextListeners` 解決
+- 能動手實作基本的 `createStore`
 
 <hr>
 
@@ -26,70 +26,56 @@ category: sourceCode
 
 為什麼會需要這個「集中式」的資料狀態管理工具？
 
-主要是因為前端的複雜性越來越高，且時常同類型的資料可能散落在不同的區塊元件中，**如果分開管理資料可能會造成資料狀態不一致的狀況，於是透過集中管理資料的方式來解決這個問題**。
+主因是前端的複雜性越來越高，且時常同類型的資料可能散落在不同的區塊元件中，**如果分開管理資料，可能會造成資料狀態不一致的狀況，於是可以透過集中管理資料的方式來解決這個問題**。
 
 例如：通常在應用程式中，使用者的資料，如姓名、大頭照、信箱等，會用在不同的區塊元件中，如果沒有集中統一管理資料，就可能會造成 A 區塊元件中的信箱資料被更新，但 B 區塊元件中信箱資料卻還是過去的狀態。如果集中管理統一管理資料，亦即使用者的資料來源只有一處，就能解決這個問題。
 
-可以從下圖直觀地了解有 Store State 當作集中式資料狀態庫時的好處。
+可從下圖直觀地了解有統一資料來源(store state)，作為集中式資料狀態庫時的好處。
 
 ![with and without Redux](/article/sourceCode/redux-make-createStore-getState-dispatch-subscribe/01.png)
 
-除了「集中式」之外，Redux 還有一個關鍵是基於 Flux 實踐的「單向資料流」更新資料方式，簡言之就是**限制更新 Store State 的方式，只能透過下圖單向的流程來執行，藉此讓資料的改變更安全、可預期地被控管**，概念如下圖：
+除了「集中式」之外，Redux 還有一個關鍵是基於 Flux 實踐的「單向資料流」更新資料方式，簡言之就是**限制更新 store state 的方式，只能透過下圖單向的流程來執行，藉此讓資料的改變更安全、可預期地被控管**，概念如下圖：
 
 ![redux flow](/article/sourceCode/redux-make-createStore-getState-dispatch-subscribe/02.png)
 
-- Store :
-  - Redux 的核心，可比喻為一個容器，擁有唯一的資料中心 `Store State`（是個 object）以及提供 `getState`、`dispatch`、`subscribe` 等 API 供外部使用。
-  - 在創建 `Store` 時，會接收外部定義的 `Reducer` 函式（定義更新資料的規則），提供給更新資料時執行。
-- Dispatcher :
-  - 會接收 `Action`，這個 `Action` 包含著更新資料的方式 `Action Type` 以及更新資料時所用的值 `Action Payload`。
-  - 如果 `Store` 中的資料發生了變化，只會有一種可能，就是由 `Dispatcher` 派發 `Action` 所觸發的結果。
-- Reducer :
-  - 會接收 `Dispatcher` 派發的 `Action`，經由對應的 `Action Type` 進行資料更新後，會回傳新的 `Store State`。
-  - `Reducer` 是個 pure function，由外部定義，會在創建 `Store` 時傳入。
+快速介紹重要的角色：
 
-上面的觀念大致看過有個概念即可，先記住 Redux 最重要的觀念：
+- Store :
+  - Redux 的核心，可比喻為一個容器，擁有唯一的資料中心 `store state` 以及會提供 `getState`、`dispatch`、`subscribe` 等 API 供外部使用。
+- Dispatcher :
+  - `dispatch` 會接收 `action` 物件，`action` 通常包含更新資料的方式 `action type` 以及更新資料時所用的值 `action payload`。
+  - 如果 `store state` 發生變化，只有一種可能，就是由 `dispatch` 派發 `action` 所觸發的結果。
+- Reducer :
+  - 會接收 `dispatch` 派發的 `action`，經由對應 `action type` 的資料更新規則，進行資料更新後，回傳新的 `store state`。
+
+上面的觀念大致看過有個概念即可，記住 Redux 最重要的觀念：
 
 1. **會創建單一的中心資料庫**
 2. **修改資料的模式是單向資料流**
 
-接著就開始依據 Redux 原始碼的 pattern，實作 `createStore`。
+接著將藉由這兩個觀念，依據 Redux 原始碼的 pattern，實作 `createStore`。
 
-_註 1：使用 Redux 是會有成本的，例如：程式碼數量增加、需要額外維護 Reducer、需要學習 Redux 的運作等，因此通常是資料流複雜度較高的專案才會考慮使用。_
-
-_註 2：更嚴謹的定義 Redux，需包含 3 個要件為 **Single source of truth​、State is read-only​（only change by dispatching）、Changes are made with pure functions**，可參考 [Redux 文件](https://redux.js.org/understanding/thinking-in-redux/three-principles)。_
+_註：更嚴謹的定義 Redux，需包含 3 個要件為 **Single source of truth​、State is read-only​（only change by dispatching）、Changes are made with pure functions**，可參考 [Redux 文件](https://redux.js.org/understanding/thinking-in-redux/three-principles)。_
 
 <hr>
 
 ## Step 1 : 實作單一資料庫與 getState API
 
-由於 Redux 中的中心資料庫 `store state`，只能透過對外提供的特定 API 操作，因此先宣告 `createStore` 函式作為模組使用，可以對外提供特定 API。
+首先，透過函式模組化 ([Module Pattern](https://javascript.plainenglish.io/data-hiding-with-javascript-module-pattern-62b71520bddd)) 的方式，來實踐「單一資料庫」的概念：
 
 ```javascript
 /*** createStore.js file ***/
-createStore() {
-  return {};
-};
-
-export default createStore;
-```
-
-實踐 Redux 只有單一中心資料庫的核心概念，因此在 `createStore` 內宣告 `currentState`，並初始為外部傳入的 `preloadedState`。
-
-```javascript
-/*** createStore.js file ***/
-createStore(preloadedState) {
+// 宣告 createStore 函式
+function createStore(preloadedState) {
   // 創建單一的資料中心 currentState
   let currentState = preloadedState;
-
   return {};
-};
+}
 
 export default createStore;
-
 ```
 
-接著創建 `getState` API 方法，讓外部能使用 `store.getState` API，當呼叫 `getState`API 時，會 `return currentState`。
+接著創建 `getState` API 方法，讓外部能使用 `store.getState` API。當呼叫 `getState`API 時，會 `return currentState`。
 
 ```javascript
 /*** createStore.js file ***/
@@ -111,13 +97,13 @@ function createStore(reducer, preloadedState) {
 export default createStore;
 ```
 
-如此一來，因為 closure，所以在 `createStore` 中宣告 `currentState` 的變數，不會被 garbage collection 機制回收，因此可以持續存在，提供給外部提取和操作。
+由於 closure 特性，所以在 `createStore` 中宣告 `currentState` 的變數，不會被 garbage collection 機制回收，因此可以持續存在，提供給外部提取和操作。
 
 <hr>
 
 ## Step 2 : 實作更改資料的 dispatch API
 
-實踐單一的 `store state` 以及 `getState` API 後，下一步就來實踐「更新資料」。
+實踐 `store state` 以及 `getState` API 後，下一步就來實踐「更新資料」。
 
 先在 `createState` 內部，創建更新資料的方法，稱之為 `dispatch`，並且能傳入 `newState` 參數，藉此更新 `store state`。
 
@@ -130,6 +116,7 @@ function createStore(preloadedState) {
 
   // 創建更新 store state 的 dispatch API
   function dispatch(newState) {
+    // 將 store state 更新為 newState
     currentState = newState;
   };
 
@@ -144,45 +131,51 @@ function createStore(preloadedState) {
 export default createStore;
 ```
 
-看起來好似完成了，然而目前更新資料庫的自由度過高，開發時可能產生問題。
+看似完成，然而目前更新資料庫的自由度過高，開發時可能產生問題。
 
-例如：當 `store state`中，原本是有 number 型別的資料，會進行數字運算，但開發者不小心使用 `dispatch('string')` ，將資料更新成 string 時，就會造成運算上的 Bug。像是下面這樣：
+例如：當 `store state`中，原本是有 number 型別的資料，會進行數字運算，但開發者不小心使用 `dispatch('string')` ，將資料更新成 string 時，就會造成運算上的 bug。
+
+產生 bug 的範例如下：
 
 ```javascript
-/*** index.js file ***/
+/*** app.js file ***/
 import createStore from './createStore.js';
 
 const preloadedState = {
   points: 0;
 }
-
+// 引入剛剛實作的 createStore 創建 store
 const store = createStore(preloadedState);
 
-// 將目前 state + 1
+// 將 state 加 1
 store.dispatch({
   points: store.getState().points + 1
 });
 
-// 將目前 state - 1
+// 將 state 減 1
 store.dispatch({
-  points: store.getState().points + 1
+  points: store.getState().points - 1
 });
 
-// 想隨便改，造成後續 Bug
+// 想隨便改，造成後續 Bug，因為 string 加減後爆掉
 store.dispatch({
   points: 'string'
 });
 ```
 
-因此會需要一些規則來解決這個問題，分成兩個方面思考：
+爲了避免上述狀況，會需要「更新 `state`的規則」來解決問題，分兩個方面思考：
 
-1. 需要制定更新 `store state` 的規則，且需確保不會有預期外的 side effect。
-2. 需要修改 `store.dispatch`，讓 `dispatch` 能按造制訂出來的規則更新 `store state`。
+1. 需要制定更新 `store state` 的規則，且確保不會有預期外的 side effect。
+2. 需要修改 `store.dispatch`，讓 `dispatch` 按造開發者制訂出的規則更新 `store state`。
 
-從第一點開始實作，透過名為 `reducer` 的 pure function，定義好更新 `store state` 的規則：
+從第一點開始實作，開發者透過定義名為 `reducer` 的 pure function，預先規範更新 `store state` 的規則，並且 pure function 不會有 side effect。
+
+當然，要將此 `reducer` 傳入 `createStore`，才能在 `dispatch` 執行時，觸發 `reducer`，依據預先制定的規則更新 `store state`。
+
+上述實作如下：
 
 ```javascript
-/*** index.js file ***/
+/*** app.js file ***/
 import createStore from './createStore.js';
 
 const preloadedState = {
@@ -210,15 +203,15 @@ function reducer(state, action) {
   };
 };
 
-// 需將制定好的 reducer 傳入 createStore 中，提供給 dispatch 使用
+// 將制定好的 reducer 傳入 createStore 中，提供給 dispatch 使用
 const store = createStore(reducer, preloadedState);
 
-// 透過定義好的 action.type "INCREMENT" 規則修改 state
+// 僅能透過定義好的 action.type "INCREMENT" 修改 state
 store.dispatch({
   type: 'INCREMENT',
 });
 
-// 透過制定的 action.type "DECREMENT" 規則修改 state
+// 僅能透過制定和的 action.type "DECREMENT" 修改 state
 store.dispatch({
   type: 'DECREMENT'
 });
@@ -226,11 +219,10 @@ store.dispatch({
 
 接著實作第二點，優化 `createStore` 中的 `dispatch`，使其能依據 `reducer` 規則修改 `store state`。
 
-具體實踐上，就是讓 `dispatch` 能接收 `action`，並透過執行 `reducer` function，更新 `store state`。
+具體實踐上，就是讓 `dispatch` 能接收 `action`，並透過執行 `reducer` 函式，更新 `store state`。
 
 ```javascript
 /*** createStore.js file ***/
-
 // 新增 reducer 參數，由外部定義後傳入
 function createStore(reducer, preloadedState) {
   let currentState = preloadedState;
@@ -258,8 +250,8 @@ export default createStore;
 
 至此，就完成更新 `store state` 的 `dispatch` API，複習一下，它做了兩件事情：
 
-1. 可以接收 action 參數
-2. 將 action 傳遞給 reducer，藉此更新 store state
+1. 可以接收 `action` 參數
+2. 將 `action` 傳遞給 `reducer`，藉此更新 `store state`
 
 <hr>
 
@@ -270,7 +262,7 @@ export default createStore;
 換句話說，就是外部使用方能否在自定義的 `reducer` 內使用 `store.getState` 與 `store.dispatch` ?
 
 - getState : 不必要，因為 `reducer` 本身參數已經傳入 `state`，直接從傳入的參數取用 `state` 即可。
-- dispatch : 不必要，因為預期一個 `action` 就會針對 `state` 更動一次邏輯，因此可避免 `reducer` 執行時一個 `action` 時再重複觸發 `dispatch` 執行同個 `action` 的狀況，這種狀況會導致無限遞迴的 Bug。
+- dispatch : 不必要，因為預期一個 `action` 就會針對 `state` 更動一次邏輯，因此可避免 `reducer` 執行時一個 `action` 時，再重複觸發 `dispatch` 執行同個 `action` 的狀況，這種狀況會導致無限遞迴的 Bug。
 
 撇除上面兩項說明，還有個重要思維是 **reducer 的本質是專注在接收 action ，並且根據各個 action type 已經定義好的邏輯，更新 state 後回傳，是個 pure function，所以多餘的 side effect 都該盡量避免**。
 
@@ -284,7 +276,6 @@ export default createStore;
 
 ```javascript
 /*** createStore.js file ***/
-
 function createStore(reducer, preloadedState) {
   let currentState = preloadedState;
   let currentReducer = reducer;
@@ -341,7 +332,7 @@ export default createStore;
 今天新增一個需求，希望當 `store state` 中的 points 被更新時，要自動 `console.log` points，期望的使用方式如下：
 
 ```javascript
-/*** index.js file ***/
+/*** app.js file ***/
 import createStore from './createStore.js';
 
 ......
@@ -358,8 +349,8 @@ store.subscribe(() => {
 
 `subscribe` 需要實踐兩個重要的概念：
 
-1. 可以傳入一個 callback 參數作為訂閱項目
-2. 當 store state 改變後，訂閱的 callback 會被執行
+1. 可以傳入一個 callback 參數作為訂閱函式
+2. 當 `store state` 改變後，訂閱的 callback 會被執行
 
 基於上述就能實作出：
 
@@ -506,27 +497,29 @@ function createStore(reducer, preloadedState) {
 export default createStore;
 ```
 
-到此就完成 subscribe / unsubscribe 基本功能。
+到此就完成 `subscribe`/`unsubscribe` 基本功能。
 
 <hr>
 
 ## Step 5 : 修復多層 subscribe / unsubscribe 的問題
 
-目前我們實作的 Redux 在使用端執行多層 subscribe / unsubscribe 時會出現問題，如下：
+目前實作的 Redux 在開發端執行**多層** `subscribe`/`unsubscribe` 時會有問題，如下：
 
 ```javascript
-/*** index.js ***/
+/*** app.js ***/
 const store = createStore(reducer, preloadedState);
 const unsubscribe1 = store.subscribe(() => {...});
 const unsubscribe2 = store.subscribe(() => {
   // 在 subscribe callback 中執行 unsubscribe 會有問題
   unsubscribe1();
-  // 在 subscribe callback 中執行另一個 subscribe 會有問題
+  // 在 subscribe callback 中執行另一個 subscribe 也有問題
   const unsubscribe3 = store.subscribe(() => {...});
 });
 ```
 
-為什麼上面這樣會有問題？**因為在針對 listeners array 進行 for loop 時，更改到 listeners 的長度，所以會造成非預期的執行狀況**。
+為什麼上面這樣會有問題？
+
+**因為在針對 listeners array 進行 for loop 時，更改到 listeners 的長度，所以會造成非預期的執行狀況**。
 
 ```javascript
 /*** createStore.js file ***/
@@ -547,12 +540,12 @@ function createStore(reducer, preloadedState) {
 export default createStore;
 ```
 
-處理這個問題，最直覺的方式就是**確保正在執行的 listeners 不會被 subscribe / unsubscribe 影響**。
+處理此問題，可以透過**確保正在執行的 listeners 不會被 subscribe / unsubscribe 影響**。
 
 可以透過創建 `currentListeners` 與 `nextListeners` 達成這個目的：
 
-- currentListeners : stable, 正在被 for 迴圈執行的 listeners
-- nextListeners : unstable, 會被 subscribe 及 unsubscribe 改變的 listeners
+- **currentListeners** : stable, 正在被 for 迴圈執行的 listeners
+- **nextListeners** : unstable, 會被 `subscribe` 及 `unsubscribe` 改變的 listeners
 
 ```javascript
 /*** createStore.js file ***/
@@ -660,13 +653,13 @@ function createStore(reducer, preloadedState) {
 export default createStore;
 ```
 
-經過以上的處理，才算是真正地完成 subscribe / unsubscribe 。
+經過以上的處理，才算是真正地完成 `subscribe`/`unsubscribe` 。
 
 <hr>
 
 ## Step 6 : 添加初始化的 dispatch
 
-最後一步，添加初始化的 dispatch，讓一開始的 state 可以返回 reducer 中設定的 initialState。
+最後一步，添加初始化的 `dispatch`，讓最初的 `state` 可以返回 `reducer` 中設定的 `initialState`。
 
 ```javascript
 /*** createStore.js file ***/
@@ -682,7 +675,6 @@ function createStore(reducer, preloadedState) {
     type: `INIT${randomString()}`,
   });
 
-
   const store = {
     getState,
     dispatch,
@@ -695,49 +687,13 @@ function createStore(reducer, preloadedState) {
 export default createStore;
 ```
 
-至此就完成核心的 `createStore` 功能囉，實作程式碼的統整會放在下方「recap 整個 createSote 程式碼」段落。
-
-<hr>
-
-## 回顧最初的幾個閱讀文章目標
-
-來回文章最初幾個希望閱讀後，能理解的項目：
-
-### 1. 理解 Redux 是什麼，以及主要想解決的問題
-
-Redux 是一個基於 Flux 流程概念實踐的集中式資料狀態管理的工具，最主要的目的是統一管理資料，避免資料狀態不一致的問題，且也利用單向資料流的方式控管資料狀態，讓資料變動更可預期與維護。
-
-### 2. 理解並實作 createStore 中的 getState、dispatch、subscribe
-
-createStore 的核心在於單一控管的 sore state，且提供下列三個 API :
-
-- getState : 取得目前的 store state。
-- dispatch : 透過傳入 action (含 type and payload) 更新 store state。
-- subscribe : 透過傳入 callback，就能訂閱 callback，在 sotore state 更新後會執行 callback。
-
-實作程式碼的統整會放在下方「回顧整個 createStore 程式碼」段落。
-
-### 3. 理解 subscribe 會遇到什麼 bugs，如何藉由 currentListners、nextListners、ensureCanMutateNextListeners 解決
-
-如果不特別處理，在 subscribe 傳入的 listner callback 中執行另一個 subscribe 或 unsubscribe 可能遇到非預期 bugs。
-
-解決方案的關鍵就是：
-
-- currentListners : 創建 currentListners，真正在 state 變動後，會執行的 listners。
-- nextListners : 創建 nextListners，當 subscribe / unsubscribe 時，會針對 nextListners 新增或移除 listner。
-- ensureCanMutateNextListeners : 因為 listners 是 array，為了確保 currentListners 與 nextListners 不同，因此在 nextListners 操作前，會先執行 ensureCanMutateNextListeners function。
-
-### 4. 能動手實作 basic createStore function
-
-可以試著自己實作，印象會更深刻！如果卡住，再來回顧本文或者 Redux 原始碼。
-
-實作的完整程式碼，會放在下方「recap 整個 createSote 程式碼」段落。
+至此就完成核心的 `createStore` 功能囉。
 
 <hr>
 
 ## 回顧整個 createStore 程式碼
 
-整段程式碼如下，有註解解釋，如果需要無註解的版本，可以直接[點此到 Github 上觀看](https://github.com/LiangYingC/Implement-Simple-Redux/blob/master/createStore.js)。
+整段程式碼如下，附上註解解釋，如需無註解的版本，可以[點此到 Github 上觀看](https://github.com/LiangYingC/understand-redux-source-code/tree/master/phase1_createStore)。
 
 ```javascript
 /*** createStore.js file ***/
@@ -849,10 +805,10 @@ function createStore(reducer, preloadedState) {
 export default createStore;
 ```
 
-同時附上使用 `createStore` 的範例：
+同時附上使用 `createStore` 的範例 `app.js` 檔案：
 
 ```javascript
-/*** index.js file ***/
+/*** app.js file ***/
 import { createStore } from './createStore.js';
 
 // 自定義 reducer
@@ -908,7 +864,39 @@ store.subscribe(() => {
 });
 ```
 
-雖然此篇文章尚未做出完整的 `createStore`，像是沒實作 `enhancer` 相關功能，但透過實作 `getState`、`dispatch`、`subscribe`，已經能理解核心的 Redux 運作，也知道它是如何透過 closure、listeners 等模式，去封裝並實踐集中式管理資料以及監聽資料變化等概念，整體而言很有趣呢。
+<hr>
+
+## 回顧最初的閱讀文章後要達成的目標
+
+來回文章最初幾個希望閱讀後，能達成的項目：
+
+### 1. 理解 Redux 是什麼，以及主要想解決的問題
+
+Redux 是一個基於 Flux 流程概念實踐的「集中式」資料狀態管理的工具，最主要的目的是統一管理資料，避免資料狀態不一致的問題，且也利用「單向資料流」的方式控管資料狀態，讓資料變動更可預期與維護。
+
+### 2. 理解並實作 createStore 中的 getState、dispatch、subscribe
+
+`createStore` 的核心在於單一控管的 `sore state`，且提供下列三個 API :
+
+- **getState** : 取得目前的 `store state`。
+- **dispatch** : 透過傳入 `action` (含 type and payload) 更新 `store state`。
+- **subscribe** : 透過傳入 callback，就能訂閱 callback，在 `sotore state` 更新後會執行 callback。
+
+### 3. 理解 subscribe 會遇到什麼 bugs，如何藉由 currentListners、nextListners、ensureCanMutateNextListeners 解決
+
+如果不特別處理，在 `subscribe` 傳入的 listner callback 中執行另一個 `subscribe` 或 `unsubscribe` 可能遇到非預期 bugs。
+
+解決方案的關鍵是：
+
+- **currentListners** : 創建 `currentListners`，真正在 `state` 變動後，會執行的 `listners`。
+- **nextListners** : 創建 `nextListners`，當 `subscribe`/`unsubscribe` 時，會針對 `nextListners` 新增或移除 `listner`。
+- **ensureCanMutateNextListeners** : 因為 `listners` 是 array，為了確保 `currentListners` 與 `nextListners` 不同，因此在 `nextListners` 操作前，會先執行 `ensureCanMutateNextListeners`。
+
+### 4. 能動手實作 basic createStore function
+
+非常推薦可以自己實作，印象會更深刻！如果卡住，再隨時回顧本文或者 Redux 的原始碼。
+
+雖然此篇文章尚未做出完整的 `createStore`，像是沒實作 `enhancer` 相關功能，但透過實作 `getState`、`dispatch`、`subscribe`，已經能理解核心的 Redux 運作，也知道它是如何透過 closure、listeners 等模式，去封裝並實踐集中式管理資料以及監聽資料變化等概念，非常有趣。
 
 如果對 `enhancer` 或 `middlewares` 機制有興趣，歡迎閱讀下篇文章：[理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/sourceCode/redux-make-createStore-enhancer-and-applyMiddleware)。
 
@@ -916,9 +904,9 @@ store.subscribe(() => {
 
 #### 【 參考資料 】
 
-- [LiangYingC/Implement-Simple-Redux repo | 我的實作程式碼](https://github.com/LiangYingC/Implement-Simple-Redux)
-- [reduxjs/redux repo | Redux 原始碼](https://github.com/reduxjs/redux/tree/master/src)
-- [redux three principles | Redux 文件](https://redux.js.org/understanding/thinking-in-redux/three-principles)
+- [LiangYingC/understand-redux-source-code](https://github.com/LiangYingC/understand-redux-source-code/tree/master/phase1_createStore)
+- [reduxjs/redux | redux source code ](https://github.com/reduxjs/redux/tree/master/src)
+- [redux three principles | redux document](https://redux.js.org/understanding/thinking-in-redux/three-principles)
 - [挑戰 40 分鐘實作簡易版 Redux 佐設計模式 | 谷哥](https://modernweb.ithome.com.tw/session-inner#448)
-- [完全理解 redux（从零实现一个 redux） ｜ brickspert](https://mp.weixin.qq.com/s?__biz=MzIxNjgwMDIzMA==&mid=2247484209&idx=1&sn=1a33a2c8cb58ae98e4f8080ab59da06f&scene=21#wechat_redirect)
+- [完全理解 redux（从零实现一个 redux）｜ brickspert](https://mp.weixin.qq.com/s?__biz=MzIxNjgwMDIzMA==&mid=2247484209&idx=1&sn=1a33a2c8cb58ae98e4f8080ab59da06f&scene=21#wechat_redirect)
 - [從 source code 來看 Redux 更新 state 的運行機制 | 陳冠霖](https://as790726.medium.com/%E5%BE%9E-source-code-%E4%BE%86%E7%9C%8B-redux-%E7%9A%84%E9%81%8B%E8%A1%8C%E6%A9%9F%E5%88%B6-f5e0adc1b9f6)
