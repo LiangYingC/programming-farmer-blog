@@ -7,9 +7,9 @@ category: sourceCode
 
 ## 前言
 
-延續上篇分享的 [理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/sourceCode/redux-make-createStore-enhancer-and-applyMiddleware)，這次將更深入探討 Redux 原始碼中，關於 `combineReducers` 的部分，試著了解 Redux 如何整合多個 `reducers`。
+在上篇 [理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/sourceCode/redux-make-createStore-enhancer-and-applyMiddleware)中，已經理解 Redux middlewares 相關功能。這次將探討 Redux 原始碼中，關於 `combineReducers` 的部分，藉此理解 Redux 如何整合多個 `reducers`。
 
-期許閱讀完這篇後，能達成：
+期許閱讀完本文後，能達成：
 
 - 理解 `combineReducers` 要達成的目的
 - 能實作 `combineReducers` 相關程式碼
@@ -18,10 +18,10 @@ category: sourceCode
 
 ## combineReducers 要解決的問題
 
-快速回憶一下 `reducer` 的使用情境：
+快速回憶 `reducer` 的使用情境：
 
 ```javascript
-/*** index.js file ***/
+/*** app.js file ***/
 import createStore from './createStore.js';
 
 // 自定義的 reducer，藉此統一規範更改 state 的規則
@@ -58,7 +58,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-接下來都將聚焦在 `reducer` 相關內容：
+接下來將聚焦在 `reducer` 相關內容：
 
 ```javascript
 // store state 的資料結構
@@ -91,7 +91,7 @@ const preloadedState = {
   points: 0,
   // 新增 user 資料
   user: {
-    name: 'Liang',
+    name: 'LiangC',
     age: 18,
   },
 };
@@ -135,9 +135,9 @@ const reducer = (state, action) => {
 
 從上面的範例中可以發現，目前的 `reducer` 有個問題，就是隨著 `store state` 越來越多，`reducer` 就會非常龐大，而且會將很多關聯不大的資料更新邏輯混在一起。
 
-根據經驗，會希望不同資料邏輯，可以拆分開來，讓 `reducer` 複雜度下降，並且讓關注點分離，程式更好維護。
+這時候，可以思考將關聯性低的資料邏輯拆分開，讓 `reducer` 複雜度下降，並且關注點分離，讓程式更好維護。
 
-所以實作上會希望拆分成 `pointsReducer` 與 `userReducer`：
+所以實作上希望將 `reducer` 拆分成 `pointsReducer` 與 `userReducer`：
 
 ```javascript
 // store state 的資料結構
@@ -150,25 +150,19 @@ const preloadedState = {
 };
 
 // pointsReducer 規範 points 的更新
-const pointsReducer = (state, action) => {
-  // 注意此處傳入的 state 會是 { points: XXX }
+const pointsReducer = (state = preloadedState.points, action) => {
   switch (action.type) {
     case 'PLUS_POINTS':
-      return {
-        points: state.points + action.payload,
-      };
+      return state.points + action.payload;
     case 'MINUS_POINTS':
-      return {
-        points: state.points - action.payload,
-      };
+      return state.points - action.payload;
     default:
       return state;
   }
 };
 
 // userReducer 規範 user 的更新
-const userReducer = (state, action) => {
-  // 注意此處傳入的 state 會是 { user: XXX }
+const userReducer = (state = preloadedState.user, action) => {
   switch (action.type) {
     case 'UPDATE_NAME':
       return {
@@ -188,36 +182,41 @@ const userReducer = (state, action) => {
 
 如此一來，`reducer` 變小且關注點分離。
 
-下個問題來了，最後傳入 `createStore` 的只能是「單一」的 `reducer`，因此會需要有個方法函式，將 `pointsReducer` 與 `userReducer` 整併回單一的 `reducer`。
+下個問題來了，最後傳入 `createStore` 的只能是「單一的 `reducer`」，因此會需要有個方法函式，將 `pointsReducer` 與 `userReducer` 整併回單一的 `reducer`。
 
-這就是 `combineReducers` 要達成的目標：將多個不同商業邏輯的 `reducers`，整合成單一 `reducer`，藉此傳入 `createStore` 中使用。
+這就是 `combineReducers` 要達成的目標：**將多個不同商業邏輯的 `reducers`，整合成單一 `reducer`，藉此傳入 `createStore` 中使用**。
 
 使用的期望如下：
 
 ```javascript
-/*** index.js file ***/
+/*** app.js file ***/
 import createStore from './createStore.js';
 // 引入 combineReducers
 import combineReducers from './combineReducers.js'
 
+// store state 的資料結構
+const preloadedState = {
+  points: 0,
+  user: {
+    name: 'Liang',
+    age: 18,
+  },
+};
+
 // pointsReducer 規範 points 的更新
-const pointsReducer = (state, action) => {
+const pointsReducer = (state = preloadedState.points, action) => {
   switch (action.type) {
     case 'PLUS_POINTS':
-      return {
-        points: state.points + action.payload,
-      };
+      return state.points + action.payload;
     case 'MINUS_POINTS':
-      return {
-        points: state.points - action.payload,
-      };
+      return state.points - action.payload;
     default:
       return state;
   }
 };
 
 // userReducer 規範 user 的更新
-const userReducer = (state, action) => {
+const userReducer = (state = preloadedState.user, action) => {
   switch (action.type) {
     case 'UPDATE_NAME':
       return {
@@ -234,15 +233,6 @@ const userReducer = (state, action) => {
   }
 };
 
-// store state 的資料結構
-const preloadedState = {
-  points: 0,
-  user: {
-    name: 'Liang',
-    age: 18,
-  },
-};
-
 // 期望透過 combineReducers，整合出最終單一的 reducer
 const reducer = combineReducers({
     points: pointsReducer,
@@ -255,7 +245,7 @@ const store = createStore(reducer, preloadedState);
 ......
 ```
 
-接著，就開始實踐最關鍵的 `combineReducers` 吧！
+接著，就開始實踐最關鍵的 `combineReducers` 吧。
 
 <hr>
 
@@ -272,19 +262,19 @@ const reducer = combineReducers({
 
 > Redux 原始碼對 combineReducers 的註解：**Turns an object whose values are different reducer functions, into a single reducer function**.
 
-藉此定義出 `combineReducers` 的介面：
+藉此定義能 `combineReducers` 的介面：
 
-- Input：為物件，key 是 store state 的 key ; value 是用來更新對應 state 的 reducer 函式，先將此物件稱為 `reducersObj`。
-- Output：為最終合併的 reducer，會是個函式，先稱為 `combinedReducer`。
+- Input：為物件，先稱為 `reducersObj`，此物件的 key 是 store state 的 key ; value 是用來更新對應 state 的 reducer 函式。
+- Output：為最終合併的 reducer，會是個函式，先稱為 `singleReducer`。
 
 ```javascript
 /*** combineReducers.js file ***/
 
 // 定義 input 為 reducersObj
 function combineReducers(reducersObj) {
-  // 定義 output 為 combinedReducer function
-  return function combinedReducer(state = {}, action) {
-    // combinedReducer 執行後，回傳整合後的新 state
+  // 定義 output 為 singleReducer function
+  return function singleReducer(state = {}, action) {
+    // singleReducer 執行後，回傳整合後的新 state
     const newState = {};
     return newState;
   };
@@ -293,9 +283,9 @@ function combineReducers(reducersObj) {
 export default combineReducers;
 ```
 
-接著來思考 `combinedReducer` 的核心是：
+接著來思考 `singleReducer` 的核心是：
 
-- 將被傳入的單一 `children state` 與 `action`，丟進 `reducersObj` 每個對應的 `reducer` 中執行，藉此獲得多個新的 `state`。
+- 將被傳入的單一 `children state` 與 `action`，丟進 `reducersObj` 每個對應的 `reducer` 中執行，藉此獲得更新後的 `children state`。
   - 例如：`state[points]` 與 `action` 丟進 `pointsReducer` 產出新的 `pointsState` ; `state[user]` 與 `action` 丟進 `userReducer` 產出新的 `userState`。
 - 將所有新的 `state` 組合在一起，變成最終的 `newState`。
   - 例如：將 `pointsState` 與 `userState` 組合成最終的 `newState`。
@@ -309,7 +299,7 @@ function combineReducers(reducersObj) {
   // 取得 reducerKeys = ['points', 'user']
   const reducerKeys = Object.keys(reducersObj);
 
-  return function combinedReducer(state = {}, action) {
+  return function singleReducer(state = {}, action) {
     const newState = {};
 
     // 遍歷執行每一個 reducer，藉此整合出最終的 newState
@@ -343,7 +333,7 @@ export default combineReducers;
 function combineReducers(reducers) {
   const reducerKeys = Object.keys(reducers);
 
-  // combinedReducer => combination
+  // singleReducer => combination
   return function combination(state = {}, action) {
     // newState => nextState
     const nextState = {};
@@ -505,7 +495,7 @@ export default combineReducers;
 
 ## 總結，回顧最初的目標
 
-事實上，在 Redux 原始碼還有更多細節的實踐，偏向更多的合法檢查以及將合法檢查相關邏輯抽成獨立函式等，在此就不贅述，避免過於冗長，有興趣可再去爬原始碼，不難理解。
+事實上，在 Redux 原始碼還有更多細節的實踐，偏向更多的合法檢查以及將合法檢查相關邏輯抽成獨立函式等，在此就不贅述，有興趣可再去爬原始碼，不難理解。
 
 接著回顧文章最初期待閱讀完的收穫：
 
@@ -518,24 +508,29 @@ export default combineReducers;
 程式的使用如下：
 
 ```javascript
+// store state 的資料結構
+const preloadedState = {
+  points: 0,
+  user: {
+    name: 'Liang',
+    age: 18,
+  },
+};
+
 // pointsReducer 規範 points 的更新
-const pointsReducer = (state, action) => {
+const pointsReducer = (state = preloadedState.points, action) => {
   switch (action.type) {
     case 'PLUS_POINTS':
-      return {
-        points: state.points + action.payload,
-      };
+      return state.points + action.payload;
     case 'MINUS_POINTS':
-      return {
-        points: state.points - action.payload,
-      };
+      return state.points - action.payload;
     default:
       return state;
   }
 };
 
 // userReducer 規範 user 的更新
-const userReducer = (state, action) => {
+const userReducer = (state = preloadedState.user, action) => {
   switch (action.type) {
     case 'UPDATE_NAME':
       return {
@@ -550,15 +545,6 @@ const userReducer = (state, action) => {
     default:
       return state;
   }
-};
-
-// store state 的資料結構
-const preloadedState = {
-  points: 0,
-  user: {
-    name: 'Liang',
-    age: 18,
-  },
 };
 
 // 透過 combineReducers，整合出最終單一的 reducer
@@ -606,11 +592,14 @@ function combineReducers(reducers) {
 export default combineReducers;
 ```
 
-以上是關於 `combineReducers` 的實作和總結，比起前兩篇 Basic createStore 、Redux Middleware 都還要單純，重點在於知道 `combineReducers` 要達成的單一目標後，就蠻能知道要如何實作，很適合自己寫寫看當練習。
+如果有需要沒有註解的程式碼，可[點此前往 GitHub 取用](https://github.com/LiangYingC/understand-redux-source-code/tree/master/phase3_combineReducers)。
+
+以上是關於 `combineReducers` 的實作和總結，比起前兩篇 Basic createStore 、Redux middleware 都還要單純，重點在於知道 `combineReducers` 要達成的單一目標後，就蠻能知道要如何實作，很適合自己寫寫看當練習。
 
 <hr>
 
 #### 【 參考資料 】
 
-- [reduxjs/redux repo | Redux 原始碼](https://github.com/reduxjs/redux/tree/master/src)
+- [LiangYingC/understand-redux-source-code](https://github.com/LiangYingC/understand-redux-source-code/tree/master/phase3_combineReducers)
+- [reduxjs/redux repo | redux source code](https://github.com/reduxjs/redux/tree/master/src)
 - [完全理解 redux（从零实现一个 redux）｜ brickspert](https://mp.weixin.qq.com/s?__biz=MzIxNjgwMDIzMA==&mid=2247484209&idx=1&sn=1a33a2c8cb58ae98e4f8080ab59da06f&scene=21#wechat_redirect)
