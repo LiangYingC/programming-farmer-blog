@@ -39,8 +39,8 @@
       // Can use import form '@XXX'
       { "ignore": ["^@"] }
     ],
-    "react/prop-types": 0,
-    "react/react-in-jsx-scope": 0, // Can use JSX without import React
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off", // Can use JSX without import React
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "jsx-a11y/anchor-is-valid": "off", // Have href attribute is 「 not 」 required on an anchor (<a>), so Link can use (<Link> will generates href attribute).
