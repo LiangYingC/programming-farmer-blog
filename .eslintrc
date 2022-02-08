@@ -39,7 +39,6 @@
       // Can use import form '@XXX'
       { "ignore": ["^@"] }
     ],
-    "react/prop-types": "off",
     "react/react-in-jsx-scope": "off", // Can use JSX without import React
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
