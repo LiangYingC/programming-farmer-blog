@@ -5,6 +5,6 @@
   "singleQuote": true,
   "jsxSingleQuote": false,
   "proseWrap": "preserve",
-  "arrowParens": "avoid",
+  "arrowParens": "always",
   "htmlWhitespaceSensitivity": "ignore"
 }
