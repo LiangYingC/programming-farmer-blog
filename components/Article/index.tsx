@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import ReactMarkdown from 'react-markdown/with-html';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { atomOneDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
@@ -10,7 +9,7 @@ interface CodeBlockProps {
   value: string;
 }
 
-const CodeBlock: FC<CodeBlockProps> = ({ language, value }) => {
+const CodeBlock = ({ language, value }: CodeBlockProps) => {
   return (
     <SyntaxHighlighter language={language} style={atomOneDark}>
       {value}
@@ -25,9 +24,14 @@ interface ArticleProps {
   pageURL: string;
 }
 
-const Article: FC<ArticleProps> = ({ content, pageTitle, pageDesc, pageURL }) => {
+const Article = ({ content, pageTitle, pageDesc, pageURL }: ArticleProps) => {
   return (
-    <Layout pageTitle={pageTitle} pageDesc={pageDesc} pageType="article" pageURL={pageURL}>
+    <Layout
+      pageTitle={pageTitle}
+      pageDesc={pageDesc}
+      pageType="article"
+      pageURL={pageURL}
+    >
       <ArticleWrapper>
         <ReactMarkdown
           escapeHtml={false}

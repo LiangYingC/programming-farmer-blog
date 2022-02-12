@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { Frontmatter } from '@myTypes/articles';
 import { getAllArticles, getArticleMatter } from '@lib/fs';
@@ -10,7 +9,11 @@ interface ArticlePageProps {
   articleUrl: string;
 }
 
-const ArticlePage: FC<ArticlePageProps> = ({ content, frontmatter, articleUrl }) => {
+const ArticlePage = ({
+  content,
+  frontmatter,
+  articleUrl,
+}: ArticlePageProps) => {
   return (
     <Article
       content={content}

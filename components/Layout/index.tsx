@@ -1,4 +1,3 @@
-import React, { FC } from 'react';
 import Head from 'next/head';
 import Header from '@components/Header/index';
 import Footer from '@components/Footer/index';
@@ -12,7 +11,13 @@ interface LayoutProps {
   pageType: string;
 }
 
-const Layout: FC<LayoutProps> = ({ children, pageTitle, pageDesc, pageURL, pageType }) => {
+const Layout = ({
+  children,
+  pageTitle,
+  pageDesc,
+  pageURL,
+  pageType,
+}: LayoutProps) => {
   const isHomePage = pageURL === 'https://www.programfarmer.com';
 
   return (
@@ -44,7 +49,11 @@ const Layout: FC<LayoutProps> = ({ children, pageTitle, pageDesc, pageURL, pageT
           content="https://www.programfarmer.com/assets/icons/icon-384x384.png"
           key="twitterImage"
         />
-        <meta name="twitter:creator" content="@LiangCh95173853" key="twitterCreator" />
+        <meta
+          name="twitter:creator"
+          content="@LiangCh95173853"
+          key="twitterCreator"
+        />
         {isHomePage && (
           <meta
             name="google-site-verification"

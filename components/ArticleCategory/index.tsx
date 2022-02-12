@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import Link from 'next/link';
 import { allArticlesPaths } from '@configs/paths';
 import { capitalizeLetter } from '@lib/format';
@@ -10,7 +9,7 @@ import {
   GoArticlesBtn,
 } from '@components/ArticleCategory/indexStyle';
 
-const ArticleCategory: FC = () => {
+const ArticleCategory = () => {
   return (
     <GoArticleWapper>
       <Title>Articles Category</Title>

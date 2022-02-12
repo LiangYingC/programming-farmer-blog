@@ -1,4 +1,11 @@
-import { FC, createContext, useState, useEffect, useCallback, useContext } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from 'react';
 import {
   checkIsUserPreferLightModeOnOS,
   setItemToLocalStorage,
@@ -34,12 +41,13 @@ export const useColorMode = () => {
   return context;
 };
 
-export const ColorModeProvider: FC = ({ children }) => {
+export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
   const [colorMode, setColorMode] = useState(ColorModeEnum.dark);
   const isDarkMode = colorMode === ColorModeEnum.dark;
 
   const initColorModeFromStorage = (colorModeFromStorage: string) => {
-    const isSelectedDarkModeLastTime = colorModeFromStorage === ColorModeEnum.dark;
+    const isSelectedDarkModeLastTime =
+      colorModeFromStorage === ColorModeEnum.dark;
     isSelectedDarkModeLastTime
       ? setColorMode(ColorModeEnum.dark)
       : setColorMode(ColorModeEnum.light);
@@ -53,7 +61,9 @@ export const ColorModeProvider: FC = ({ children }) => {
   };
 
   useEffect(() => {
-    const colorModeFromStorage = getItemFromLocalStorage(COLOR_MODE_STORAGE_KEY);
+    const colorModeFromStorage = getItemFromLocalStorage(
+      COLOR_MODE_STORAGE_KEY
+    );
 
     colorModeFromStorage !== null
       ? initColorModeFromStorage(colorModeFromStorage)
@@ -66,7 +76,9 @@ export const ColorModeProvider: FC = ({ children }) => {
 
   const toggleColorMode = useCallback(() => {
     setColorMode(prev => {
-      return prev === ColorModeEnum.dark ? ColorModeEnum.light : ColorModeEnum.dark;
+      return prev === ColorModeEnum.dark
+        ? ColorModeEnum.light
+        : ColorModeEnum.dark;
     });
   }, []);
 
@@ -75,5 +87,9 @@ export const ColorModeProvider: FC = ({ children }) => {
     toggleColorMode,
   };
 
-  return <ColorModeContext.Provider value={context}>{children}</ColorModeContext.Provider>;
+  return (
+    <ColorModeContext.Provider value={context}>
+      {children}
+    </ColorModeContext.Provider>
+  );
 };

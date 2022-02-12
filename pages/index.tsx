@@ -1,9 +1,8 @@
-import { FC } from 'react';
 import Layout from '@components/Layout';
 import Bio from '@components/Bio';
 import ArticleCategory from '@components/ArticleCategory';
 
-const HomePage: FC = () => {
+const HomePage = () => {
   return (
     <Layout
       pageType="website"
