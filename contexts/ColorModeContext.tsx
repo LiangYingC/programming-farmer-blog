@@ -75,7 +75,7 @@ export const ColorModeProvider = ({ children }: { children: ReactNode }) => {
   }, [colorMode]);
 
   const toggleColorMode = useCallback(() => {
-    setColorMode(prev => {
+    setColorMode((prev) => {
       return prev === ColorModeEnum.dark
         ? ColorModeEnum.light
         : ColorModeEnum.dark;
