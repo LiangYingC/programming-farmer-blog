@@ -25,7 +25,7 @@ const ArticleList: FC<{ articleIntro?: string; articles: Articles }> = ({
         const formattedDate = formatDashDate(date);
 
         return (
-          <Link key={title} href={`/articles/${category}/${slug}`}>
+          <Link key={title} href={`/articles/${category}/${slug}`} passHref>
             <ArticleWrapper
               onClick={() => {
                 sendEvent({

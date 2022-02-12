@@ -34,7 +34,7 @@ const Footer: FC = () => {
       <MobileFooterWrapper>
         {mobileFooterConfig.map(({ link, component }) => {
           return (
-            <Link key={link} href={`${link}`}>
+            <Link key={link} href={`${link}`} passHref>
               <FooterIcon href={`${link}`}>{component}</FooterIcon>
             </Link>
           );

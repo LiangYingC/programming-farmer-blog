@@ -17,7 +17,7 @@ const ArticleCategory: FC = () => {
       <GoArticlesBtns>
         {allArticlesPaths.map(({ name, path }) => {
           return (
-            <Link key={name} href={`/articles${path}`}>
+            <Link key={name} href={`/articles${path}`} passHref>
               <GoArticlesBtn
                 onClick={() => {
                   sendEvent({
