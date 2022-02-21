@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useColorMode } from '@contexts/ColorModeContext';
-import { AiFillGithub, AiOutlineTwitter } from 'react-icons/ai';
+import { AiFillGithub } from 'react-icons/ai';
 import {
   BioWrapper,
   RoundImageWrapper,
@@ -19,13 +19,6 @@ const socialLinks = [
     link: 'https://github.com/LiangYingC',
     getIcon: function getGithubIcon() {
       return <AiFillGithub />;
-    },
-  },
-  {
-    site: 'Twitter',
-    link: 'https://twitter.com/LiangCh95173853',
-    getIcon: function getTwitterIcon() {
-      return <AiOutlineTwitter />;
     },
   },
 ];
