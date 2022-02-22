@@ -1,17 +1,20 @@
 // 1. Typescript and ESlint Example on Next.js repo : https://github.com/vercel/next.js/tree/canary/examples/with-typescript-eslint-jest
 // 2. Start a clean Next.js project with TypeScript, ESLint and Prettier from scratch : https://paulintrognon.fr/blog/typescript-prettier-eslint-next-js
 // 3. Using ESLint and Prettier in a TypeScript Project : https://www.robertcooper.me/using-eslint-and-prettier-in-a-typescript-project
-
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2020, // Allows for the parsing of modern ECMAScript features
-    "sourceType": "module", // Allows for the use of imports
+    "sourceType": "module", // Allows for using ECMAScript modules
     "ecmaFeatures": {
       "jsx": true // Allows for the parsing of JSX
     }
   },
-  "plugins": ["@typescript-eslint", "react-hooks", "prettier"],
+  "plugins": [
+    "@typescript-eslint",
+    "react-hooks",
+    "prettier"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:import/errors",
@@ -19,7 +22,7 @@
     "plugin:jsx-a11y/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/recommended", 
+    "plugin:@typescript-eslint/recommended",
     "prettier", // "prettier/......" has been merged into "prettier" in eslint-config-prettier 8.0.0. See: https://github.com/prettier/eslint-config-prettier/blob/main/CHANGELOG.md#version-800-2021-02-21.
     "plugin:prettier/recommended" // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
@@ -40,12 +43,16 @@
     "import/no-unresolved": [
       "error",
       // Can use import form '@XXX'
-      { "ignore": ["^@"] }
+      {
+        "ignore": [
+          "^@"
+        ]
+      }
     ],
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 0, // Can use JSX without import React
-    "react-hooks/rules-of-hooks": "error", 
-    "react-hooks/exhaustive-deps": "warn", 
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "jsx-a11y/anchor-is-valid": "off", // Have href attribute is 「 not 」 required on an anchor (<a>), so Link can use (<Link> will generates href attribute).
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
