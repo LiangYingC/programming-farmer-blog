@@ -12,7 +12,8 @@ const getGlobalStyle = (theme: Theme) => {
     }
 
     body {
-      font-family: 'HelveticaNeue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+      font-family: 'HelveticaNeue', Helvetica, Arial, 'Lucida Grande',
+        sans-serif;
       width: 100vw;
       height: auto;
       color: ${theme.colors.primaryText};

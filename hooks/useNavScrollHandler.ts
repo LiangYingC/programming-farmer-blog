@@ -11,11 +11,17 @@ const initScrollState = {
 
 const useNavScrollHandler = () => {
   const [scrollState, setScrollState] = useState(initScrollState);
-  const { lastPositionY, nowPositionY, movedY, isHideNavBar, isShowHeaderBgColor } = scrollState;
+  const {
+    lastPositionY,
+    nowPositionY,
+    movedY,
+    isHideNavBar,
+    isShowHeaderBgColor,
+  } = scrollState;
 
   const handleScroll = () => {
     const newNowPositionY = window.pageYOffset;
-    setScrollState(prev => {
+    setScrollState((prev) => {
       return {
         ...prev,
         lastPositionY: prev.nowPositionY,
@@ -26,7 +32,7 @@ const useNavScrollHandler = () => {
 
   const calculateScrollHeight = useCallback(() => {
     const scrollHeight = nowPositionY - lastPositionY;
-    setScrollState(prev => {
+    setScrollState((prev) => {
       return {
         ...prev,
         movedY: scrollHeight,
@@ -36,14 +42,14 @@ const useNavScrollHandler = () => {
 
   const handleIsScrollToWindowTop = useCallback(() => {
     if (nowPositionY <= 0) {
-      setScrollState(prev => {
+      setScrollState((prev) => {
         return {
           ...prev,
           isShowHeaderBgColor: false,
         };
       });
     } else {
-      setScrollState(prev => {
+      setScrollState((prev) => {
         return {
           ...prev,
           isShowHeaderBgColor: true,
@@ -54,7 +60,7 @@ const useNavScrollHandler = () => {
 
   const handleNavBarHide = useCallback(() => {
     if (movedY > 15) {
-      setScrollState(prev => {
+      setScrollState((prev) => {
         return {
           ...prev,
           movedY: 0,
@@ -62,7 +68,7 @@ const useNavScrollHandler = () => {
         };
       });
     } else if (movedY <= -15 || nowPositionY < 80) {
-      setScrollState(prev => {
+      setScrollState((prev) => {
         return {
           ...prev,
           movedY: 0,
@@ -73,7 +79,7 @@ const useNavScrollHandler = () => {
   }, [movedY, nowPositionY]);
 
   useEffect(() => {
-    setScrollState(prev => {
+    setScrollState((prev) => {
       return {
         ...prev,
         nowPositionY: window.pageYOffset,
@@ -98,7 +104,10 @@ const useNavScrollHandler = () => {
   }, [handleNavBarHide, movedY]);
 
   const isHideNavBarMemorized = useMemo(() => isHideNavBar, [isHideNavBar]);
-  const isShowHeaderBgColorMemorized = useMemo(() => isShowHeaderBgColor, [isShowHeaderBgColor]);
+  const isShowHeaderBgColorMemorized = useMemo(
+    () => isShowHeaderBgColor,
+    [isShowHeaderBgColor]
+  );
 
   return {
     isHideNavBar: isHideNavBarMemorized,

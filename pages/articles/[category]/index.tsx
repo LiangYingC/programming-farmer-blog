@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { Articles } from '@myTypes/articles';
 import { articleCategoryPaths } from '@configs/paths';
@@ -13,7 +12,7 @@ interface CategoryPageProps {
   articles: Articles;
 }
 
-const CategoryPage: FC<CategoryPageProps> = ({ category, articles }) => {
+const CategoryPage = ({ category, articles }: CategoryPageProps) => {
   const capitalizedCategory = capitalizeLetter(category);
 
   return (
@@ -23,7 +22,10 @@ const CategoryPage: FC<CategoryPageProps> = ({ category, articles }) => {
       pageDesc={`城市碼農技術部落格中，關於 ${capitalizedCategory} 的文章列表。`}
       pageURL={`https://www.programfarmer.com/articles/${category}`}
     >
-      <ArticleList articleIntro={`Articles about ${capitalizedCategory}`} articles={articles} />
+      <ArticleList
+        articleIntro={`Articles about ${capitalizedCategory}`}
+        articles={articles}
+      />
     </Layout>
   );
 };

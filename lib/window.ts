@@ -4,7 +4,13 @@ export const checkIsUserPreferLightModeOnOS = () => {
   return window.matchMedia('(prefers-color-scheme: light)').matches;
 };
 
-export const setItemToLocalStorage = ({ key, value }: { key: string; value: string }) => {
+export const setItemToLocalStorage = ({
+  key,
+  value,
+}: {
+  key: string;
+  value: string;
+}) => {
   return window.localStorage.setItem(key, value);
 };
 

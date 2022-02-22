@@ -16,7 +16,9 @@ export const getArticleSlug = (articleFileName: string) => {
  * @param articleFilePath - a article file path
  */
 export const getArticleMatter = (articleFilePath: string) => {
-  const markdownFileContent = fs.readFileSync(articleFilePath, 'utf8').toString();
+  const markdownFileContent = fs
+    .readFileSync(articleFilePath, 'utf8')
+    .toString();
   const { data, content } = matter(markdownFileContent);
   const frontmatter = {
     ...data,
@@ -33,7 +35,7 @@ export const getArticleMatter = (articleFilePath: string) => {
  * @return [{ category, slug, frontmatter } , ...]
  */
 const makeArticles = (articleFileNames: string[], categoryName: string) => {
-  const articles = articleFileNames.map(articleFileName => {
+  const articles = articleFileNames.map((articleFileName) => {
     // article frontmatter data
     const articleFilePath = `${process.cwd()}/contents/article/${categoryName}/${articleFileName}`;
     const { frontmatter } = getArticleMatter(articleFilePath);

@@ -1,7 +1,7 @@
-import { FC, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useColorMode } from '@contexts/ColorModeContext';
-import { AiFillGithub, AiOutlineTwitter } from 'react-icons/ai';
+import { AiFillGithub } from 'react-icons/ai';
 import {
   BioWrapper,
   RoundImageWrapper,
@@ -21,13 +21,6 @@ const socialLinks = [
       return <AiFillGithub />;
     },
   },
-  {
-    site: 'Twitter',
-    link: 'https://twitter.com/LiangCh95173853',
-    getIcon: function getTwitterIcon() {
-      return <AiOutlineTwitter />;
-    },
-  },
 ];
 
 const myImages = {
@@ -41,7 +34,7 @@ const myImages = {
   },
 };
 
-const Bio: FC = () => {
+const Bio = () => {
   const { isDarkMode } = useColorMode();
   const initBioImage = isDarkMode ? myImages.dark : myImages.light;
   const [bioImage, setBioImage] = useState(initBioImage);
@@ -69,7 +62,10 @@ const Bio: FC = () => {
         <SocialLinks>
           {socialLinks.map(({ site, link, getIcon }) => {
             return (
-              <SocialLink key={site} onClick={() => window.open(link, '_blank')}>
+              <SocialLink
+                key={site}
+                onClick={() => window.open(link, '_blank')}
+              >
                 <SocialLink>{getIcon()}</SocialLink>
               </SocialLink>
             );

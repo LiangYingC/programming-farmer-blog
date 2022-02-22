@@ -1,8 +1,7 @@
-import { FC } from 'react';
 import Layout from '@components/Layout';
 import ArticleCategory from '@components/ArticleCategory';
 
-const CategoryPage: FC = () => {
+const CategoryPage = () => {
   return (
     <Layout
       pageType="website"

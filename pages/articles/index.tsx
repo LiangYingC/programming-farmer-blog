@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { GetStaticProps } from 'next';
 import { Articles } from '@myTypes/articles';
 import { getAllArticles } from '@lib/fs';
@@ -6,7 +5,11 @@ import { sortArticlesByDateDesc } from '@lib/sort';
 import Layout from '@components/Layout';
 import ArticleList from '@components/ArticleList';
 
-const AllArticlesPage: FC<{ articles: Articles }> = ({ articles }) => {
+interface AllArticlesPageProps {
+  articles: Articles;
+}
+
+const AllArticlesPage = ({ articles }: AllArticlesPageProps) => {
   return (
     <Layout
       pageType="website"

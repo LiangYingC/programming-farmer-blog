@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import Link from 'next/link';
 import { formatDashDate, capitalizeLetter } from '@lib/format';
 import { sendEvent } from '@lib/gtag';
@@ -13,10 +12,12 @@ import {
   Brief,
 } from '@components/ArticleList/indexStyle';
 
-const ArticleList: FC<{ articleIntro?: string; articles: Articles }> = ({
-  articleIntro,
-  articles,
-}) => {
+interface ArticleListProps {
+  articleIntro?: string;
+  articles: Articles;
+}
+
+const ArticleList = ({ articleIntro, articles }: ArticleListProps) => {
   return (
     <>
       {articleIntro && <ArticleIntro>{articleIntro}</ArticleIntro>}
@@ -25,7 +26,7 @@ const ArticleList: FC<{ articleIntro?: string; articles: Articles }> = ({
         const formattedDate = formatDashDate(date);
 
         return (
-          <Link key={title} href={`/articles/${category}/${slug}`}>
+          <Link key={title} href={`/articles/${category}/${slug}`} passHref>
             <ArticleWrapper
               onClick={() => {
                 sendEvent({

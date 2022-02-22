@@ -26,7 +26,11 @@ category: react
 用 `React.createElement` 結果為：
 
 ```javascript
-const containerElement = React.createElement('div', { className: 'container' }, 'Hello World !');
+const containerElement = React.createElement(
+  'div',
+  { className: 'container' },
+  'Hello World !'
+);
 ```
 
 通常使用 `React.createElement` 最主要會傳入三個參數 `component`、`props`、 `...children`。完整的函式為 `React.createElement(component, props, ...children)`。
@@ -126,9 +130,17 @@ const containerElement = React.createElement('div', {
 const containerElement = React.createElement('div', {
   className: 'container',
   children: [
-    React.createElement('span', { key: '1', className: 'word', children: 'Hello' }),
+    React.createElement('span', {
+      key: '1',
+      className: 'word',
+      children: 'Hello',
+    }),
     ' ', // Hello Word ! 兩個字中間的空格
-    React.createElement('span', { key: '2', className: 'word', children: 'World !' }),
+    React.createElement('span', {
+      key: '2',
+      className: 'word',
+      children: 'World !',
+    }),
   ],
 });
 ```
@@ -137,8 +149,16 @@ const containerElement = React.createElement('div', {
 
 ```javascript
 const createElement = React.createElement;
-const helloElement = createElement('span', { key: '1', className: 'word', children: 'Hello' });
-const worldElement = createElement('span', { key: '2', className: 'word', children: 'World !' });
+const helloElement = createElement('span', {
+  key: '1',
+  className: 'word',
+  children: 'Hello',
+});
+const worldElement = createElement('span', {
+  key: '2',
+  className: 'word',
+  children: 'World !',
+});
 
 const containerElement = createElement('div', {
   className: 'container',
@@ -150,8 +170,16 @@ const containerElement = createElement('div', {
 
 ```javascript
 const createElement = React.createElement;
-const helloElement = createElement('span', { key: '1', className: 'word' }, 'Hello');
-const worldElement = createElement('span', { key: '2', className: 'word' }, 'World !');
+const helloElement = createElement(
+  'span',
+  { key: '1', className: 'word' },
+  'Hello'
+);
+const worldElement = createElement(
+  'span',
+  { key: '2', className: 'word' },
+  'World !'
+);
 
 const containerElement = createElement(
   'div',
@@ -174,8 +202,16 @@ const containerElement = createElement(
 
 ```javascript
 const createElement = React.createElement;
-const helloElement = createElement('span', { key: '1', className: 'word' }, 'Hello');
-const worldElement = createElement('span', { key: '2', className: 'word' }, 'World !');
+const helloElement = createElement(
+  'span',
+  { key: '1', className: 'word' },
+  'Hello'
+);
+const worldElement = createElement(
+  'span',
+  { key: '2', className: 'word' },
+  'World !'
+);
 
 const containerElement = createElement('div', {
   className: 'container',

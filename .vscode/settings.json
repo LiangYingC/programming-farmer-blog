@@ -5,4 +5,7 @@
     "source.fixAll.tslint": true,
     "source.fixAll.stylelint": true
   },
+  "eslint.alwaysShowStatus": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }

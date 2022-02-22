@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import { IoMdSunny, IoMdMoon } from 'react-icons/io';
 import Link from 'next/link';
 import useNavScrollHandler from '@hooks/useNavScrollHandler';
@@ -13,7 +12,7 @@ import {
   ColorModeIcon,
 } from '@components/Header/indexStyle';
 
-const Header: FC = () => {
+const Header = () => {
   const { isDarkMode, toggleColorMode } = useColorMode();
   const { isHideNavBar, isShowHeaderBgColor } = useNavScrollHandler();
 
@@ -24,7 +23,10 @@ const Header: FC = () => {
   };
 
   return (
-    <HeaderWrapper isHide={isHideNavBar} isShowHeaderBgColor={isShowHeaderBgColor}>
+    <HeaderWrapper
+      isHide={isHideNavBar}
+      isShowHeaderBgColor={isShowHeaderBgColor}
+    >
       <InnerWrapper>
         <Title>
           <Link href={'/'}>城市碼農</Link>
@@ -35,7 +37,9 @@ const Header: FC = () => {
           </NavItem>
         </Nav>
         <ColorModeBtn onClick={handleToggleColorMode}>
-          <ColorModeIcon>{isDarkMode ? <IoMdSunny /> : <IoMdMoon />}</ColorModeIcon>
+          <ColorModeIcon>
+            {isDarkMode ? <IoMdSunny /> : <IoMdMoon />}
+          </ColorModeIcon>
         </ColorModeBtn>
       </InnerWrapper>
     </HeaderWrapper>

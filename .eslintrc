@@ -1,0 +1,57 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020, // Allows for the parsing of modern ECMAScript features
+    "sourceType": "module", // Allows for the use of imports
+    "ecmaFeatures": {
+      "jsx": true // Allows for the parsing of JSX
+    }
+  },
+  "plugins": ["react", "react-hooks", "jsx-a11y", "import"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@next/next/recommended",
+    "prettier"
+  ],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "commonjs": true,
+    "jest": true,
+    "node": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // Tells eslint-plugin-react to automatically detect the version of React which u install to use.
+    }
+  },
+  "rules": {
+    // eslint rules: https: //eslint.org/docs/rules/
+    "no-console": "warn",
+    // eslint-plugin-import rules: https://github.com/import-js/eslint-plugin-import
+    "import/no-unresolved": ["error", { "ignore": ["^@"] }],
+    // eslint-plugin-react rules: https://github.com/yannickcr/eslint-plugin-react
+    "react/jsx-fragments": "error",
+    "react/jsx-boolean-value": "error",
+    "react/jsx-wrap-multilines": "error",
+    "react/no-array-index-key": "error",
+    "react/self-closing-comp": "error",
+    "react/destructuring-assignment": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    // eslint-plugin-react-hooks rules: https://github.com/facebook/react/tree/main/packages/eslint-plugin-react-hooks
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    // @typescript-eslint/eslint-plugin rules: https://typescript-eslint.io/rules/
+    "@typescript-eslint/member-delimiter-style": "error",
+    "@typescript-eslint/no-empty-function": "error",
+    "@typescript-eslint/no-var-requires": "error",
+    "@typescript-eslint/no-explicit-any": "warn"
+  }
+}

@@ -1,7 +1,5 @@
-import React, { FC } from 'react';
 import Link from 'next/link';
 import { BiHome, BiCategoryAlt } from 'react-icons/bi';
-
 import {
   DesktopFooterWrapper,
   CopyrightWrap,
@@ -21,7 +19,7 @@ const mobileFooterConfig = [
   },
 ];
 
-const Footer: FC = () => {
+const Footer = () => {
   const thisYear = new Date().getFullYear();
   return (
     <>
@@ -34,7 +32,7 @@ const Footer: FC = () => {
       <MobileFooterWrapper>
         {mobileFooterConfig.map(({ link, component }) => {
           return (
-            <Link key={link} href={`${link}`}>
+            <Link key={link} href={`${link}`} passHref>
               <FooterIcon href={`${link}`}>{component}</FooterIcon>
             </Link>
           );
