@@ -18,6 +18,7 @@
 
 - [理解 Redux 原始碼 (一)：來實作 createStore 的 getState、dispatch、subscribe 吧](https://www.programfarmer.com/articles/sourceCode/redux-make-createStore-getState-dispatch-subscribe)
 - [理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](https://www.programfarmer.com/articles/sourceCode/redux-make-createStore-enhancer-and-applyMiddleware)
+- [理解 Redux 原始碼 (三)：來實作 combineReducers 吧](https://www.programfarmer.com/articles/sourceCode/redux-make-combineReducers)
 
 ### React
 
