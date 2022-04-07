@@ -205,7 +205,7 @@ console.log(originalData[1].secondLayerNum);
 
 看完淺拷貝，緊接著繼續了解深拷貝。
 
-當 `Original Object data` 與 `Cloned Object data` ，**是兩個完全獨立，每一層的資料地址都不同，相互不影響的深層物件**，就為**深拷貝(shallow copy)**。
+當 `Original Object data` 與 `Cloned Object data` ，**是兩個完全獨立，每一層的資料地址都不同，相互不影響的深層物件**，就為**深拷貝(deep copy)**。
 
 ![deep copy](/article/javaScript/javascript-shallow-copy-deep-copy/04.png)
 _p.s 概念示意圖，地址並非直接存在 obj 中，而是 obj 變數會對應一個地址_
