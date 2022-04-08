@@ -9,7 +9,7 @@ category: javaScript
 
 如同這篇 Huli 所寫的《[深入探討 JavaScript 中的參數傳遞：call by value 還是 reference？](https://blog.techbridge.cc/2018/06/23/javascript-call-by-value-or-reference/)》文章中提到的一句話：「會再重新回來研究參數傳遞這個問題完全是個美麗的錯誤，我本來要寫的主題是深拷貝跟淺拷貝。」會寫這篇也是如此。
 
-原本僅是在工作中遇到關於 object `淺拷貝(Shadow copy)`與`深拷貝(Deep copy)`的問題，打算研究拷貝主題並寫篇文章，然而文章寫下去就發現要先解釋 `pass by reference` 的變數傳遞方式，才能更好地解釋：為什麼會需要淺拷貝與深拷貝。
+原本僅是在工作中遇到關於 object `淺拷貝(Shallow copy)`與`深拷貝(Deep copy)`的問題，打算研究拷貝主題並寫篇文章，然而文章寫下去就發現要先解釋 `pass by reference` 的變數傳遞方式，才能更好地解釋：為什麼會需要淺拷貝與深拷貝。
 
 ok，這麼一來就先簡單寫 `pass by value` 以及 `pass by reference` 當作淺深拷貝文章開頭即可吧？並非如此，因為深究後才發現還有 `pass by sharing` 以及 `JavaScript 都是 pass by value 的說法`，這些是我過往所不知道的知識呀。
 
