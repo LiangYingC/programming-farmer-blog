@@ -112,8 +112,8 @@ function fn3() {
   console.log('fn3');
 
   setTimeout(fn1, 1000);
-  // 1. 執行 setTimeout 時，會先丟給 Web API 倒數 1s。
-  // 2. 倒數 1s 完畢，fn1 被轉移到 Queue 等待 Stack 清空。
+  // 1. 執行 setTimeout 時，會先丟給 Web API 倒數 0.1s。
+  // 2. 倒數 0.1s 完畢，fn1 被轉移到 Queue 等待 Stack 清空。
   // 3. Stack 清空後，fn1 被轉移到 Stack 中執行。
 
   fn2();
