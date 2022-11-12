@@ -4,8 +4,6 @@ const SITE_URL = process.env.SITE_URL;
 module.exports = {
   siteUrl: SITE_URL,
   changefreq: 'weekly',
-  priority: 0.7,
-  sitemapSize: 5000,
-  sourceDir: '.next',
+  generateIndexSitemap: false,
   generateRobotsTxt: false,
 };

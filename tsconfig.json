@@ -32,6 +32,6 @@
       "@hooks/*": ["hooks/*"]
     }
   },
-  "include": ["./**/*.ts", "./**/*.tsx", "next-env.d.ts", "next-sitemap.js"],
+  "include": ["./**/*.ts", "./**/*.tsx", "next-env.d.ts", "next-sitemap.config.js"],
   "exclude": ["node_modules"]
 }
