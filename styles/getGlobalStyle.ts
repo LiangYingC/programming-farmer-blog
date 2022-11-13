@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import emotionNormalize from 'emotion-normalize';
 import { Theme } from '@styles/theme';
+import 'highlight.js/styles/github-dark.css';
 
 const getGlobalStyle = (theme: Theme) => {
   const globalStyle = css`
@@ -140,7 +141,13 @@ const getGlobalStyle = (theme: Theme) => {
       font-size: ${theme.fontSizes.lg};
       line-height: ${theme.lineHeights.base};
       border-radius: ${theme.borderRadius.sm};
+      color: ${theme.colors.preColor};
       background-color: ${theme.colors.preElementBg} !important;
+      overflow-x: auto;
+
+      .hljs-comment {
+        color: ${theme.colors.preHljsCommentColor};
+      }
 
       @media (max-width: ${theme.breakpoints.tabletS}) {
         font-size: ${theme.fontSizes.md};

@@ -80,6 +80,8 @@ export const darkThemeColors = {
   bodyBg: '#282b30',
   navigationBg: '#202226',
   btnBg: '#202226',
+  preColor: '#eeeeee',
+  preHljsCommentColor: '#bbbbbb',
   preElementBg: '#1b1c21',
   codeElementBg: '#454545',
   colorModeIcon: '#ffd479',
@@ -94,6 +96,8 @@ export const lightThemeColors = {
   bodyBg: '#fcfcfc',
   navigationBg: '#ffffff',
   btnBg: '#ffffff',
+  preColor: '#eeeeee',
+  preHljsCommentColor: '#bbbbbb',
   preElementBg: '#1b1c21',
   codeElementBg: '#e5e5e5',
   colorModeIcon: '#f2bd54',
@@ -111,6 +115,8 @@ export interface Theme extends DefaultTheme {
     bodyBg: string;
     navigationBg: string;
     btnBg: string;
+    preColor: string;
+    preHljsCommentColor: string;
     preElementBg: string;
     codeElementBg: string;
     colorModeIcon: string;
