@@ -5,6 +5,7 @@ node_modules
 /.next/
 /out/
 /public/sitemap.xml
+tsconfig.tsbuildinfo
 
 # production
 /build
