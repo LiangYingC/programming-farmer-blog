@@ -1,22 +1,20 @@
-import ReactMarkdown from 'react-markdown/with-html';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import md from 'markdown-it';
+import hljs from 'highlight.js';
 import Layout from '@components/Layout';
 import { ArticleWrapper, GoIssueWrapper } from '@components/Article/indexStyle';
 
-interface CodeBlockProps {
-  language: string;
-  value: string;
-}
-
-const CodeBlock = ({ language, value }: CodeBlockProps) => {
-  return (
-    <SyntaxHighlighter language={language} style={atomOneDark}>
-      {value}
-    </SyntaxHighlighter>
-  );
-};
-
+const buildMdWitHljs = md({
+  highlight: function (code, lang) {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return hljs.highlight(lang, code, false).value;
+      } catch (err: any) {
+        throw new Error(err);
+      }
+    }
+    return '';
+  },
+});
 interface ArticleProps {
   content: string;
   pageTitle: string;
@@ -33,19 +31,9 @@ const Article = ({ content, pageTitle, pageDesc, pageURL }: ArticleProps) => {
       pageURL={pageURL}
     >
       <ArticleWrapper>
-        <ReactMarkdown
-          escapeHtml={false}
-          source={content}
-          renderers={{
-            code: CodeBlock,
-            link: function customAnchorElement({ href, children }) {
-              // ref : https://github.com/remarkjs/react-markdown/issues/12
-              return (
-                <a href={href} target="_blank" rel="noreferrer noopener">
-                  {children}
-                </a>
-              );
-            },
+        <article
+          dangerouslySetInnerHTML={{
+            __html: buildMdWitHljs.render(content),
           }}
         />
         <GoIssueWrapper>

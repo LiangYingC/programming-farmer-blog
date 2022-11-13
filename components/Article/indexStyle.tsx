@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-export const ArticleWrapper = styled.article`
+export const ArticleWrapper = styled.div`
   a {
     margin: 0 2px;
     padding: 0 3px;
