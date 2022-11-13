@@ -7,7 +7,7 @@ const buildMdWitHljs = md({
   highlight: function (code, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return hljs.highlight(lang, code).value;
+        return hljs.highlight(code, { language: lang }).value;
       } catch (err: any) {
         throw new Error(err);
       }
