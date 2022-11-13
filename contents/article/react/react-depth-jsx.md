@@ -19,7 +19,7 @@ category: react
 
 概略來說，React.js 是套能夠用來創造/操作 DOM 的前端框架，它有將 browser API 封裝成較為聲明式（declarative）的 API，其中「創建 DOM 」 的 Raw API 即為 `React.createElement`，舉例而言，如果要創建下面的 Hello World Element：
 
-```javascript
+```html
 <div class="container">Hello World !</div>
 ```
 
@@ -221,7 +221,7 @@ const containerElement = createElement('div', {
 
 2. `JSX` 的寫法：
 
-```javascript
+```jsx
 <div className="container">
   <span key={1} className="word">
     Hello
@@ -274,17 +274,17 @@ JSX 主要有幾個特色：
 
 舉例而言下面這段 `JSX`：
 
-```javascript
+```jsx
 <div className="container">
-    <div>Hello Belly<div>
-    <div>Hello Toast<div>
-    <div>Hello Mochi<div>
+    <div>Hello Belly</div>
+    <div>Hello Toast</div>
+    <div>Hello Mochi</div>
 </div>
 ```
 
 可以用 `JavaScript Expression`中的 `{}`、`map` 等改寫成：
 
-```javascript
+```jsx
 const userLists = ['Belly', 'Toast', 'Mochi'];
 
 const HelloUsers = () => {
@@ -302,7 +302,7 @@ const HelloUsers = () => {
 
 因為只要 `JavaScript Expression` 就合法，因此也可以在 `{}` 中直接呼叫 function，並回傳合法的值：
 
-```javascript
+```jsx
 const userLists = [
   { firstName: 'Belly', lastName: 'Lee' },
   { firstName: 'Toast', lastName: 'Chen' },
@@ -330,19 +330,19 @@ const HelloUsers = () => {
 
 由於 `JSX` 在編譯後，就成了一般的 `JavaScript Function` (createElement)，且會被呼叫，最後產出的結果為 `JavaScript Object`(element object)。因此可以將 `JSX` 視為一個變數使用：
 
-```javascript
+```jsx
 const helloUsersElement = (
     <div className="container">
-        <div>Hello Belly<div>
-        <div>Hello Toast<div>
-        <div>Hello Mochi<div>
+        <div>Hello Belly</div>
+        <div>Hello Toast</div>
+        <div>Hello Mochi</div>
     </div>
 );
 ```
 
 更可以如下面範例，作為 function 的回傳值：
 
-```javascript
+```jsx
 const formatName = user => {
   return user.firstName + ' ' + user.lastName;
 };
@@ -359,7 +359,7 @@ function getGreeting(user) {
 
 在前面曾經提及 `createElement` 第一個參數可以傳入 `component`，並非僅有 string `elementType`(div、span...)。因此在 `JSX` 中，自然也可使用自定義的 component name 當作 element，要特別注意的是：在使用自定義的 component 時，要使用「大寫」才合法。
 
-```javascript
+```jsx
 const userLists = ['Belly', 'Toast', 'Mochi'];
 
 const HelloUser = name => {
@@ -424,7 +424,7 @@ const HelloUsers = () => {
 
 在專案中的程式碼如下：
 
-```javascript
+```jsx
 import React from 'react';
 
 const HelloWorld = () => {
@@ -457,7 +457,7 @@ const HelloWorld = () => {
 
 在專案中的程式碼如下：
 
-```javascript
+```jsx
 const HelloWorld = () => {
   return <div class="container">Hello World !</div>;
 };
