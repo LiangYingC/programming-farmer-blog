@@ -47,13 +47,14 @@ const preloadedState = {
 };
 const store = createStore(reducer, preloadedState);
 
-document.getElementById('plus-points-btn').addEventListener('click', () => {
-  // 將 action type & payload 傳進 reducer 中，增加 100 points
-  store.dispatch({
-    type: 'PLUS_POINTS',
-    payload: 100,
+document.getElementById('plus-points-btn')
+  .addEventListener('click', () => {
+    // 將 action type & payload 傳進 reducer 中，增加 100 points
+    store.dispatch({
+      type: 'PLUS_POINTS',
+      payload: 100,
+    });
   });
-});
 
 ......
 ```
