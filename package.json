@@ -19,8 +19,8 @@
   "author": "LiangC",
   "license": "ISC",
   "dependencies": {
-    "@emotion/react": "^11.1.4",
-    "@emotion/styled": "^11.0.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "date-fns": "^2.19.0",
     "emotion-normalize": "^11.0.1",
     "gray-matter": "^4.0.2",
