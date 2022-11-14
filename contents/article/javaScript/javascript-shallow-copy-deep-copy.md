@@ -52,7 +52,7 @@ console.log(b); // { number : 10 }
 
 _p.s 本文的附圖都是便於理解抽象原理所做，實際在記憶體運作往往有更多細節。_
 
-<hr>
+---
 
 ## 淺拷貝的原理與實作
 
@@ -199,7 +199,7 @@ console.log(originalData[1].secondLayerNum);
 // 200 => 第二層被 clonedData 影響而改變
 ```
 
-<hr>
+---
 
 ## 深拷貝的原理與實作
 
@@ -325,7 +325,7 @@ console.log(originalData.obj.secondLayerNum);
 
 這是簡單的做法，然而要深入的製作 deep copy function 還有很多可以調整與探討的，可參考這篇：[如何写出一个惊艳面试官的深拷贝?](https://juejin.cn/post/6844903929705136141#heading-6)
 
-<hr>
+---
 
 ## 淺深拷貝總結
 
@@ -340,7 +340,7 @@ console.log(originalData.obj.secondLayerNum);
 
 如果還有些困惑，建議和[前一篇](/articles/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing)一起再讀一讀，會更有機會理解整個運作機制囉。
 
-<hr>
+---
 
 ## 後記，在開發中遇到的 Bug
 
@@ -447,7 +447,7 @@ const useOrderDataHandler = () => {
 
 以上就是與 `Object data` 拷貝有關的 Bug 紀錄和分享，藉此未來謹記之。
 
-<hr>
+---
 
 #### 【 參考資料 】
 

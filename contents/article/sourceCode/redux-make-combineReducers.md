@@ -14,7 +14,7 @@ category: sourceCode
 - 理解 `combineReducers` 要達成的目的
 - 能實作 `combineReducers` 相關程式碼
 
-<hr>
+---
 
 ## combineReducers 要解決的問題
 
@@ -248,7 +248,7 @@ const store = createStore(reducer, preloadedState);
 
 接著，就開始實踐最關鍵的 `combineReducers` 吧。
 
-<hr>
+---
 
 ## Step 1 : 實作 combineReducers 核心邏輯
 
@@ -358,7 +358,7 @@ export default combineReducers;
 
 至此，就已完成 `combineReducers` 的核心主邏輯。
 
-<hr>
+---
 
 ## Step 2 : 確保傳入的 reducers 合法
 
@@ -426,7 +426,7 @@ function combineReducers(reducers) {
 export default combineReducers;
 ```
 
-<hr>
+---
 
 ## Step 3 : 確保傳入的 action 合法
 
@@ -492,7 +492,7 @@ export default combineReducers;
 
 藉此達成檢查 `action` 是否合法。
 
-<hr>
+---
 
 ## 總結，回顧最初的目標
 
@@ -597,7 +597,7 @@ export default combineReducers;
 
 以上是關於 `combineReducers` 的實作和總結，比起前兩篇 Basic createStore 、Redux middleware 都還要單純，重點在於知道 `combineReducers` 要達成的單一目標後，就蠻能知道要如何實作，很適合自己寫寫看當練習。
 
-<hr>
+---
 
 #### 【 參考資料 】
 

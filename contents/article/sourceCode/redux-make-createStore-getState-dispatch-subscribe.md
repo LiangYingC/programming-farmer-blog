@@ -16,7 +16,7 @@ category: sourceCode
 - 理解 `subscribe` 遇到什麼 bugs，如何藉由 `currentListners`、`nextListners`、`ensureCanMutateNextListeners` 解決
 - 能動手實作基本的 `createStore`
 
-<hr>
+---
 
 ## Redux 是什麼？
 
@@ -57,7 +57,7 @@ category: sourceCode
 
 _註：更嚴謹的定義 Redux，需包含 3 個要件為 **Single source of truth​、State is read-only​（only change by dispatching）、Changes are made with pure functions**，可參考 [Redux 文件](https://redux.js.org/understanding/thinking-in-redux/three-principles)。_
 
-<hr>
+---
 
 ## Step 1 : 實作單一資料庫與 getState API
 
@@ -99,7 +99,7 @@ export default createStore;
 
 由於 closure 特性，所以在 `createStore` 中宣告 `currentState` 的變數，不會被 garbage collection 機制回收，因此可以持續存在，提供給外部提取和操作。
 
-<hr>
+---
 
 ## Step 2 : 實作更改資料的 dispatch API
 
@@ -253,7 +253,7 @@ export default createStore;
 1. 可以接收 `action` 參數
 2. 將 `action` 傳遞給 `reducer`，藉此更新 `store state`
 
-<hr>
+---
 
 ## Step 3 : 透過 isDispatching 優化 getState 以及 dispatch
 
@@ -325,7 +325,7 @@ function createStore(reducer, preloadedState) {
 export default createStore;
 ```
 
-<hr>
+---
 
 ## Step 4 : 實作訂閱機制的 subscribe API
 
@@ -499,7 +499,7 @@ export default createStore;
 
 到此就完成 `subscribe`/`unsubscribe` 基本功能。
 
-<hr>
+---
 
 ## Step 5 : 修復多層 subscribe / unsubscribe 的問題
 
@@ -655,7 +655,7 @@ export default createStore;
 
 經過以上的處理，才算是真正地完成 `subscribe`/`unsubscribe` 。
 
-<hr>
+---
 
 ## Step 6 : 添加初始化的 dispatch
 
@@ -689,7 +689,7 @@ export default createStore;
 
 至此就完成核心的 `createStore` 功能囉。
 
-<hr>
+---
 
 ## 回顧整個 createStore 程式碼
 
@@ -864,7 +864,7 @@ store.subscribe(() => {
 });
 ```
 
-<hr>
+---
 
 ## 回顧最初的閱讀文章後要達成的目標
 
@@ -900,7 +900,7 @@ Redux 是一個基於 Flux 流程概念實踐的「集中式」資料狀態管�
 
 如果對 `enhancer` 或 `middlewares` 機制有興趣，歡迎閱讀下篇文章：[理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/sourceCode/redux-make-createStore-enhancer-and-applyMiddleware)。
 
-<hr>
+---
 
 #### 【 參考資料 】
 

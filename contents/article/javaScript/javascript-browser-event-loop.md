@@ -21,7 +21,7 @@ category: javaScript
 
 接著就先開始理解第一個觀念： `Call Stack`。
 
-<hr>
+---
 
 ## 在 Call Stack 中，一次執行一項任務
 
@@ -81,7 +81,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 所以能想像到，假設有個任務耗時非常久，例如：網路請求取回資料(`XMLHttpRequest`) or `setTimeout(fn, 3000)` 等等，將會阻塞卡死下方所有任務。
 
-<hr>
+---
 
 ## Web APIs，讓同時執行多項任務變成可能
 
@@ -144,7 +144,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 至此，已經可以理解為什麼 `JavaScript` 是 `single thread` ，執行時，卻可以同時進行多項任務。
 
-<hr>
+---
 
 ## 初探 Event Loop : 究竟是什麼？
 
@@ -181,7 +181,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=CmNvbn
 
 可以看到每次點擊 Click 按鈕後，事件會先交由 `Web API` ，接著再進入到 `Callback Queue` 與 `Call Stack` 中，運行 `Event Loop` 機制。
 
-<hr>
+---
 
 ## 深入 Event Loop： Task(Macrotask) 與 Microtask
 
@@ -235,7 +235,7 @@ _p.s. `Task` 其實就是坊間常聽聞的 `Macrotask`，本文從此開始也�
 
 至此，對於 `Task` 與 `Microtask` 有初步的理解，接下來要詳細的探討兩者在 `Event Loop` 中**運作循環的流程**。
 
-<hr>
+---
 
 ## Task(Macrotask) 與 Microtask 的運作流程
 
@@ -321,7 +321,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=Y29uc2
 
 這個例子蠻重要的，如果能理解，對於 `Event Loop` 的運作就有大致的理解，如果尚不太懂，可以多看幾次。
 
-<hr>
+---
 
 ## 如何透過 setTimeout 避免使用者操作卡頓
 
@@ -463,7 +463,7 @@ setTimeout(generateRows, 0);
 
 上述例子中，設定 setTimeout 延遲 0 秒進行，代表的意義並非 0 秒後就會執行，而是至少 0 秒後進行。意思上相近於通知瀏覽器，儘早執行該項 `callback Task`。但同時間也賦予瀏覽器能夠在切分的 `Task` 與 `Task` 間重新調整的權利（例如：重新繪製畫面）。
 
-<hr>
+---
 
 ## 總結，回答前言中的那些問題
 
@@ -519,7 +519,7 @@ setTimeout(generateRows, 0);
 
 建議每個題目都可先想想看，再往下滑看答案喔。
 
-<hr>
+---
 
 ## 最後來點，promise 與 setTimeout 混雜執行的挑戰
 
@@ -665,7 +665,7 @@ console.log('script end');
 
 假設上述題目還有不理解的內容，會建議將本文再看過一遍理解看看，或是直接閱讀下方參考文件的部分，或許有更適合你吸收的文章喔！
 
-<hr>
+---
 
 #### 【 參考資料 】
 

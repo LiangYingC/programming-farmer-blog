@@ -13,7 +13,7 @@ category: react
 
 在提到 `JSX` 語法糖前，先來了解比較根本的方法，也就是也就是 React 提供用來創建 DOM 的 `Raw API` : `createElement`。
 
-<hr>
+---
 
 ## Using React.createElement to create DOM element
 
@@ -192,7 +192,7 @@ const containerElement = createElement(
 
 理解如何用 React Raw API `ceateElement` 創建 element 後，接著進入到 `JSX`。
 
-<hr>
+---
 
 ## Using JSX to create DOM element
 
@@ -408,7 +408,7 @@ const HelloUsers = () => {
 
 以上就是 `JSX` 主要幾個特點，當然還有更多細節，可以閱讀文末的 React 官方文件。
 
-<hr>
+---
 
 ## React 17 版後，新的 JSX Transform 方式
 
@@ -481,7 +481,7 @@ const HelloWorld = () => {
 
 比較需要特別注意的是 **`react/jsx-runtime`、`react/jsx-dev-runtime` 中的等等新的 `JSX` 轉換方式的 function，是透過編譯器自動引入的，如果想要在專案源碼中不使用 JSX 創建元素，那麼還是要使用 `React.createElement`** 。
 
-<hr>
+---
 
 ## 總結
 
@@ -495,7 +495,7 @@ const HelloWorld = () => {
 
 認真要探討的話還有很多細節呢！有興趣的可以再閱讀文末參考資料中的文章，或是 [createElement 的原始碼](https://github.com/facebook/react/blob/fd61f7ea53989a59bc427603798bb111c852816a/packages/react-dom/src/client/ReactDOMComponent.js#L413)。
 
-<hr>
+---
 
 #### 【 參考資料 】
 

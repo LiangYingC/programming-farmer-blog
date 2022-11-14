@@ -15,7 +15,7 @@ ok，這麼一來就先簡單寫 `pass by value` 以及 `pass by reference` 當�
 
 因此資料讀著讀著，就決定輸出成文，一來覺得非常有趣，二來資料量頗大，三來整理輸出過後的知識才是自己的，於是開始這趟探討 JavaScript 中的 `pass by value` 、 `pass by reference` 以及 `pass by sharing`之旅囉。
 
-<hr>
+---
 
 ## 在記憶體中的基本型別 (Primitive type) 與物件型別 (Object) 資料
 
@@ -74,7 +74,7 @@ _p.s 本文的附圖都是便於理解抽象概念所做，實際在記憶體運
 
 綜合以上，就能理解兩種資料型別在記憶體中儲存的概念，接著進入到在記憶體中，複製變數的行為和結果。
 
-<hr>
+---
 
 ## 在記憶體中，複製變數的行為和結果
 
@@ -174,7 +174,7 @@ console.log(b); // { number : 10 } => 跟著 a 改變
 
 接著要將同樣的概念，帶進 function 的傳遞參數中囉！
 
-<hr>
+---
 
 ## 從 function 的傳遞參數，理解 pass by value
 
@@ -216,7 +216,7 @@ console.log(a); // 5 => 沒被改變
 
 `pass by value` 同時也可以稱之為 `call by value`，畢竟函式可以用呼叫的 (call)。
 
-<hr>
+---
 
 ## 從 function 的傳遞參數，理解 pass by reference
 
@@ -254,7 +254,7 @@ console.log(a); // { number: 10 } => 跟著改變
 
 當然，`pass by reference` 也可以被稱之為 `call by reference`。
 
-<hr>
+---
 
 ## 咦，怎麼又冒出個 pass by sharing ?
 
@@ -339,7 +339,7 @@ console.log(a); // { number: 5 } =>  那尼！居然沒跟著改變！
 
 因此綜合上述，便有種說法是：在 JavaScript 中，`Primitive type` 的變數資料是 `pass by value`，而 `Object` 的變數資料是 `pass by sharing` (綜合了 `pass by value` / `pass by reference`)。
 
-<hr>
+---
 
 ## 為什麼有 JavaScript 都是 pass by value 的說法 ?
 
@@ -351,7 +351,7 @@ console.log(a); // { number: 5 } =>  那尼！居然沒跟著改變！
 
 所以說若角度是以：**複製時傳遞的都是「資料欄位內儲存的值(value)」來看的話，就可能會被視為 JavaScript 都是 pass by value**。因此才有相關的說法產生。
 
-<hr>
+---
 
 ## 總結：比起技術名詞，更該在意「複製變數的過程是如何運行的」
 
@@ -419,7 +419,7 @@ console.log(a); // { number: 5 } => 沒被改變
 
 希望看完這篇整理的你，能更理解變數資料在複製時，產生的行為囉。
 
-<hr>
+---
 
 #### 【 參考資料 】
 

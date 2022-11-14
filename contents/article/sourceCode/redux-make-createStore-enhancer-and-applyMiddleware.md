@@ -22,7 +22,7 @@ category: sourceCode
 
 因此，先快速回憶上篇實作的程式碼。
 
-<hr>
+---
 
 ## 複習前篇已實作的 createStore.js 與 app.js
 
@@ -170,7 +170,7 @@ store.subscribe(() => {
 
 接著將開始接收需求，去擴展現有的程式碼，會先從 `app.js` 下手。
 
-<hr>
+---
 
 ## 第一個需求: Log preState and newState
 
@@ -261,7 +261,7 @@ document.getElementById('minus-points-btn').addEventListener('click', () => {
 
 而這種**擴展 store.dispatch 的方法，其實就是 middleware 的概念**，接著將透過更多的需求實踐，更理解這個概念。
 
-<hr>
+---
 
 ## 第二個需求: Catch error
 
@@ -498,7 +498,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 到此為止，已完成多個 `middlewares` 的串接，也做到基本的關注點分離和擴展彈性。
 
-<hr>
+---
 
 ## 第三個需求: Record time
 
@@ -611,7 +611,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 至此，已透過需求的實踐，間接達成實作 `Redux middleware` 的完整概念，最後會再定義解說 `Redux middleware`，現在先接續目前程式碼，做更多的優化與封裝。
 
-<hr>
+---
 
 ## 實作 applyMiddleware 函式，封裝 middlewares 的細節邏輯
 
@@ -796,7 +796,7 @@ export default applyMiddleware;
 
 至此，已實踐整個 `applyMiddleware` 的函式，還可做些優化。
 
-<hr>
+---
 
 ## applyMiddleware 函式的優化
 
@@ -930,7 +930,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 ......
 ```
 
-<hr>
+---
 
 ## 整合 createStore 與 newCreateStore
 
@@ -1041,7 +1041,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 到此就大致完成 Redux 原始碼中，與 `middleware` 有關的邏輯概念實作！
 
-<hr>
+---
 
 ## 回顧本文幾個重點項目
 
@@ -1201,7 +1201,7 @@ function createStore(reducer, preloadedState, enhancer) {
 export default createStore;
 ```
 
-<hr>
+---
 
 ## 回顧所有實作的程式碼
 
@@ -1349,7 +1349,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 下篇文章會實作 `combineReducers`，相對此篇，非常輕量簡單，有興趣歡迎閱讀：[理解 Redux 原始碼 (三)：來實作 combineReducers 吧](/articles/sourceCode/redux-make-combineReducers)。
 
-<hr>
+---
 
 #### 【 參考資料 】
 

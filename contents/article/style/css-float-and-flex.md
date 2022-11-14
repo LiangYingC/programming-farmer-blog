@@ -9,7 +9,7 @@ category: style
 
 在 CSS 還沒有 `display: flex` 可以很暢快的玩弄排版前，通常會利用 `float` 來進行平行橫向的排版，然而使用`float`而導致的浮動副作用總是令人恨得牙癢癢，因此這篇文章主要來探索「 利用 `clear:both` 清除浮動（clearfix）的三種方式 」，學一學後，恩.....還是繼續回去用 flex 好了 (非誤為真 RRR )。
 
-<hr>
+---
 
 ## float 造成元素高度消失
 
@@ -21,7 +21,7 @@ category: style
 
 float 屬性，顧名思義是「 讓元素區塊直接產生浮起來的效果 」，聽起來很玄，追究這種浮起來的原因，其實是**因為 Left / Right 區塊的 height 被忽略**，可以視為 height 變成 0（實際上有值，但被忽視），所以造成 Footer 區塊因為上方沒有高度，所以往上移動的現象。
 
-<hr>
+---
 
 ## clearfix 清除浮動問題
 
@@ -190,7 +190,7 @@ ok，到這裡能理解的話，就差不多了，接著看 CSS 的變化，因�
 ![clearfix3](/article/style/css-float-and-flex/05.gif)
 _[codepen 有興趣可以玩玩](https://codepen.io/LiangC/pen/VwwQJPp)_
 
-<hr>
+---
 
 ## 總結：其實都是 clear: both 的延伸
 

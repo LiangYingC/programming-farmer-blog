@@ -9,7 +9,7 @@ category: javaScript
 
 最近在工作時，是使用 `Number` 去將 string 轉換為 number，這時候同事建議可以使用 `parseInt` 方法，除了能確保傳入的 type 為 string 外，也能夠指定要用「幾進位制」的方式，將 string 轉換成 number，因此在好奇心驅使下，就來稍微研究下 `parseInt` / `parseFloat` / `Number` 三者差異，順便整理成文章。
 
-<hr>
+---
 
 ## parseInt(string, radix) 介紹
 
@@ -81,7 +81,7 @@ But，結果會是 8 !!!
 - 第一個參數傳入 string type。
 - 第二個參數都要傳入。（可讀性 + 避免瀏覽器預設非 10 進位）。
 
-<hr>
+---
 
 ## parseFloat (string) 介紹
 
@@ -112,7 +112,7 @@ parseInt({
 }); // 0.1
 ```
 
-<hr>
+---
 
 ## Number(value) / Number ( [ value ] ) 介紹
 
@@ -162,7 +162,7 @@ Number('0o11'); // 17，用 8 進位處理 11
 Number('0b11'); // 17，用 3 進位處理 11
 ```
 
-<hr>
+---
 
 ## 使用 parseInt 抑或是 Number ?
 
@@ -196,7 +196,7 @@ const contentHeight2 = `
 
 3. `parseInt` 可以很明確的指定要轉換的進位制，因此可讀性也佳。
 
-<hr>
+---
 
 ## 最後總結使用 parseInt 的正確姿勢
 
@@ -267,7 +267,7 @@ parseInt(Infinity); // NaN
 parseFloat(Infinity); // Infinity
 ```
 
-<hr>
+---
 
 #### 【 參考資料 】
 
