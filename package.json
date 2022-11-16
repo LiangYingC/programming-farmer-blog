@@ -33,7 +33,7 @@
     "react-icons": "^4.6.0"
   },
   "devDependencies": {
-    "@emotion/babel-plugin": "^11.2.0",
+    "@emotion/babel-plugin": "^11.10.5",
     "@next/eslint-plugin-next": "^13.0.3",
     "@types/gtag.js": "^0.0.8",
     "@types/markdown-it": "^12.2.3",
