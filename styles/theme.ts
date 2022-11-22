@@ -86,7 +86,7 @@ export const darkThemeColors = {
   codeElementBg: '#454545',
   colorModeIcon: '#ffd479',
   divideLine: '#bbbbbb',
-  anchorInsetShadow: 'rgb(255, 255, 255, 0.3);',
+  anchorInsetShadow: '#0052a5',
 };
 
 export const lightThemeColors = {
@@ -102,7 +102,7 @@ export const lightThemeColors = {
   codeElementBg: '#e5e5e5',
   colorModeIcon: '#f2bd54',
   divideLine: '#555555',
-  anchorInsetShadow: 'rgb(0, 0, 0, 0.1);',
+  anchorInsetShadow: '#96f4ff',
 };
 
 type DefaultTheme = typeof defaultTheme;
