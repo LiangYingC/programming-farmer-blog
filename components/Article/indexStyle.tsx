@@ -5,7 +5,7 @@ export const ArticleWrapper = styled.div`
     margin: 0 2px;
     padding: 0 3px;
     display: inline;
-    box-shadow: inset 0 -6px 0 0 ${({ theme }) => theme.colors.anchorInsetShadow};
+    box-shadow: inset 0 -5px 0 0 ${({ theme }) => theme.colors.anchorInsetShadow};
     transition: 0.25s;
 
     :hover {
