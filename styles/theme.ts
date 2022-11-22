@@ -99,7 +99,7 @@ export const lightThemeColors = {
   preColor: '#eeeeee',
   preHljsCommentColor: '#bbbbbb',
   preElementBg: '#1b1c21',
-  codeElementBg: '#e5e5e5',
+  codeElementBg: '#ececec',
   colorModeIcon: '#f2bd54',
   divideLine: '#555555',
   anchorInsetShadow: '#96f4ff',
