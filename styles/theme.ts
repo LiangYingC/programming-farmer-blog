@@ -86,7 +86,7 @@ export const darkThemeColors = {
   codeElementBg: '#454545',
   colorModeIcon: '#ffd479',
   divideLine: '#bbbbbb',
-  anchorInsetShadow: '#0052a5',
+  anchorInsetShadow: '#034e99',
 };
 
 export const lightThemeColors = {
