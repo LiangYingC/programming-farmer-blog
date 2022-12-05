@@ -3,7 +3,7 @@ import hljs from 'highlight.js';
 import Layout from '@components/Layout';
 import { ArticleWrapper, GoIssueWrapper } from '@components/Article/indexStyle';
 
-const buildMdWitHljs = md({
+const mdWitHljs = md({
   highlight: function (code, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
@@ -15,6 +15,35 @@ const buildMdWitHljs = md({
     return '';
   },
 });
+
+// Render Ref: https://github.com/markdown-it/markdown-it/blob/master/docs/architecture.md#renderer
+const defaultRender =
+  mdWitHljs.renderer.rules.link_open ||
+  function (tokens, idx, options, env, self) {
+    return self.renderToken(tokens, idx, options);
+  };
+
+mdWitHljs.renderer.rules.link_open = function (
+  tokens,
+  idx,
+  options,
+  env,
+  self
+) {
+  const aIndex = tokens[idx].attrIndex('target');
+  if (aIndex < 0) {
+    // add new attribute
+    tokens[idx].attrPush(['target', '_blank']);
+  } else {
+    const attrs = tokens[idx].attrs;
+    if (attrs) {
+      // replace value of existing attr
+      attrs[aIndex][1] = '_blank';
+    }
+  }
+  return defaultRender(tokens, idx, options, env, self);
+};
+
 interface ArticleProps {
   content: string;
   pageTitle: string;
@@ -33,7 +62,7 @@ const Article = ({ content, pageTitle, pageDesc, pageURL }: ArticleProps) => {
       <ArticleWrapper>
         <article
           dangerouslySetInnerHTML={{
-            __html: buildMdWitHljs.render(content),
+            __html: mdWitHljs.render(content),
           }}
         />
         <GoIssueWrapper>
