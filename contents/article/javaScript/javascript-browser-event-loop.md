@@ -1,15 +1,15 @@
 ---
 title: 透過程式範例，熟悉 JS 執行流程的關鍵：Event Loop
 date: 2021-07-25
-description: 在學習 JavaScript 執行流程時，一定會需要深入理解 Event Loop，其中包含 Call Stack、Callback Queue、Macrotasks、Microtasks 等概念，將在本文中整理說明，期待閱讀完後，就能更完整地回答 promise 與 setTimeout 混在一起時，誰先執行的相關問題。
+description: 學習 JavaScript 執行流程時，會需要深入理解 Event Loop，其中包含 Call Stack、Callback Queue、Macrotasks、Microtasks 等概念，將在本文中整理詳述，期待閱讀完後，能更完整地理解 promise 與 setTimeout 等執行項目混在一起時，誰先執行的相關問題。
 category: javaScript
 ---
 
 ## 前言
 
-前陣子回 AppWorks School，擔任模擬面試官，準備非同步題目時，發現對於 `Event Loop` 的概念有些遺失，尤其是關於 `Task(macrotask)` 與 `Microtask` 的執行順序和流程。過往也沒用文字梳理相關知識，藉此寫偏文章整理我對 `Event Loop` 及相關觀念的理解。
+前陣子回 AppWorks School，擔任模擬面試官，準備非同步題目時，發現對於 `Event Loop` 的概念有些遺失，尤其是關於 `Task(Macrotask)` 與 `Microtask` 的執行順序和流程。加上過往也沒用文字梳理相關知識，因而藉此文整理我對 `Event Loop` 及相關觀念的理解。
 
-期許閱讀完文章後，能大致回答下面幾個問題：
+期許閱讀完後，能大致回答下面幾個問題：
 
 1. 為何 `JavaScript` 可以非同步執行任務？
 2. 什麼是 `Event Loop` ?
@@ -17,7 +17,7 @@ category: javaScript
 4. `Event Loop` 的運作流程？
 5. 如何避免 `Event` 處理成本高時，造成的卡頓問題？
 
-最後一個段落，還會提供幾題混雜 `setTimeout` / `Promise` 的範例，來練習測驗是否真正理解程式運作流程哦（也是面試可能遇到的考題ＸＤ）。
+最後的段落，還會提供幾題混雜 `setTimeout` / `Promise` 的範例，來測驗看看是否真正理解程式運作的流程（也是面試常見的考題類型ＸＤ）。
 
 接著就先開始理解第一個觀念： `Call Stack`。
 
@@ -25,9 +25,9 @@ category: javaScript
 
 ## 在 Call Stack 中，一次執行一項任務
 
-`JavaScript` 是單線程 (Single Thread) 的語言，一次僅能執行一項任務。可以結合 `Call Stack(執行堆疊)` 的運作概念來理解這件事情。
+`JavaScript` 是單線程 (Single Thread) 的語言，一次僅能執行一項任務。可以結合 `Call Stack(執行堆疊)` 的運作來理解這件事情。
 
-`Call Stack` 或稱作 `Execution Stack`是一個紀錄著目前程式執行狀態的空間。在 `JavaScript` 運行時，會將所執行到的任務，先移入到 `Call Stack` 中最上方，待執行完畢後，才會將該項任務移出。
+`Call Stack` 或稱作 `Execution Stack` 是一個紀錄目前程式執行狀態的空間。在 `JavaScript` 運行時，會將所執行到的任務，先移入到 `Call Stack` 中最上方，待執行完畢後，才會將該項任務移出。
 
 透過下方這段程式碼的運行，來理解 `Call Stack`：
 
@@ -61,25 +61,27 @@ fn3();
 
 _p.s. 事實上 `Call Stack` 第一步該為「**執行全域環境 (Global execution context)**」其後才會開始堆疊每個 `function` 的執行環境。_
 
-利用 [loupe](http://latentflip.com/loupe) 這套工具，就能更加具體、視覺化地理解整個運作流程：
+利用 [loupe](http://latentflip.com/loupe) 這套工具，能更加具體、視覺化地理解整個運作流程：
 
 ![Call Stack on Loupe](/article/javaScript/javascript-browser-event-loop/01.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3Rpb24gZm4xKCkgewogICAgY29uc29sZS5sb2coJ2ZuMScpOwp9CgpmdW5jdGlvbiBmbjIoKSB7CiAgICBmbjEoKTsKICAgIGNvbnNvbGUubG9nKCdmbjInKTsKfQoKZnVuY3Rpb24gZm4zKCkgewogICAgZm4yKCk7CiAgICBjb25zb2xlLmxvZygnZm4zJyk7Cn0KCmZuMygpOyA%3D!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
 
-可以看到，當執行到某一行任務時，就會把該任務加入 `Call Stack` 中，如果是單純的一行程式(例如：`console.log`)，就會立刻被運行完畢，並移出 `Call Stack`。
+可以看到，當執行到某一行任務時，就會把該任務加入 `Call Stack` 中。
 
-但如果是運行到 `function` ，則會需要 `function` 內全部執行完畢 (return something or undefined) 後，才移出 `Call Stack`。
+如果是單純的程式(例如：`console.log`)，就會立刻被運行完畢，並移出 `Call Stack`; 
+
+但如果運行到 `function`，則需要 `function` 內全部執行完畢 (return something or undefined) 後，才移出 `Call Stack`。
 
 有趣的是，當第一個 `function` 中又呼叫第二個 `function` 時，會優先執行「比較晚被呼叫」的第二個 `function`，待第二個執行完後，才會再回到第一個 `function` 繼續執行，例如：`fn1` 雖然是最晚被執行的，卻是最早被執行完畢 ; 而 `fn3` 是最早被執行的，卻是最晚被執行完畢。
 
-從程式運作的 GIF 圖中，可以看到 `function` 是會被堆疊上去的，而最上方的 `function`，會最早執行完畢被移出 `Call Stack`。
+從程式運作的 GIF 圖中，可看到 `function` 是會被堆疊上去的，而最上方的 `function`，會最早執行完畢被移出 `Call Stack`。
 
 從這個 `Call Stack` 中，可以發現兩件事：
 
 - `function` 的執行順序遵循「後進先出」（LIFO, Last In First Out）的模式。
 - 一次只能執行在 `Call Stack` 中最上方的一個任務。
 
-所以能想像到，假設有個任務耗時非常久，例如：網路請求取回資料(`XMLHttpRequest`) or `setTimeout(fn, 3000)` 等等，將會阻塞卡死下方所有任務。
+所以能想到：在單執行緒，一次僅能執行一個任務情況下，假設有任務耗時非常久，例如：網路請求取回資料(`XMLHttpRequest`) or `setTimeout(fn, 3000)` 等等，將會阻塞卡死後面所有任務。
 
 ---
 
@@ -87,17 +89,15 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 由於 `JavaScript` 一次僅能做一件任務，所以如果要解決單個任務運行過久的阻塞問題，會需要「其他機制」的協助。
 
-這個其他機制會從哪裡來呢？就是從 `JavaScript` 的「執行環境」提供，執行環境像是 `Browser` 或是 `Node.js` 等等。
+這個其他機制從哪裡來呢？就是從 `JavaScript` 的「執行環境」提供，執行環境像是 `Browser` 或 `Node.js` 等等。
 
-在 `Browser` 執行環境中，為了解決阻塞問題，有提供 `Web APIs` 協助處理需時較久的任務，例如：`XMLHttpRequest(XHR)`、`setTimeout`、`setInterval` 等等。
+在 `Browser` 執行環境中，為了解決阻塞問題，有提供 `Web APIs` 協助處理需時較久的任務，例如：`XMLHttpRequest(XHR)`、`setTimeout`、`setInterval` 等等。當遇到這些項目時，會先交給 `Browser` 處理，進而不會阻塞原本的執行緒，藉此**讓原本同時間只能進行一項的任務，變成可以進行多項**。
 
-藉此讓原本同時間只能進行一項的任務，變成可以進行多項，因為多出來的項目，`Browser` 會幫忙處理。
-
-而 `Web APIs` 協助處理完負責的邏輯後，會吐回 Callback 任務，Callback 任務不會直接被放回到 `Call Stack` 中，而是先排入 `Callback Queue` 中等待，當 `Call Stack` 為空時，才會將 `Callback Queue` 中的任務，移入 `Call Stack` 中，並開始執行。
+當 `Web APIs` 協助處理完負責的邏輯後，會吐回待執行的 Callback 任務，Callback 任務不會直接被放回到 `Call Stack` 中，而是先排入 `Callback Queue` 中等待，當 `Call Stack` 為空時，才會將 `Callback Queue` 中的任務，移入 `Call Stack` 中，並開始執行。
 
 ![Call Stack + Web APIs + Callback Queue](/article/javaScript/javascript-browser-event-loop/02.png)
 
-透過 `setTimeout` 的範例，來理解整個運作過程：
+透過 `setTimeout` 的範例，理解整個運作過程：
 
 ```javascript
 function fn1() {
@@ -112,9 +112,9 @@ function fn3() {
   console.log('fn3');
 
   setTimeout(fn1, 1000);
-  // 1. 執行 setTimeout 時，會先丟給 Web API 倒數 0.1s。
-  // 2. 倒數 0.1s 完畢，fn1 被轉移到 Queue 等待 Stack 清空。
-  // 3. Stack 清空後，fn1 被轉移到 Stack 中執行。
+  // 1. 執行 setTimeout 時，先丟給 Web API 處理倒數 0.1s 的邏輯。
+  // 2. 倒數 0.1s 完畢，fn1 Callback 被轉移到 Queue 等待 Stack 清空。
+  // 3. Stack 清空後，fn1 Callback 被轉移到 Stack 中執行。
 
   fn2();
 }
@@ -126,7 +126,7 @@ fn3();
 ![Browser Event Loop with setTimeout on Loupe](/article/javaScript/javascript-browser-event-loop/03.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3Rpb24gZm4xKCkgewogIGNvbnNvbGUubG9nKCdmbjEnKTsKfQoKZnVuY3Rpb24gZm4yKCkgewogIGNvbnNvbGUubG9nKCdmbjInKTsKICBmbjEoKTsKfQoKZnVuY3Rpb24gZm4zKCkgewogIGNvbnNvbGUubG9nKCdmbjMnKTsKICAKICBzZXRUaW1lb3V0KGZuMSwgMTAwMCk7CiAgCiAgZm4yKCk7Cn0KCmZuMygpOw%3D%3D!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
 
-執行的步驟如下：
+執行步驟如下：
 
 1. `fn3` 被呼叫，移入 Stack 中執行。
 2. 印出 `'fn3'`，接著執行到 `setTimeout(fn1, 1000)`。
@@ -139,37 +139,37 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 經由程式運作的 GIF 圖能具體看到兩個關鍵：
 
-1. `setTimeout(fn1, 1000)` 的倒數 0.1s 並沒有阻塞 `Call Stack` 中任務的執行，因為是由 `Web APIs` 協助進行，藉此達成同時間多項任務的運行。
+1. `setTimeout(fn1, 1000)` 的倒數 0.1s 的過程，並沒有阻塞其餘 `Call Stack` 中任務的執行，因為是由 `Web APIs` 協助進行，藉此達成多項任務的運行。
 2. `setTimeout(fn1, 1000)` 並非保證 `fn1` 一定會在 0.1s 後執行，因為倒數完 0.1s 後，只是將 `fn1` 排入 `Callback Queue` 等待，直到 `Call Stack` 為空時，才會再將 `fn1` 移入其中執行。因此只能說是「保證會等待至少 0.1s 後，才執行 `fn1`」。
 
-至此，已經可以理解為什麼 `JavaScript` 是 `single thread` ，執行時，卻可以同時進行多項任務。
+至此，已可理解為何 `JavaScript` 是單執行緒 ，執行時，卻可同時進行多項任務。
 
 ---
 
 ## 初探 Event Loop : 究竟是什麼？
 
-其實前面所述之內容，已經包含 `Event Loop` 的概念。
+其實前面所述之內容，已經包含 `Event Loop` 概念。
 
-概觀來說，「 所謂的 `Event Loop`，就是事件任務在 `Call Stack` 與 `Callback Queue` 間，非同步執行的循環機制。」這邊僅提及概觀，意思是還有細節的 `Task(Macrotask)`、`Microtask` 尚未說明，會在之後詳細介紹。
+概觀來說，「 所謂的 `Event Loop`，就是事件任務在 `Call Stack` 與 `Callback Queue` 間，非同步執行的循環機制。」這邊僅提及概觀，意思是還有細節的 `Task(Macrotask)`、`Microtask` 尚未說明，會在後續詳細介紹。
 
 ![Call Stack + Web APIs + Callback Queue + Event Loop](/article/javaScript/javascript-browser-event-loop/04.png)
 
-需要強調一點，就是 `JavaScript` 語言本身沒有 `Event Loop`，而是要搭配「執行環境」後，才會有 `Event Loop` 機制。像是 `Browser` 或 `Node.js` 的執行環境下，就會有各自的 `Event Loop` 機制。
+需要特別強調，就是 `JavaScript` 語言本身沒有 `Event Loop`，而是要搭配「執行環境」後，才會有 `Event Loop` 機制。像是 `Browser` 或 `Node.js` 的執行環境下，會有各自的 `Event Loop` 機制。
 
 到此稍微整理重點：
 
 - `Event Loop` 是一種處理非同步任務執行順序的機制。
 - `Event Loop` 是在 JS 執行環境中才有的機制，例如：有 `Browser` 中的 `Event Loop`、`Node` 中的 `Event Loop` 等。
 - `Browser Event Loop` 會關聯到 `Call Stack`、`Web APIs`、`Callback Queue` 間的交互作用。
-  - 如果遇到 `setTimeout`、`XHR` 等非同步任務，就會交由 `Web APIs` 處理，不阻塞 `Call Stack`。
+  - 如果遇到 `setTimeout`、`XHR` 等非同步任務，會交由 `Web APIs` 處理，不阻塞 `Call Stack`。
   - `Web APIs` 處理完非同步邏輯後，會將 Callback 任務丟回 `Callback Queue` 等待。
   - 當 `Call Stack` 為空後，就會收到 Callback 任務，並執行之。
 
-附上這張 `Browser Event Loop` 的經典全貌圖，到此，應能大致理解這張圖的意涵。
+附上這張 `Browser Event Loop` 的經典全貌圖，應能大致理解這張圖的意涵。
 
 ![Browser Event Loop Whole Concept](/article/javaScript/javascript-browser-event-loop/05.png)
 
-其中有個兩個特別的地方要提醒：
+其中有個兩個特別的補充說明：
 
 1. 在 `Callback Queue` 中，有各種不同類型的 `Queue`，像是 `Timer Queue`、`Network Queue` 等等，因此可以說，在 `Event Loop` 中，可能同時包涵多種類的 `Queue`。
 2. Web APIs 並非只有協助耗時較久的任務，還有其他許多任務，像是 `DOM event(click, scroll...)` 等等，因此如果遇到 `onClick` 等事件，也會進入到 `Web API` + `Callback Queue` + `Call Stack` 的循環中。
@@ -198,7 +198,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=CmNvbn
 - 解析 HTML
 - 執行 JavaScript 主線程式 (mainline)、script
 - 更換 URL
-- setTimeout、setInterval => callback event（傳入的第一個 cb fn 參數）
+- setTimeout、setInterval => callback event（傳入的 callback fn 參數）
 - 發布 Event 事件 => callback event (onClick、onScroll 等等)
 - 獲取網路資源 => callback event (XHR 後的 callback fn)
 
@@ -249,9 +249,9 @@ _p.s. `Task` 其實就是坊間常聽聞的 `Macrotask`，本文從此開始也�
 4. 如果有 `Microtask` 就執行之，並且會將 `Microtask Queue` 中所有 `Microtask` 執行完畢後，才會進入下個 `render` 的階段。
 5. 如果有需要 `render` 就渲染，不需要就不執行。接著再回到第一步。
 
-從中可以發現一個關鍵是：**在單次的循環中，最多只處理一項大型任務，但是所有微任務都會被處理完畢**。
+從中可以發現一個關鍵：**在單次的循環中，最多只處理一項大型任務，但是所有微任務都會被處理完畢**。
 
-可從下面這段程式的執行過程來理解：
+可由下面這段程式的執行過程來理解：
 
 ```javascript
 <script>
@@ -294,7 +294,7 @@ console.log('script end');
 9. 此時 `script` 這項 `Task` 執行完畢，進入檢查 `Microtask Queue` 是否有待執行項目的時機。
 10. `Microtask Queue` 有 `promise 1` 與 `promise 2` 兩個 `callback`，會全部執行完畢，印出 `promise 1 callback` 與 `promise 2 callback`。
 11. 此時 `Microtask Queue` 無項目，進入到是否 `render`，畫面可能更新。
-12. 結束一輪的循環 ，重投開始新一輪循環。
+12. 結束一輪的循環，從頭開始新一輪循環。
 13. 檢查 `Task Queue`，發現有先前 `setTimeout` 的 `callback`，執行印出 `setTimeout callback`。
 14. 此時 `setTimeout callback` 這項 `Task` 執行完畢，進入檢查 `Microtask Queue` 是否有待執行項目的時機。
 15. 此時 `Microtask Queue` 無項目，進入到是否 `render`，畫面可能更新。
@@ -385,11 +385,11 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=CgokLm
 
 因此運用 `setTimeout` 的非同步概念，是有機會解決(或減緩)第一個問題。
 
-_p.s. 關於如何處理這種頻繁觸發的 event，延伸的概念為 Debounce 和 Throttle，有興趣可以再 Google。_
+_p.s. 關於如何處理這種頻繁觸發的 event，延伸概念為 Debounce 和 Throttle。_
 
 ### 事件任務處理成本過高
 
-一般而言，瀏覽器會試著在每秒鐘，可以更新頁面 60 次，讓畫面流暢反應。換句話說，每 16 ms，更新畫面一次。
+一般而言，瀏覽器會試著在每秒鐘，更新頁面 60 次，讓畫面流暢反應。換句話說，每 16 ms，更新畫面一次。
 
 而可以看到在 `Event Loop` 的最後一個階段，正是繪製、更新畫面，因此理想上，一次循環中「 `Task` 以及產生所有的 `Microtask`，都要在 16 ms 內完成」，如此一來，才能安全地保證畫面的運作順暢。
 
@@ -513,11 +513,11 @@ setTimeout(generateRows, 0);
 
 ### 總結感想
 
-老實說，`Event Loop` 還有更多內容或細節可以探討，例如直接去閱讀 [HTML 規範文件](https://html.spec.whatwg.org/multipage/webappapis.html#event-loops)，但就目前為止的觀念，應該能應付許多非同步的開發情境囉。當然拉，還有面試情境ＸＤ。
+老實說，`Event Loop` 還有更多內容或細節可以探討，例如直接去閱讀 [HTML 規範文件](https://html.spec.whatwg.org/multipage/webappapis.html#event-loops)，但就目前為止的觀念，應該能應付許多非同步的開發情境囉。當然拉，還有面試情境ＸＤ
 
 最後下方的內容，就直接看些實際的程式題，試試看回答印出來的結果會是什麼吧。
 
-建議每個題目都可先想想看，再往下滑看答案喔。
+建議每個題目都可先想想看，再往下滑看答案。
 
 ---
 
@@ -663,7 +663,7 @@ console.log('script end');
 
 其中 `script start` -> `async two` -> `promise executor` -> `script end` 是第一個循環中的 `Task` 階段，`async one` -> `fulfill` 是第一個循環中的 `Microtask` 階段，`timeout callback` 是第二個循環中的 `Task` 階段。
 
-假設上述題目還有不理解的內容，會建議將本文再看過一遍理解看看，或是直接閱讀下方參考文件的部分，或許有更適合你吸收的文章喔！
+假設上述題目還有不理解的內容，會建議將本文再看過一遍理解看看，或是直接閱讀下方參考文件的部分，或許有更適合你吸收的文章！
 
 ---
 
