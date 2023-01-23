@@ -84,7 +84,7 @@ const reducer = (state, action) => {
 };
 ```
 
-通常 `store state` 不會只有一組資料，因此在 `store state` 中新增 user 的資料：
+實務上而言， `store state` 不會只有一組資料，在此加入常見的 user 資料，於是在 `store state` 中新增 user：
 
 ```javascript
 // store state 的資料結構
@@ -134,11 +134,11 @@ const reducer = (state, action) => {
 };
 ```
 
-從上面的範例中可以發現，目前的 `reducer` 有個問題，就是隨著 `store state` 越來越多，`reducer` 就會非常龐大，而且會將很多關聯不大的資料更新邏輯混在一起。
+從上述範例中可以發現，目前的 `reducer` 有個問題，就是隨著 `store state` 越來越多，`reducer` 會非常龐大，並且會將很多關聯不大的資料更新邏輯混在一起。
 
 這時候，可以思考將關聯性低的資料邏輯拆分開，讓 `reducer` 複雜度下降，並且關注點分離，讓程式更好維護。
 
-所以實作上希望將 `reducer` 拆分成 `pointsReducer` 與 `userReducer`：
+所以實作上會希望將 `reducer` 拆分成 `pointsReducer` 與 `userReducer`：
 
 ```javascript
 // store state 的資料結構
@@ -181,11 +181,11 @@ const userReducer = (state = preloadedState.user, action) => {
 };
 ```
 
-如此一來，`reducer` 變小且關注點分離。
+如此一來，`reducer` 變簡潔且關注點分離。
 
-下個問題來了，最後傳入 `createStore` 的只能是「單一的 `reducer`」，因此會需要有個方法函式，將 `pointsReducer` 與 `userReducer` 整併回單一的 `reducer`。
+下個問題來了，最後傳入 `createStore` 的只能是「單一的 `reducer`」，因此會需要有個方法函式，「將 `pointsReducer` 與 `userReducer` 整併回單一的 `reducer`」。
 
-這就是 `combineReducers` 要達成的目標：**將多個不同商業邏輯的 `reducers`，整合成單一 `reducer`，藉此傳入 `createStore` 中使用**。
+這正是 `combineReducers` 要達成的目標：**將多個不同商業邏輯的 `reducers`，整合成單一 `reducer`，藉此傳入 `createStore` 中使用**。
 
 使用的期望如下：
 
@@ -246,7 +246,7 @@ const store = createStore(reducer, preloadedState);
 ......
 ```
 
-接著，就開始實踐最關鍵的 `combineReducers` 吧。
+接著開始實踐最關鍵的 `combineReducers`。
 
 ---
 
@@ -284,7 +284,7 @@ function combineReducers(reducersObj) {
 export default combineReducers;
 ```
 
-接著來思考 `singleReducer` 的核心是：
+接著思考 `singleReducer` 的核心：
 
 - 將被傳入的單一 `children state` 與 `action`，丟進 `reducersObj` 每個對應的 `reducer` 中執行，藉此獲得更新後的 `children state`。
   - 例如：`state[points]` 與 `action` 丟進 `pointsReducer` 產出新的 `pointsState` ; `state[user]` 與 `action` 丟進 `userReducer` 產出新的 `userState`。
@@ -432,7 +432,7 @@ export default combineReducers;
 
 除了盡量確保 `reducers` 合法外，關於 `combination` 傳入的 `action`，也可以在產出 `nextStateForKey` 時，做進一步的驗證。
 
-程式碼實踐如下，改動在回傳的 `combination` 中：
+程式碼實踐如下，會改動 `combination` 的內容：
 
 ```javascript
 function combineReducers(reducers) {
@@ -468,7 +468,7 @@ function combineReducers(reducers) {
       const previousStateForKey = state[key];
       const nextStateForKey = reducer(previousStateForKey, action);
       // 因為前面已檢查 reducer 的 state 傳入 undefined 時是否正常
-      // 所以在此 undefined 的原因，就會是 action 有誤，因此報錯
+      // 所以在此 undefined 的原因，就會是 action 有誤，而非 state 有誤，因此報錯
       if (typeof nextStateForKey === 'undefined') {
         const actionType = action && action.type;
         throw new Error(
@@ -496,7 +496,7 @@ export default combineReducers;
 
 ## 總結，回顧最初的目標
 
-事實上，在 Redux 原始碼還有更多細節的實踐，偏向更多的合法檢查以及將合法檢查相關邏輯抽成獨立函式等，在此就不贅述，有興趣可再去爬原始碼，不難理解。
+事實上，在原始碼 `combineReducers` 有更多細節的實踐，像是更多的合法檢查以及將合法檢查相關邏輯抽成獨立函式等，在此不贅述，有興趣可再去爬原始碼理解。
 
 接著回顧文章最初期待閱讀完的收穫：
 
@@ -595,7 +595,7 @@ export default combineReducers;
 
 如果有需要沒有註解的程式碼，可[點此前往 GitHub 取用](https://github.com/LiangYingC/understand-redux-source-code/tree/master/phase3_combineReducers)。
 
-以上是關於 `combineReducers` 的實作和總結，比起前兩篇 Basic createStore 、Redux middleware 都還要單純，重點在於知道 `combineReducers` 要達成的單一目標後，就蠻能知道要如何實作，很適合自己寫寫看當練習。
+以上是關於 `combineReducers` 的實作和總結，比起前兩篇 Redux createStore 、Redux middleware 都還單純些，重點在於知道 `combineReducers` 要達成的單一目標後，就能試著實作，很適合自己寫寫看當練習。
 
 ---
 
