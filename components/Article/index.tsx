@@ -23,26 +23,26 @@ const defaultRender =
     return self.renderToken(tokens, idx, options);
   };
 
-mdWitHljs.renderer.rules.link_open = function (
-  tokens,
-  idx,
-  options,
-  env,
-  self
-) {
-  const aIndex = tokens[idx].attrIndex('target');
-  if (aIndex < 0) {
-    // add new attribute
-    tokens[idx].attrPush(['target', '_blank']);
-  } else {
-    const attrs = tokens[idx].attrs;
-    if (attrs) {
-      // replace value of existing attr
-      attrs[aIndex][1] = '_blank';
-    }
-  }
-  return defaultRender(tokens, idx, options, env, self);
-};
+// mdWitHljs.renderer.rules.link_open = function (
+//   tokens,
+//   idx,
+//   options,
+//   env,
+//   self
+// ) {
+//   const aIndex = tokens[idx].attrIndex('target');
+//   if (aIndex < 0) {
+//     // add new attribute
+//     tokens[idx].attrPush(['target', '_blank']);
+//   } else {
+//     const attrs = tokens[idx].attrs;
+//     if (attrs) {
+//       // replace value of existing attr
+//       attrs[aIndex][1] = '_blank';
+//     }
+//   }
+//   return defaultRender(tokens, idx, options, env, self);
+// };
 
 interface ArticleProps {
   content: string;
