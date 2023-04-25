@@ -1,7 +1,10 @@
 import md from 'markdown-it';
 import hljs from 'highlight.js';
 import Layout from '@components/Layout';
-import { ArticleWrapper, GoIssueWrapper } from '@components/Article/indexStyle';
+import {
+  ArticleWrapper,
+  ReminderWrapper,
+} from '@components/Article/indexStyle';
 
 const mdWitHljs = md({
   highlight: function (code, lang) {
@@ -65,8 +68,16 @@ const Article = ({ content, pageTitle, pageDesc, pageURL }: ArticleProps) => {
             __html: mdWitHljs.render(content),
           }}
         />
-        <GoIssueWrapper>
-          如果發現部落格文章內容有誤，或有任何想進一步討論的內容，都非常歡迎
+        <ReminderWrapper>
+          如果分享的內容對你有幫助，歡迎{' '}
+          <a
+            href="https://portaly.cc/liangc/support"
+            target="_blank"
+            rel="noreferrer"
+          >
+            透過小額贊助請我喝杯咖啡
+          </a>{' '}
+          😌 ; 如果發現部落格文章內容有誤，或有想進一步討論的內容，歡迎
           <a
             href="https://github.com/LiangYingC/Programming-Farmer-Blog/issues"
             target="_blank"
@@ -75,7 +86,7 @@ const Article = ({ content, pageTitle, pageDesc, pageURL }: ArticleProps) => {
             點此前往開 Issues 討論
           </a>
           ，感謝！
-        </GoIssueWrapper>
+        </ReminderWrapper>
       </ArticleWrapper>
     </Layout>
   );

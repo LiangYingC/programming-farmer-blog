@@ -14,7 +14,7 @@ export const ArticleWrapper = styled.div`
   }
 `;
 
-export const GoIssueWrapper = styled.p`
+export const ReminderWrapper = styled.p`
   padding: 10px;
   border: solid ${({ theme }) => theme.colors.thirdText} 1px;
   border-radius: ${({ theme }) => theme.borderRadius.xs};
