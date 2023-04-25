@@ -18,11 +18,3 @@ export const ARTICLE_TAG_PATHS = [
     path: '/style',
   },
 ];
-
-export const ARTICLE_ALL_PATHS = [
-  {
-    name: 'all',
-    path: '/',
-  },
-  ...ARTICLE_TAG_PATHS,
-];
