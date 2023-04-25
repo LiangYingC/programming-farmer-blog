@@ -1,6 +1,6 @@
 import fs from 'fs';
 import matter from 'gray-matter';
-import { articleCategoryPaths } from '@configs/paths';
+import { ARTICLE_YAERS } from '@constants/articles';
 import { Frontmatter, Articles } from '@myTypes/articles';
 
 /**
@@ -29,54 +29,43 @@ export const getArticleMatter = (articleFilePath: string) => {
 };
 
 /**
- * Make and return articles data by articleFileNames and categoryName
- * @param articleFileNames - article file names of articles, ex: [javascript-parseInt-parseFloat-Number, javascript-var-let-const-for-loop]
- * @param categoryName - a category name of articles, ex: JavaScript
- * @return [{ category, slug, frontmatter } , ...]
- */
-const makeArticles = (articleFileNames: string[], categoryName: string) => {
-  const articles = articleFileNames.map((articleFileName) => {
-    // article frontmatter data
-    const articleFilePath = `${process.cwd()}/contents/article/${categoryName}/${articleFileName}`;
-    const { frontmatter } = getArticleMatter(articleFilePath);
-
-    // article slug data
-    const articleSlug = getArticleSlug(articleFileName);
-
-    return {
-      category: categoryName,
-      slug: articleSlug,
-      frontmatter,
-    };
-  });
-
-  return articles;
-};
-
-/**
- * Get articles data of a specific category
- * @param categoryName - article category name，example：JavaScript、React
- * @return [{ category, slug, frontmatter } , ...]
- */
-export const getArticlesByCategory = (categoryName: string) => {
-  const articlesDirectory = `${process.cwd()}/contents/article/${categoryName}`;
-  const articleFileNames = fs.readdirSync(articlesDirectory);
-  const articles = makeArticles(articleFileNames, categoryName);
-
-  return articles;
-};
-
-/**
- * Get all articles data by articleCategoryPaths config
- * @return [{ category, slug, frontmatter } , ...]
+ * Get all articles data by articleTagPaths config
+ * @return [{ tag, slug, frontmatter } , ...]
  */
 export const getAllArticles = () => {
-  const allArticles = articleCategoryPaths.reduce((prev, category) => {
-    const categoryName = category.name;
-    const articles = getArticlesByCategory(categoryName);
+  const allArticles: Articles = ARTICLE_YAERS.flatMap((year) => {
+    const articlesDirectoryPath = `${process.cwd()}/contents/articles/${year}`;
+    const articleFileNames = fs.readdirSync(articlesDirectoryPath);
 
-    return [...prev, ...articles];
-  }, [] as Articles);
+    const articles = articleFileNames.map((articleFileName) => {
+      const articleFilePath = `${process.cwd()}/contents/articles/${year}/${articleFileName}`;
+      const { frontmatter } = getArticleMatter(articleFilePath);
+      const articleSlug = getArticleSlug(articleFileName);
+      return {
+        slug: articleSlug,
+        title: frontmatter.title,
+        year: frontmatter.date.slice(1, 5),
+        date: frontmatter.date,
+        description: frontmatter.description,
+        tag: frontmatter.tag,
+      };
+    });
+    return articles;
+  });
 
   return allArticles;
+};
+
+/**
+ * Get articles data of a specific tag
+ * @param tagName - article tag name，example：JavaScript、React
+ * @return [{ tag, slug, frontmatter } , ...]
+ */
+export const getArticlesByTag = (tagName: string) => {
+  const allArticles = getAllArticles();
+
+  const specificTagArticles = allArticles.filter(({ tag }) =>
+    tag.includes(tagName)
+  );
+  return specificTagArticles;
 };
