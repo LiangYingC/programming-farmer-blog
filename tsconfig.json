@@ -28,9 +28,6 @@
       "@pages/*": [
         "pages/*"
       ],
-      "@configs/*": [
-        "configs/*"
-      ],
       "@components/*": [
         "components/*"
       ],
