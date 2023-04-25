@@ -1,4 +1,4 @@
-export const ARTICLE_YAERS = [2019, 2020, 2021, 2022, 2023];
+export const ARTICLE_YAERS = [2019, 2020, 2021, 2022];
 
 export const ARTICLE_TAG_PATHS = [
   {
