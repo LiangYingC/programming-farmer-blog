@@ -38,6 +38,13 @@ module.exports = {
         permanent: true,
       },
       {
+        source:
+          '/articles/sourceCode/redux-make-createStore-getState-dispatch-subscribe',
+        destination:
+          '/articles/2021/redux-make-createStore-getState-dispatch-subscribe',
+        permanent: true,
+      },
+      {
         source: '/articles/javaScript/javascript-browser-event-loop',
         destination: '/articles/2021/javascript-browser-event-loop',
         permanent: true,
@@ -49,18 +56,13 @@ module.exports = {
       },
       {
         source:
-          '/articles/2021/javascript-pass-by-value-pass-by-reference-pass-by-sharing',
+          '/articles/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing',
         destination:
           '/articles/2021/javascript-pass-by-value-pass-by-reference-pass-by-sharing',
         permanent: true,
       },
       {
-        source: '/articles/sourceCode/redux-make-combineReducers',
-        destination: '/articles/2022/redux-make-combineReducers',
-        permanent: true,
-      },
-      {
-        source: '/articles/2021/react-depth-jsx',
+        source: '/articles/react/react-depth-jsx',
         destination: '/articles/2021/react-depth-jsx',
         permanent: true,
       },
@@ -70,7 +72,7 @@ module.exports = {
         permanent: true,
       },
       {
-        source: '/articles/2020/javascript-var-let-const-for-loop',
+        source: '/articles/javaScript/javascript-var-let-const-for-loop',
         destination: '/articles/2020/javascript-var-let-const-for-loop',
         permanent: true,
       },
