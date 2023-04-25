@@ -1,6 +1,6 @@
 import Layout from '@components/Layout';
 import Bio from '@components/Bio';
-import ArticleCategory from '@components/ArticleCategory';
+import ArticleTags from '@components/ArticleTags';
 
 const HomePage = () => {
   return (
@@ -11,7 +11,7 @@ const HomePage = () => {
       pageURL="https://www.programfarmer.com"
     >
       <Bio />
-      <ArticleCategory />
+      <ArticleTags />
     </Layout>
   );
 };

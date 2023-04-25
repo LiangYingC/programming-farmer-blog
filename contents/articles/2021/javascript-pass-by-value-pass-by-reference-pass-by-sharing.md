@@ -2,7 +2,7 @@
 title: JS 變數傳遞探討：pass by value 、 pass by reference 還是 pass by sharing？
 date: 2021-05-20
 description: 在 JS 中，時常會聽到基本型別 (Primitive type) 的變數是 pass by value，物件型別 (Object) 的變數是 pass by reference 的說法，然而當深入查找後，又會發現 pass by sharing，更甚至看到 JS 都是 pass by value，究竟是怎麼回事呢？本文將由記憶體儲存變數的方式、複製變數的方式談起，一步步理解 JS 中的 pass by value、pass by reference 以及 pass by sharing。
-category: javaScript
+tag: javaScript
 ---
 
 ## 前言

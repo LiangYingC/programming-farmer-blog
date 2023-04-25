@@ -35,7 +35,7 @@ export const Infos = styled.div`
   }
 `;
 
-export const Category = styled.span`
+export const Tag = styled.span`
   margin: 0 10px 0 0;
   padding: 3px 10px;
   display: inline-block;

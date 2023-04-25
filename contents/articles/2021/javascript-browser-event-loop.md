@@ -2,7 +2,7 @@
 title: 透過程式範例，熟悉 JS 執行流程的關鍵：Event Loop
 date: 2021-07-25
 description: 學習 JavaScript 執行流程時，會需要深入理解 Event Loop，其中包含 Call Stack、Callback Queue、Macrotasks、Microtasks 等概念，將在本文中整理詳述，期待閱讀完後，能更完整地理解 promise 與 setTimeout 等執行項目混在一起時，誰先執行的相關問題。
-category: javaScript
+tag: javaScript
 ---
 
 ## 前言
