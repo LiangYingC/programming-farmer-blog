@@ -1,14 +1,13 @@
 export interface Frontmatter {
   title: string;
   description: string;
+  year: string;
   date: string;
-  category: string;
+  tag: string;
 }
 
-export interface Article {
-  frontmatter: Frontmatter;
+export interface Article extends Frontmatter {
   slug: string;
-  category: string;
 }
 
 export type Articles = Article[];
