@@ -51,6 +51,9 @@
       ],
       "@hooks/*": [
         "hooks/*"
+      ],
+      "@constants/*": [
+        "constants/*"
       ]
     },
     "incremental": true
