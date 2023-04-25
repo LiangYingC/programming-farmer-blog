@@ -14,7 +14,7 @@ const mobileFooterConfig = [
     component: <BiHome />,
   },
   {
-    link: '/category',
+    link: '/tags',
     component: <BiCategoryAlt />,
   },
 ];

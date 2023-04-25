@@ -6,7 +6,7 @@ import {
   ArticleIntro,
   ArticleWrapper,
   Infos,
-  Category,
+  Tag,
   Date,
   Title,
   Brief,
@@ -21,12 +21,10 @@ const ArticleList = ({ articleIntro, articles }: ArticleListProps) => {
   return (
     <>
       {articleIntro && <ArticleIntro>{articleIntro}</ArticleIntro>}
-      {articles.map(({ frontmatter, slug }) => {
-        const { title, description, date, category } = frontmatter;
+      {articles.map(({ slug, title, description, year, date, tag }) => {
         const formattedDate = formatDashDate(date);
-
         return (
-          <Link key={title} href={`/articles/${category}/${slug}`} passHref>
+          <Link key={title} href={`/articles/${year}/${slug}`} passHref>
             <ArticleWrapper
               onClick={() => {
                 sendEvent({
@@ -37,7 +35,7 @@ const ArticleList = ({ articleIntro, articles }: ArticleListProps) => {
               }}
             >
               <Infos>
-                <Category>{capitalizeLetter(category)}</Category>
+                <Tag>{capitalizeLetter(tag)}</Tag>
                 <Date>{formattedDate}</Date>
               </Infos>
               <Title>{title}</Title>

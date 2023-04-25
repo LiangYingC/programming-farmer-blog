@@ -1,22 +1,22 @@
 import Link from 'next/link';
-import { allArticlesPaths } from '@configs/paths';
 import { capitalizeLetter } from '@lib/format';
 import { sendEvent } from '@lib/gtag';
+import { ARTICLE_TAG_PATHS } from '@constants/articles';
 import {
   GoArticleWapper,
   Title,
   GoArticlesBtns,
   GoArticlesBtn,
-} from '@components/ArticleCategory/indexStyle';
+} from '@components/ArticleTags/indexStyle';
 
-const ArticleCategory = () => {
+const ArticleTags = () => {
   return (
     <GoArticleWapper>
-      <Title>Articles Category</Title>
+      <Title>Article Tags</Title>
       <GoArticlesBtns>
-        {allArticlesPaths.map(({ name, path }) => {
+        {ARTICLE_TAG_PATHS.map(({ name, path }) => {
           return (
-            <Link key={name} href={`/articles${path}`} passHref>
+            <Link key={name} href={`/tags/${name}`} passHref>
               <GoArticlesBtn
                 onClick={() => {
                   sendEvent({
@@ -36,4 +36,4 @@ const ArticleCategory = () => {
   );
 };
 
-export default ArticleCategory;
+export default ArticleTags;

@@ -26,28 +26,26 @@ const ArticlePage = ({
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const slug = (params?.slug || '') as string;
-  const category = (params?.category || '') as string;
-
-  const articleFilePath = `${process.cwd()}/contents/article/${category}/${slug}.md`;
+  const year = (params?.year || '') as string;
+  const articleFilePath = `${process.cwd()}/contents/articles/${year}/${slug}.md`;
   const { frontmatter, content } = getArticleMatter(articleFilePath);
 
   return {
     props: {
       content: `# ${frontmatter.title}\n${content}`,
       frontmatter,
-      articleUrl: `https://www.programfarmer.com/articles/${category}/${slug}`,
+      articleUrl: `https://www.programfarmer.com/articles/${year}/${slug}`,
     },
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const allArticles = getAllArticles();
-
-  const paths = allArticles.map(({ category, slug }) => {
+  const paths = allArticles.map(({ slug, year }) => {
     return {
       params: {
-        category,
         slug,
+        year,
       },
     };
   });
