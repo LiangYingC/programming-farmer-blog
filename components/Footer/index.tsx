@@ -33,7 +33,7 @@ const Footer = () => {
         {mobileFooterConfig.map(({ link, component }) => {
           return (
             <Link key={link} href={`${link}`} passHref>
-              <FooterIcon href={`${link}`}>{component}</FooterIcon>
+              <FooterIcon>{component}</FooterIcon>
             </Link>
           );
         })}
