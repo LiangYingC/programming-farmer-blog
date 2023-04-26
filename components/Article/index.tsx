@@ -75,7 +75,7 @@ const Article = ({ content, pageTitle, pageDesc, pageURL }: ArticleProps) => {
             target="_blank"
             rel="noreferrer"
           >
-            透過小額贊助請我喝杯咖啡
+            點此透過小額贊助請我喝杯咖啡
           </a>{' '}
           😌 ; 如果發現部落格文章內容有誤，或有想進一步討論的內容，歡迎
           <a
