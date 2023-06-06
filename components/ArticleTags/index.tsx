@@ -20,9 +20,11 @@ const ArticleTags = () => {
               <GoArticlesBtn
                 onClick={() => {
                   sendEvent({
-                    action: 'category_click',
-                    category: 'click',
-                    label: path.replace('/', ''),
+                    eventName: 'tag_click',
+                    eventParams: {
+                      tag_title: name,
+                      tag_path: path.replace('/', ''),
+                    },
                   });
                 }}
               >
