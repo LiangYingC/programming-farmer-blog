@@ -28,9 +28,11 @@ const ArticleList = ({ articleIntro, articles }: ArticleListProps) => {
             <ArticleWrapper
               onClick={() => {
                 sendEvent({
-                  action: 'article_click',
-                  category: 'click',
-                  label: title,
+                  eventName: 'article_click',
+                  eventParams: {
+                    article_title: title,
+                    article_path: slug,
+                  },
                 });
               }}
             >
