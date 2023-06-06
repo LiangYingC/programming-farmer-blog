@@ -1,15 +1,8 @@
 interface GtagEvent {
-  action: string;
-  category: string;
-  label: string;
-  value?: string;
+  eventName: string;
+  eventParams: object;
 }
 
-// https://developers.google.com/analytics/devguides/collection/gtagjs/events
-export const sendEvent = ({ action, category, label, value }: GtagEvent) => {
-  window.gtag('event', action, {
-    event_category: category,
-    event_label: label,
-    value: value,
-  });
+export const sendEvent = ({ eventName, eventParams }: GtagEvent) => {
+  window.gtag('event', eventName, eventParams);
 };
