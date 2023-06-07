@@ -63,7 +63,7 @@ _p.s. 事實上 `Call Stack` 第一步該為「**執行全域環境 (Global exec
 
 利用 [loupe](http://latentflip.com/loupe) 這套工具，能更加具體、視覺化地理解整個運作流程：
 
-![Call Stack on Loupe](/article/javaScript/javascript-browser-event-loop/01.gif)
+![Call Stack on Loupe](/images/articles/javascript-browser-event-loop/01.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3Rpb24gZm4xKCkgewogICAgY29uc29sZS5sb2coJ2ZuMScpOwp9CgpmdW5jdGlvbiBmbjIoKSB7CiAgICBmbjEoKTsKICAgIGNvbnNvbGUubG9nKCdmbjInKTsKfQoKZnVuY3Rpb24gZm4zKCkgewogICAgZm4yKCk7CiAgICBjb25zb2xlLmxvZygnZm4zJyk7Cn0KCmZuMygpOyA%3D!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
 
 可以看到，當執行到某一行任務時，就會把該任務加入 `Call Stack` 中。
@@ -95,7 +95,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 當 `Web APIs` 協助處理完負責的邏輯後，會吐回待執行的 Callback 任務，Callback 任務不會直接被放回到 `Call Stack` 中，而是先排入 `Callback Queue` 中等待，當 `Call Stack` 為空時，才會將 `Callback Queue` 中的任務，移入 `Call Stack` 中，並開始執行。
 
-![Call Stack + Web APIs + Callback Queue](/article/javaScript/javascript-browser-event-loop/02.png)
+![Call Stack + Web APIs + Callback Queue](/images/articles/javascript-browser-event-loop/02.png)
 
 透過 `setTimeout` 的範例，理解整個運作過程：
 
@@ -123,7 +123,7 @@ fn3();
 // 印出的順序為 fn3 -> fn2 -> fn1
 ```
 
-![Browser Event Loop with setTimeout on Loupe](/article/javaScript/javascript-browser-event-loop/03.gif)
+![Browser Event Loop with setTimeout on Loupe](/images/articles/javascript-browser-event-loop/03.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3Rpb24gZm4xKCkgewogIGNvbnNvbGUubG9nKCdmbjEnKTsKfQoKZnVuY3Rpb24gZm4yKCkgewogIGNvbnNvbGUubG9nKCdmbjInKTsKICBmbjEoKTsKfQoKZnVuY3Rpb24gZm4zKCkgewogIGNvbnNvbGUubG9nKCdmbjMnKTsKICAKICBzZXRUaW1lb3V0KGZuMSwgMTAwMCk7CiAgCiAgZm4yKCk7Cn0KCmZuMygpOw%3D%3D!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
 
 執行步驟如下：
@@ -167,7 +167,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 附上這張 `Browser Event Loop` 的經典全貌圖，應能大致理解這張圖的意涵。
 
-![Browser Event Loop Whole Concept](/article/javaScript/javascript-browser-event-loop/05.png)
+![Browser Event Loop Whole Concept](/images/articles/javascript-browser-event-loop/05.png)
 
 其中有個兩個特別的補充說明：
 
@@ -176,7 +176,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 關於第二點，直接用 loupe 操作示意：
 
-![Browser Event Loop Example with onClick](/article/javaScript/javascript-browser-event-loop/06.gif)
+![Browser Event Loop Example with onClick](/images/articles/javascript-browser-event-loop/06.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=CmNvbnNvbGUubG9nKCd0b3AnKTsKCiQub24oJ2J1dHRvbicsICdjbGljaycsIGZ1bmN0aW9uIG9uQ2xpY2soKXsKICAgICAgICBjb25zb2xlLmxvZygnQ2xpY2snKTsKfSk7CiAKIGNvbnNvbGUubG9nKCdib3R0b20nKTsKIAoKIAoKCgoKCg%3D%3D!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
 
 可以看到每次點擊 Click 按鈕後，事件會先交由 `Web API` ，接著再進入到 `Callback Queue` 與 `Call Stack` 中，運行 `Event Loop` 機制。
@@ -212,7 +212,7 @@ _p.s. `Task` 其實就是坊間常聽聞的 `Macrotask`，本文從此開始也�
 
 前面提過的 `Callback Queue` 其實就是指 `Task Queue`，概念圖如下：
 
-![Browser Event Loop with Task Queue](/article/javaScript/javascript-browser-event-loop/07.png)
+![Browser Event Loop with Task Queue](/images/articles/javascript-browser-event-loop/07.png)
 
 ### `Microtask 微任務`
 
@@ -231,7 +231,7 @@ _p.s. `Task` 其實就是坊間常聽聞的 `Macrotask`，本文從此開始也�
 
 沒錯，就是 `Microtask` 的概念，加入後，概念圖如下：
 
-![Browser Event Loop with Task Queue and Microtask Queue](/article/javaScript/javascript-browser-event-loop/08.png)
+![Browser Event Loop with Task Queue and Microtask Queue](/images/articles/javascript-browser-event-loop/08.png)
 
 至此，對於 `Task` 與 `Microtask` 有初步的理解，接下來要詳細的探討兩者在 `Event Loop` 中**運作循環的流程**。
 
@@ -239,7 +239,7 @@ _p.s. `Task` 其實就是坊間常聽聞的 `Macrotask`，本文從此開始也�
 
 ## Task(Macrotask) 與 Microtask 的運作流程
 
-![Event Loop Flow with Task Queue and Microtask Queue](/article/javaScript/javascript-browser-event-loop/09.png)
+![Event Loop Flow with Task Queue and Microtask Queue](/images/articles/javascript-browser-event-loop/09.png)
 
 這張圖是經典的 `Task` 與 `Microtask` 在 `Event Loop` 中的運作圖，來看看幾個重點：
 
@@ -316,7 +316,7 @@ console.log('script end');
 
 雖然 loupe 網站中沒有呈現 `Microtask Queue`，依然可視覺化地觀察程式的運作流程：
 
-![setTimeout and promise execute flow on Loupe](/article/javaScript/javascript-browser-event-loop/10.gif)
+![setTimeout and promise execute flow on Loupe](/images/articles/javaScript/javascript-browser-event-loop/10.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coJ3NjcmlwdCBzdGFydCcpOwoKc2V0VGltZW91dChmdW5jdGlvbiAoKSB7CiAgY29uc29sZS5sb2coJ3NldFRpbWVvdXQgY2FsbGJhY2snKTsKfSwgMTAwMCk7CgpuZXcgUHJvbWlzZShmdW5jdGlvbiAocmVzb2x2ZSwgcmVqZWN0KSB7CiAgY29uc29sZS5sb2coJ3Byb21pc2UgMSByZXNvbHZlJyk7CiAgcmVzb2x2ZSgpOwp9KS50aGVuKGZ1bmN0aW9uICgpIHsKICBjb25zb2xlLmxvZygncHJvbWlzZSAxIGNhbGxiYWNrJyk7Cn0pOwoKbmV3IFByb21pc2UoZnVuY3Rpb24gKHJlc29sdmUsIHJlamVjdCkgewogIGNvbnNvbGUubG9nKCdwcm9taXNlIDIgcmVzb2x2ZScpOwogIHJlc29sdmUoKTsKfSkudGhlbihmdW5jdGlvbiAoKSB7CiAgY29uc29sZS5sb2coJ3Byb21pc2UgMiBjYWxsYmFjaycpOwp9KTsKCmNvbnNvbGUubG9nKCdzY3JpcHQgZW5kJyk7!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
 
 這個例子蠻重要的，如果能理解，對於 `Event Loop` 的運作就有大致的理解，如果尚不太懂，可以多看幾次。
@@ -352,7 +352,7 @@ $.on('button', 'click', function onClick() {
 
 來看看運行結果：
 
-![onMousemove without setTimeout on Loupe](/article/javaScript/javascript-browser-event-loop/11.gif)
+![onMousemove without setTimeout on Loupe](/images/articles/javascript-browser-event-loop/11.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=CgokLm9uKCdkb2N1bWVudCcsICdtb3VzZW1vdmUnLCBmdW5jdGlvbiBvbk1vdXNlbW92ZSgpewogICAgICAgIGNvbnNvbGUubG9nKCdNb3VzZW1vdmUgQ2FsbGJhY2sgRXhlY3V0ZScpOwp9KTsKIAogCiQub24oJ2J1dHRvbicsICdjbGljaycsIGZ1bmN0aW9uIG9uQ2xpY2soKXsKICAgICAgICBjb25zb2xlLmxvZygnQ2xpY2sgQ2FsbGJhY2sgRXhlY3V0ZScpOwp9KTsKIAoKIAoKCgoKCg%3D%3D!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
 
 注意右下 `Task Queue` 區塊，會發現到，由於一開始滑動到 Click Me 按鈕時，已觸發許多的 `mousemove` 事件，因此之後無論怎麼點擊按鈕，`onClick` 事件永遠會在一大群 `onMousemove` 事件之後，因此 `Click Callback Execute` 會被 `Mousemove Callback Execute` 卡住無法執行。
@@ -378,7 +378,7 @@ $.on('button', 'click', function onClick() {
 
 直接來看運行結果 :
 
-![onMousemove with setTimeout on Loupe](/article/javaScript/javascript-browser-event-loop/12.gif)
+![onMousemove with setTimeout on Loupe](/images/articles/javascript-browser-event-loop/12.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=CgokLm9uKCdkb2N1bWVudCcsICdtb3VzZW1vdmUnLCBmdW5jdGlvbiBvbk1vdXNlbW92ZSgpewogICAgc2V0VGltZW91dChmdW5jdGlvbiB0aW1lb3V0Q2FsbGJhY2soKXsKICAgICAgICBjb25zb2xlLmxvZygnTW91c2Vtb3ZlIFJlYWwgQ2FsbGJhY2sgRXhlY3V0ZScpOwogICAgfSwgMCk7Cn0pOwogCiAKJC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpewogICAgY29uc29sZS5sb2coJ0NsaWNrIENhbGxiYWNrIEV4ZWN1dGUnKTsKfSk7CiAKCiAKCgoKCgo%3D!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
 
 注意 `Task Queue` 區塊，會發現 `onClick` 事件，有機會安插在 `timeoutCallback` 之間執行，意思即為 `Click Callback Execute` 會在 `Mousemove Callback Execute` 之間執行，而不會被阻塞在所有的 `Mousemove Callback Execute` 之後。
@@ -457,7 +457,7 @@ setTimeout(generateRows, 0);
 
 其執行結果概念差異如下(圖取自書中 412 頁)：
 
-![onMousemove with setTimeout on Loupe](/article/javaScript/javascript-browser-event-loop/13.jpg)
+![onMousemove with setTimeout on Loupe](/images/articles/javascript-browser-event-loop/13.jpg)
 
 最重要的差異在於原本需要長時間才完成的任務，透過 `setTimeout` 的切分，讓網頁有機會重新繪製，中間也可能可以安插新的任務（由瀏覽器控管），因此避免畫面長時間的卡住。
 

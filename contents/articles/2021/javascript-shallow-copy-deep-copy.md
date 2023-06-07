@@ -7,14 +7,14 @@ tag: javaScript
 
 ## 前言
 
-在上篇文章 [JS 變數傳遞探討：pass by value 、 pass by reference 還是 pass by sharing？](/articles/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing) 中有提到： JS 中，資料的型別主要有分為「基本型別 (Primitive type)」 以及「物件 (Object)」，兩者最大的差異在於：
+在上篇文章 [JS 變數傳遞探討：pass by value 、 pass by reference 還是 pass by sharing？](/articles/2021/javascript-pass-by-value-pass-by-reference-pass-by-sharing) 中有提到： JS 中，資料的型別主要有分為「基本型別 (Primitive type)」 以及「物件 (Object)」，兩者最大的差異在於：
 
 - **Primitive type data** 複製變數時，會直接「 複製值 (value) 」。像是：`string`、`number`、`boolean`、`undefined`、`null`、`symbol` 的變數資料。
 - **Object data** 複製變數時，會「 複製地址 (address) 」。像是：`object`、`array`、`function` 的變數資料。
 
 概念如下圖：
 
-![Primitive type data and Object data](/article/javaScript/javascript-shallow-copy-deep-copy/01.png)
+![Primitive type data and Object data](/images/articles/javascript-shallow-copy-deep-copy/01.png)
 
 轉換成程式中的表現行為如下：
 
@@ -58,7 +58,7 @@ _p.s 本文的附圖都是便於理解抽象原理所做，實際在記憶體運
 
 當 `Original Object data` 與 `Cloned Object data` 中，**有任何一層的資料地址相同，背後指向的值相同，兩個物件的操作會互相影響**，就為**淺拷貝(shallow copy)**。
 
-![shallow copy 1](/article/javaScript/javascript-shallow-copy-deep-copy/02.png)
+![shallow copy 1](/images/articles/javascript-shallow-copy-deep-copy/02.png)
 
 ```javascript
 /*** 淺拷貝：直接複製 ***/
@@ -83,7 +83,7 @@ console.log(originalData.obj.secondLayerNum);
 
 需要注意的是「只要有任何一層的資料地址相同」，換句話說就是「只要並非兩個完完全全獨立的 `Object data`」，就依然是淺拷貝。
 
-![shallow copy 2](/article/javaScript/javascript-shallow-copy-deep-copy/03.png)
+![shallow copy 2](/images/articles/javascript-shallow-copy-deep-copy/03.png)
 _p.s 概念示意圖，地址並非直接存在 obj 中，而是 obj 變數會對應一個地址_
 
 上面看完原理概念圖，接著就在程式中，實踐這種「第一層不會互相影響，但第二層後會互相影響」的淺拷貝吧！
@@ -207,7 +207,7 @@ console.log(originalData[1].secondLayerNum);
 
 當 `Original Object data` 與 `Cloned Object data` ，**是兩個完全獨立，每一層的資料地址都不同，相互不影響的深層物件**，就為**深拷貝(deep copy)**。
 
-![deep copy](/article/javaScript/javascript-shallow-copy-deep-copy/04.png)
+![deep copy](/images/articles/javascript-shallow-copy-deep-copy/04.png)
 _p.s 概念示意圖，地址並非直接存在 obj 中，而是 obj 變數會對應一個地址_
 
 有哪些方式可以達成深拷貝呢？
@@ -331,14 +331,14 @@ console.log(originalData.obj.secondLayerNum);
 
 用一張圖簡易地總結淺深拷貝的概念：
 
-![shallow copy and deep copy](/article/javaScript/javascript-shallow-copy-deep-copy/05.png)
+![shallow copy and deep copy](/images/articles/javascript-shallow-copy-deep-copy/05.png)
 
 - **淺拷貝(shallow copy)** : 原始物件資料與複製物件資料「並非完全獨立」，可能第一層就有指向相同地址的資料，也可能第二層才有指向相同地址的資料。彼此資料內容的改變可能會互相影響。
 - **深拷貝(deep copy)** : 原始物件資料與複製物件資料「完全獨立」，沒有任何一層資料指向相同的地址。彼此資內容料的改變不會互相影響。
 
 從上篇談 `pass by value`、`pass by reference`、`pass by sharing` 開始，到這篇談 `shallow copy` 與 `deep copy`，都可以發現其實最重要的觀念在於理解「 `Primitive type data` 與 `Object data` 複製的過程 」，如果腦中有他們複製時變數表運作的過程，那理解起來就相對容易，而且也不用特別死背囉。
 
-如果還有些困惑，建議和[前一篇](/articles/javaScript/javascript-pass-by-value-pass-by-reference-pass-by-sharing)一起再讀一讀，會更有機會理解整個運作機制囉。
+如果還有些困惑，建議和[前一篇](/articles/2021/javascript-pass-by-value-pass-by-reference-pass-by-sharing)一起再讀一讀，會更有機會理解整個運作機制囉。
 
 ---
 

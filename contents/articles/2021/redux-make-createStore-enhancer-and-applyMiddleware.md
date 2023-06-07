@@ -7,7 +7,7 @@ tag: sourceCode
 
 ## 前言
 
-延續上篇分享的 [理解 Redux 原始碼：來實作 createStore 的 getState, dispatch, subscribe 吧](/articles/sourceCode/redux-make-createStore-getState-dispatch-subscribe)，這次將更深入探討 Redux 原始碼中，關於 `middleware` 的部分，像是：`applyMiddleware` 及 `createStore` 傳入的 `enhancer` 等等。
+延續上篇分享的 [理解 Redux 原始碼：來實作 createStore 的 getState, dispatch, subscribe 吧](/articles/2021/redux-make-createStore-getState-dispatch-subscribe)，這次將更深入探討 Redux 原始碼中，關於 `middleware` 的部分，像是：`applyMiddleware` 及 `createStore` 傳入的 `enhancer` 等等。
 
 期許閱讀完本文後，能達成：
 
@@ -165,7 +165,7 @@ store.subscribe(() => {
 });
 ```
 
-如果對於上述的程式碼很不熟，建議先回頭閱讀[理解 Redux 原始碼：來實作 createStore 的 getState, dispatch, subscribe 吧](/articles/sourceCode/redux-make-createStore-getState-dispatch-subscribe)後，再來讀本文。
+如果對於上述的程式碼很不熟，建議先回頭閱讀[理解 Redux 原始碼：來實作 createStore 的 getState, dispatch, subscribe 吧](/articles/2021/redux-make-createStore-getState-dispatch-subscribe)後，再來讀本文。
 
 接著將開始接收需求，去擴展現有的程式碼，會先從 `app.js` 下手。
 
@@ -1050,7 +1050,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 **透過 Redux middleware 的機制，開發者可以擴展 Dispatcher 的功能，達成在 Action 被指派後到 Reducer 執行前，或者在 Reducer 執行後，進行額外的操作處理**，例如：把更新前後的資料狀態印出來觀察、呼叫 API 更新資料等等，概念如下圖。
 
-![redux flow](/article/sourceCode/redux-make-createStore-enhancer-and-applyMiddleware/01.gif)
+![redux flow](/images/articles/redux-make-createStore-enhancer-and-applyMiddleware/01.gif)
 
 特別注意的是，middleware 並非一次只能使用一個，如果有多個 middlewares 的情況，概念上就會像接力一樣，前一個 middleware 會透過 `next` 將 `action` 交給下一個 middleware，直到最後一個 middleware 執行完畢後，才會觸發到原始的 `dispatch`，進而執行 `reducer`。
 

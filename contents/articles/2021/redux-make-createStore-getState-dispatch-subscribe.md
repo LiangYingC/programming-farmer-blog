@@ -32,11 +32,11 @@ tag: sourceCode
 
 可從下圖直觀地了解有統一資料來源(store state)、集中式資料狀態庫的好處。
 
-![with and without Redux](/article/sourceCode/redux-make-createStore-getState-dispatch-subscribe/01.png)
+![with and without Redux](/images/articles/redux-make-createStore-getState-dispatch-subscribe/01.png)
 
 除了「集中式」之外，Redux 還有一個關鍵是基於 Flux 實踐的「單向資料流」更新資料方式，簡言之就是**限制更新 store state 的方式，只能透過下圖單向的流程來執行，藉此讓資料的改變更安全、可預期地被控管**，概念如下圖：
 
-![redux flow](/article/sourceCode/redux-make-createStore-getState-dispatch-subscribe/02.png)
+![redux flow](/images/articles/redux-make-createStore-getState-dispatch-subscribe/02.png)
 
 概要地介紹其中重要的角色：
 
@@ -900,7 +900,7 @@ Redux 是一個基於 Flux 流程概念實踐的「集中式」資料狀態管�
 
 雖然此篇文章尚未做出完整的 `createStore`，像是沒實作 `enhancer` 相關功能，但透過實作 `getState`、`dispatch`、`subscribe`，已能理解核心的 Redux 運作，也知道它是如何透過 closure、listeners 等模式，去封裝並實踐集中式資料管理以及監聽資料變化等概念，非常有趣。
 
-如果對 `enhancer` 或 `middlewares` 機制有興趣，歡迎閱讀下篇文章：[理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/sourceCode/redux-make-createStore-enhancer-and-applyMiddleware)。
+如果對 `enhancer` 或 `middlewares` 機制有興趣，歡迎閱讀下篇文章：[理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/2021/redux-make-createStore-enhancer-and-applyMiddleware)。
 
 ---
 
