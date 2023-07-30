@@ -57,7 +57,7 @@ const Bio = () => {
           LiangC<Divider>|</Divider>Frontend Developer
         </Title>
         <Description>
-          曾為農夫、農產品品管、線上課程品管，現為前端工程師，喜歡栽培和成長，在城市裡耕耘程式，期望栽種有價值的產品。
+          曾為農業現場員工、農產品品管、線上課程品管，現為前端工程師，喜歡栽培和成長，在城市裡耕耘程式，期望栽種有價值的產品。
         </Description>
         <SocialLinks>
           {socialLinks.map(({ site, link, getIcon }) => {
