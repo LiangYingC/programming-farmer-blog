@@ -1,5 +1,6 @@
 import md from 'markdown-it';
 import hljs from 'highlight.js';
+import { sendEvent } from '@lib/gtag';
 import Layout from '@components/Layout';
 import {
   ArticleWrapper,
@@ -74,6 +75,15 @@ const Article = ({ content, pageTitle, pageDesc, pageURL }: ArticleProps) => {
             href="https://portaly.cc/liangc/support"
             target="_blank"
             rel="noreferrer"
+            onClick={() =>
+              sendEvent({
+                eventName: 'support_click',
+                eventParams: {
+                  article_title: pageTitle,
+                  article_path: pageURL,
+                },
+              })
+            }
           >
             點此透過小額贊助請我喝杯咖啡
           </a>{' '}
@@ -82,6 +92,15 @@ const Article = ({ content, pageTitle, pageDesc, pageURL }: ArticleProps) => {
             href="https://github.com/LiangYingC/Programming-Farmer-Blog/issues"
             target="_blank"
             rel="noreferrer"
+            onClick={() =>
+              sendEvent({
+                eventName: 'issues_click',
+                eventParams: {
+                  article_title: pageTitle,
+                  article_path: pageURL,
+                },
+              })
+            }
           >
             點此前往開 Issues 討論
           </a>
