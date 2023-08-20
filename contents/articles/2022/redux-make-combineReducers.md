@@ -1,5 +1,5 @@
 ---
-title: 理解 Redux 原始碼 (三)：來實作 combineReducers 吧
+title: 理解 Redux 原始碼 (3)：來實作 combineReducers 吧
 date: 2022-01-20
 description: 前兩篇 Redux 原始碼的文章，實作了 createStore 以及 applyMiddleware 等項目，在這篇文章中，將實作負責整合多個 reducers 的 combineReducers，藉此了解 Redux 是如何實踐這件事。
 tag: sourceCode
@@ -7,7 +7,7 @@ tag: sourceCode
 
 ## 前言
 
-在上篇 [理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/2021/redux-make-createStore-enhancer-and-applyMiddleware)中，已經理解 Redux middlewares 相關功能。這次將探討 Redux 原始碼中，關於 `combineReducers` 的部分，藉此理解 Redux 如何整合多個 `reducers`。
+在上篇 [理解 Redux 原始碼 (2)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/2021/redux-make-createStore-enhancer-and-applyMiddleware)中，已經理解 Redux middlewares 相關功能。這次將探討 Redux 原始碼中，關於 `combineReducers` 的部分，藉此理解 Redux 如何整合多個 `reducers`。
 
 期許閱讀完本文後，能達成：
 

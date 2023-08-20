@@ -1,5 +1,5 @@
 ---
-title: 理解 Redux 原始碼 (四)：透過 Provider 與 connect 理解 React-Redux 的組合
+title: 理解 Redux 原始碼 (4)：透過 Provider 與 connect 理解 React-Redux 的組合
 date: 2023-07-30
 description: 在前端世界中，不常見到單獨使用 Redux，而是 React 與 Redux 共同使用，aka React-Redux。因此在本文中，會探討 React-Redux 的核心部分的實踐，主要聚焦於 Provider 元件與 connect 方法。
 tag: sourceCode
@@ -9,9 +9,9 @@ tag: sourceCode
 
 在前幾篇文章中：
 
-- [理解 Redux 原始碼 (一)：來實作 createStore 的 getState、dispatch、subscribe 吧](/articles/2021/redux-make-createStore-getState-dispatch-subscribe)
-- [理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/2021/redux-make-createStore-enhancer-and-applyMiddleware)
-- [理解 Redux 原始碼 (三)：來實作 combineReducers 吧](/articles/2022/redux-make-combineReducers)
+- [理解 Redux 原始碼 (1)：來實作 createStore 的 getState、dispatch、subscribe 吧](/articles/2021/redux-make-createStore-getState-dispatch-subscribe)
+- [理解 Redux 原始碼 (2)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/2021/redux-make-createStore-enhancer-and-applyMiddleware)
+- [理解 Redux 原始碼 (3)：來實作 combineReducers 吧](/articles/2022/redux-make-combineReducers)
 
 已探討 Redux 的主要概念和實現，包括 `createStore`、`middlewares`、`applyMiddleware`、以及 `combineReducers`，所以對 Redux 有不少的認識，如果不熟可再回頭看看上面的文章，或者閱讀 Redux 官方文件。
 

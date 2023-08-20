@@ -1,5 +1,5 @@
 ---
-title: 理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧
+title: 理解 Redux 原始碼 (2)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧
 date: 2021-12-30
 description: 接續上篇 Redux 系列文章，已實作完 createStore 中的 getState、dispatch、subscribe 後，這篇將進階到實作 Redux middleware 相關的功能，如 applyMiddleware 及 createStore 傳入的 enhancer 等。帶著好奇心，更深入探討 Redux 吧。
 tag: sourceCode
@@ -1342,7 +1342,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 然而整體而言，已實作 Redux middleware 的核心概念，而且是從需求角度出發的思考模式，希望讓閱讀完的你，有更容易理解 Redux middleware 相關原始碼。
 
-下篇文章會實作 `combineReducers`，相對此篇，非常輕量簡單，有興趣歡迎閱讀：[理解 Redux 原始碼 (三)：來實作 combineReducers 吧](/articles/sourceCode/redux-make-combineReducers)。
+下篇文章會實作 `combineReducers`，相對此篇，非常輕量簡單，有興趣歡迎閱讀：[理解 Redux 原始碼 (3)：來實作 combineReducers 吧](/articles/sourceCode/redux-make-combineReducers)。
 
 ---
 

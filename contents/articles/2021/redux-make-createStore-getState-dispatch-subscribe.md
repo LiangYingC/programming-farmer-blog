@@ -1,5 +1,5 @@
 ---
-title: 理解 Redux 原始碼 (一)：來實作 createStore 的 getState、dispatch、subscribe 吧
+title: 理解 Redux 原始碼 (1)：來實作 createStore 的 getState、dispatch、subscribe 吧
 date: 2021-12-01
 description: 很好奇 Redux 是如何在程式中實踐狀態統一控管以及單向資料流的概念，於是決定閱讀 Redux 的原始碼，並解實作基礎的 createStore function，會聚焦在 getState、dispatch、subscribe API。
 tag: sourceCode
@@ -900,7 +900,7 @@ Redux 是一個基於 Flux 流程概念實踐的「集中式」資料狀態管�
 
 雖然此篇文章尚未做出完整的 `createStore`，像是沒實作 `enhancer` 相關功能，但透過實作 `getState`、`dispatch`、`subscribe`，已能理解核心的 Redux 運作，也知道它是如何透過 closure、listeners 等模式，去封裝並實踐集中式資料管理以及監聽資料變化等概念，非常有趣。
 
-如果對 `enhancer` 或 `middlewares` 機制有興趣，歡迎閱讀下篇文章：[理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/2021/redux-make-createStore-enhancer-and-applyMiddleware)。
+如果對 `enhancer` 或 `middlewares` 機制有興趣，歡迎閱讀下篇文章：[理解 Redux 原始碼 (2)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](/articles/2021/redux-make-createStore-enhancer-and-applyMiddleware)。
 
 ---
 

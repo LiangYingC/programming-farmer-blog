@@ -16,10 +16,10 @@
 
 ### SourceCode
 
-- [理解 Redux 原始碼 (一)：來實作 createStore 的 getState、dispatch、subscribe 吧](https://www.programfarmer.com/articles/2021/redux-make-createStore-getState-dispatch-subscribe)
-- [理解 Redux 原始碼 (二)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](https://www.programfarmer.com/articles/2021/redux-make-createStore-enhancer-and-applyMiddleware)
-- [理解 Redux 原始碼 (三)：來實作 combineReducers 吧](https://www.programfarmer.com/articles/2022/redux-make-combineReducers)
-- [理解 Redux 原始碼 (四)：透過 Provider 與 connect 理解 React-Redux 的組合](https://www.programfarmer.com/articles/2023/redux-make-provider-and-connect)
+- [理解 Redux 原始碼 (1)：來實作 createStore 的 getState、dispatch、subscribe 吧](https://www.programfarmer.com/articles/2021/redux-make-createStore-getState-dispatch-subscribe)
+- [理解 Redux 原始碼 (2)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](https://www.programfarmer.com/articles/2021/redux-make-createStore-enhancer-and-applyMiddleware)
+- [理解 Redux 原始碼 (3)：來實作 combineReducers 吧](https://www.programfarmer.com/articles/2022/redux-make-combineReducers)
+- [理解 Redux 原始碼 (4)：透過 Provider 與 connect 理解 React-Redux 的組合](https://www.programfarmer.com/articles/2023/redux-make-provider-and-connect)
 
 ### React
 
