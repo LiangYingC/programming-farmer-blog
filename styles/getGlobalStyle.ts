@@ -65,6 +65,19 @@ const getGlobalStyle = (theme: Theme) => {
       }
     }
 
+    h4 {
+      margin: 20px 0px;
+      font-size: ${theme.fontSizes.xl};
+      font-weight: ${theme.fontWeights.semibold};
+      color: ${theme.colors.primaryText};
+      letter-spacing: ${theme.letterSpacings.wider};
+      line-height: ${theme.lineHeights.short};
+
+      @media (max-width: ${theme.breakpoints.tabletS}) {
+        font-size: ${theme.fontSizes.lg};
+      }
+    }
+
     strong {
       margin: 0 1px;
       letter-spacing: ${theme.letterSpacings.wide};
