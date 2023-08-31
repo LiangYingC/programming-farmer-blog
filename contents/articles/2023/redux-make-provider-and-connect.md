@@ -158,7 +158,7 @@ const mapStateToProps = (state) => ({
   count: state.count,
 });
 
-// 宣告 mapStateToProps，
+// 宣告 mapDispatchToProps，
 // 設定 Counter 需要取用 store dispatch actions
 const mapDispatchToProps = (dispatch) => ({
   increment: () => dispatch({ type: 'INCREMENT' }),
@@ -569,6 +569,8 @@ export connect(mapStateToProps, null)(component)
 ```
 
 以上的小補充，希望能讓這個「比對方式」的細節被理解得更快。
+
+---
 
 ## 總結，回顧最初的目標
 
