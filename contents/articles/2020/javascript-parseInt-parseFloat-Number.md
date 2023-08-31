@@ -269,7 +269,7 @@ parseFloat(Infinity); // Infinity
 
 ---
 
-#### 【 參考資料 】
+#### 參考資料
 
 - [ES6 規格書 | parseInt](http://www.ecma-international.org/ecma-262/6.0/#sec-parseint-string-radix)
 - [MDN | parseInt](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/parseInt)

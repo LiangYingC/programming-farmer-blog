@@ -599,7 +599,7 @@ export default combineReducers;
 
 ---
 
-#### 【 參考資料 】
+#### 參考資料
 
 - [LiangYingC/understand-redux-source-code](https://github.com/LiangYingC/understand-redux-source-code/tree/master/phase3_combineReducers)
 - [reduxjs/redux repo | redux source code](https://github.com/reduxjs/redux/tree/master/src)

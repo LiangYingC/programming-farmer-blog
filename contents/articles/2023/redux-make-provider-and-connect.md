@@ -768,7 +768,7 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
 
 ---
 
-#### 【 參考資料 】
+#### 參考資料
 - 與[ChatGPT4](https://openai.com/gpt-4)對談完成
 - [Provider 原始碼](https://github.com/reduxjs/react-redux/blob/master/src/components/Provider.tsx)
 - [connect 原始碼](https://github.com/reduxjs/react-redux/blob/7.x/src/connect/connect.js)

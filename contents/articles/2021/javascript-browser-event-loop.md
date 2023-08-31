@@ -667,7 +667,7 @@ console.log('script end');
 
 ---
 
-#### 【 參考資料 】
+#### 參考資料
 
 - [所以說 event loop 到底是什麼玩意兒？| Philip Roberts | JSConf EU](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 - [我知道你懂 Event Loop，但你了解到多深？](https://yeefun.github.io/event-loop-in-depth/)

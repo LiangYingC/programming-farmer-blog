@@ -344,7 +344,7 @@ console.log(myDogName);
 感謝 **Jason Wu** 在 `var / let` for loop 時給予的觀點與諮詢。
 <br>
 
-#### 【 參考資料 】
+#### 參考資料
 
 - [重新認識 JavaScript: Day 18 Callback Function 與 IIFE | Kuro Hsu](https://ithelp.ithome.com.tw/articles/10192739)
 - [鐵人賽：ES6 開始的新生活 let, const | 卡斯伯](https://wcc723.github.io/javascript/2017/12/20/javascript-es6-let-const/)

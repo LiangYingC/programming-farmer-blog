@@ -497,7 +497,7 @@ const HelloWorld = () => {
 
 ---
 
-#### 【 參考資料 】
+#### 參考資料
 
 - [介紹 JSX | React 官方文件](https://zh-hant.reactjs.org/docs/introducing-jsx.html)
 - [深入 JSX | React 官方文件](https://zh-hant.reactjs.org/docs/jsx-in-depth.html)

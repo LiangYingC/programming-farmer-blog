@@ -1346,7 +1346,7 @@ document.getElementById('plus-points-btn').addEventListener('click', () => {
 
 ---
 
-#### 【 參考資料 】
+#### 參考資料
 
 - [LiangYingC/understand-redux-source-code](https://github.com/LiangYingC/understand-redux-source-code/tree/master/phase2_middlewares)
 - [reduxjs/redux | redux source code ](https://github.com/reduxjs/redux/tree/master/src)

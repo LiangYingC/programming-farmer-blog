@@ -700,7 +700,7 @@ export default useDispatch;
 
 ---
 
-#### 【 參考資料 】
+#### 參考資料
 - 與[ChatGPT4](https://openai.com/gpt-4)對談完成
 - [Redux Doc Hooks](https://react-redux.js.org/api/hooks)
 - [Reat-Redux source code useSelector](https://github.com/reduxjs/react-redux/blob/7.x/src/hooks/useSelector.js)

@@ -421,7 +421,7 @@ console.log(a); // { number: 5 } => 沒被改變
 
 ---
 
-#### 【 參考資料 】
+#### 參考資料
 
 - [基本資料型別和參考資料型別 Primitive Data Type & Reference Data Type - 彭彭直播](https://www.youtube.com/watch?v=43VI2zWSpd0)
 - [你不可不知的 JavaScript 二三事#Day26：程式界的哈姆雷特 —— Pass by value, or Pass by reference？](https://ithelp.ithome.com.tw/articles/10209104)

@@ -212,7 +212,7 @@ _[codepen 有興趣可以玩玩](https://codepen.io/LiangC/pen/VwwQJPp)_
 
 事實上現在 CSS 中已經有 「 `grid` 」 與 「 `flex` 」的出現，需要使用到 「 float 」 排版的情況減少很多，所以...也不一定要用 ＸＤＤ
 
-#### 【 參考資料 】
+#### 參考資料
 
 - [清除浮动的四种方式及其原理理解 | 掘金](https://juejin.im/article/59e7190bf265da4307025d9)
 - [用 clearfix 解決 Bootstrap grid 跑版問題，以及其原理 | 關節 ](https://medium.com/@kansetsu7/%E5%88%A9%E7%94%A8clearfix%E8%A7%A3%E6%B1%BAbootstrap-grid-system%E8%B7%91%E7%89%88%E5%95%8F%E9%A1%8C-%E4%BB%A5%E5%8F%8A%E5%85%B6%E8%83%8C%E5%BE%8C%E5%8E%9F%E7%90%86-58f6f461e4ca)

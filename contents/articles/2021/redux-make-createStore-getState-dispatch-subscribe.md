@@ -904,7 +904,7 @@ Redux 是一個基於 Flux 流程概念實踐的「集中式」資料狀態管�
 
 ---
 
-#### 【 參考資料 】
+#### 參考資料
 
 - [LiangYingC/understand-redux-source-code](https://github.com/LiangYingC/understand-redux-source-code/tree/master/phase1_createStore)
 - [reduxjs/redux | redux source code ](https://github.com/reduxjs/redux/tree/master/src)

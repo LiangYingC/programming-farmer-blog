@@ -449,7 +449,7 @@ const useOrderDataHandler = () => {
 
 ---
 
-#### 【 參考資料 】
+#### 參考資料
 
 - [A Deep Dive into Shallow Copy and Deep Copy in JavaScript](https://javascript.plainenglish.io/shallow-copy-and-deep-copy-in-javascript-a0a04104ab5c)
 - [Understanding Deep and Shallow Copy in Javascript](https://medium.com/@manjuladube/understanding-deep-and-shallow-copy-in-javascript-13438bad941c)
