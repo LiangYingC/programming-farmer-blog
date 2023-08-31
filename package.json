@@ -37,7 +37,7 @@
     "@next/eslint-plugin-next": "^13.0.3",
     "@types/gtag.js": "^0.0.12",
     "@types/markdown-it": "^12.2.3",
-    "@types/node": "^14.14.22",
+    "@types/node": "^18.17.0",
     "@types/react": "^18.0.1",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "eslint": "^8.8.0",
