@@ -701,12 +701,12 @@ export default useDispatch;
 ---
 
 #### 參考資料
-- 與[ChatGPT4](https://openai.com/gpt-4)對談完成
 - [Redux Doc Hooks](https://react-redux.js.org/api/hooks)
 - [Reat-Redux source code useSelector](https://github.com/reduxjs/react-redux/blob/7.x/src/hooks/useSelector.js)
 - [Reat-Redux source code useDispatch](https://github.com/reduxjs/react-redux/blob/7.x/src/hooks/useDispatch.js)
 - [The evolution of React APIs and code reuse](https://frontendmastery.com/posts/the-evolution-of-react-patterns/)
 - [React-redux | 為了瞭解原理，那就來實作一個 React-redux 吧！](https://medium.com/%E6%89%8B%E5%AF%AB%E7%AD%86%E8%A8%98/developing-react-redux-from-zero-to-one-e27eddfbce39)
+- 與[ChatGPT4](https://openai.com/gpt-4)對談完成
 
 
 

@@ -769,11 +769,11 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
 ---
 
 #### 參考資料
-- 與[ChatGPT4](https://openai.com/gpt-4)對談完成
 - [Provider 原始碼](https://github.com/reduxjs/react-redux/blob/master/src/components/Provider.tsx)
 - [connect 原始碼](https://github.com/reduxjs/react-redux/blob/7.x/src/connect/connect.js)
 - [React-redux | 為了瞭解原理，那就來實作一個 React-redux 吧！](https://medium.com/%E6%89%8B%E5%AF%AB%E7%AD%86%E8%A8%98/developing-react-redux-from-zero-to-one-e27eddfbce39)
 - [從 source code 來看 React-Redux 怎麼讓 Redux 跟 React 共舞](https://as790726.medium.com/%E5%BE%9E-source-code-%E4%BE%86%E7%9C%8B-react-redux-%E6%80%8E%E9%BA%BC%E8%AE%93-redux-%E8%B7%9F-react-%E5%85%B1%E8%88%9E-a0777b99463a)
+- 與[ChatGPT4](https://openai.com/gpt-4)對談完成
 
 
 
