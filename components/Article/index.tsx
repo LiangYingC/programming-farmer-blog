@@ -72,7 +72,7 @@ const Article = ({ content, pageTitle, pageDesc, pageURL }: ArticleProps) => {
         <ReminderWrapper>
           如果分享的內容對你有幫助，歡迎{' '}
           <a
-            href="https://portaly.cc/liangc/support"
+            href="https://www.buymeacoffee.com/mojito.liangc"
             target="_blank"
             rel="noreferrer"
             onClick={() =>
@@ -85,7 +85,7 @@ const Article = ({ content, pageTitle, pageDesc, pageURL }: ArticleProps) => {
               })
             }
           >
-            點此透過小額贊助請我喝杯咖啡
+            點此小額贊助請我喝杯咖啡
           </a>{' '}
           😌 ; 如果發現部落格文章內容有誤，或有想進一步討論的內容，歡迎
           <a
