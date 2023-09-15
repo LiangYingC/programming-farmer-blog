@@ -2,7 +2,7 @@
 title: 理解 Redux 原始碼 (4)：透過 Provider 與 connect 理解 React-Redux 的組合
 date: 2023-07-30
 description: 在前端世界中，不常見到單獨使用 Redux，而是 React 與 Redux 共同使用，aka React-Redux。因此在本文中，會探討 React-Redux 的核心部分的實踐，主要聚焦於 Provider 元件與 connect 方法。
-tag: sourceCode
+tag: react, sourceCode
 ---
 
 ## 前言
