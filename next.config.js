@@ -6,26 +6,6 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: `/articles/react`,
-        destination: `/tags/react`,
-        permanent: true,
-      },
-      {
-        source: `/articles/javascript`,
-        destination: `/tags/javascript`,
-        permanent: true,
-      },
-      {
-        source: `/articles/sourceCode`,
-        destination: `/tags/sourceCode`,
-        permanent: true,
-      },
-      {
-        source: `/articles/style`,
-        destination: `/tags/style`,
-        permanent: true,
-      },
-      {
         source: '/articles/sourceCode/redux-make-combineReducers',
         destination: '/articles/2022/redux-make-combineReducers',
         permanent: true,
