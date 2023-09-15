@@ -29,6 +29,7 @@ const Layout = ({
           rel="shortcut icon"
           href="https://www.programfarmer.com/assets/icons/favicon-32x32.png"
         />
+        <link rel="canonical" href={pageURL} />
         <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} key="desc" />
         <meta property="og:type" content={pageType} key="ogType" />
