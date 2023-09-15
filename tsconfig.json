@@ -5,11 +5,7 @@
     "target": "esnext", // 使用 Next.js 指定生成的 js 檔案為 ESNext 版本
     "module": "esnext", // 使用 Next.js 指定生成的 module 類型為 ESNext module
     "jsx": "preserve", // 使用 Next.js 用 Preserve mode 支援 JSX 語法。 Preserve mode 會保留 JSX 原始狀態，藉此提供完整資訊給其他編譯器，如：babel，再次編譯。 Next.js uses Babel to handle TypeScript, so need preserve mode
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ], // 編譯過程中需要引入的 library 文件列表
+    "lib": ["dom", "dom.iterable", "esnext"], // 編譯過程中需要引入的 library 文件列表
     "strict": true,
     "sourceMap": true, // 生成相應的 .map 文件，方便 debug
     "removeComments": true,
@@ -25,33 +21,15 @@
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "@pages/*": [
-        "pages/*"
-      ],
-      "@components/*": [
-        "components/*"
-      ],
-      "@contents/*": [
-        "contents/*"
-      ],
-      "@contexts/*": [
-        "contexts/*"
-      ],
-      "@lib/*": [
-        "lib/*"
-      ],
-      "@styles/*": [
-        "styles/*"
-      ],
-      "@myTypes/*": [
-        "types/*"
-      ],
-      "@hooks/*": [
-        "hooks/*"
-      ],
-      "@constants/*": [
-        "constants/*"
-      ]
+      "@pages/*": ["pages/*"],
+      "@components/*": ["components/*"],
+      "@contents/*": ["contents/*"],
+      "@contexts/*": ["contexts/*"],
+      "@lib/*": ["lib/*"],
+      "@styles/*": ["styles/*"],
+      "@myTypes/*": ["types/*"],
+      "@hooks/*": ["hooks/*"],
+      "@constants/*": ["constants/*"]
     },
     "incremental": true
   },
@@ -61,7 +39,5 @@
     "next-env.d.ts",
     "next-sitemap.config.js"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
