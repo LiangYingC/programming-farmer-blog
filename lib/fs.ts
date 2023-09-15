@@ -29,7 +29,7 @@ export const getArticleMatter = (articleFilePath: string) => {
 };
 
 /**
- * Get all articles data by articleTagPaths config
+ * Get all articles data
  * @return [{ tag, slug, frontmatter } , ...]
  */
 export const getAllArticles = () => {
@@ -54,6 +54,24 @@ export const getAllArticles = () => {
   });
 
   return allArticles;
+};
+
+/**
+ * Get all article tags data
+ * @return [tag1, tag2...]
+ */
+export const getAllArticleTags = () => {
+  const dulplicatedTags: string[] = ARTICLE_YAERS.flatMap((year) => {
+    const articlesDirectoryPath = `${process.cwd()}/contents/articles/${year}`;
+    const articleFileNames = fs.readdirSync(articlesDirectoryPath);
+    const articleTags = articleFileNames.flatMap((articleFileName) => {
+      const articleFilePath = `${process.cwd()}/contents/articles/${year}/${articleFileName}`;
+      const { frontmatter } = getArticleMatter(articleFilePath);
+      return frontmatter.tag.split(',').map((item) => item.trim());
+    });
+    return articleTags;
+  });
+  return [...new Set(dulplicatedTags)];
 };
 
 /**
