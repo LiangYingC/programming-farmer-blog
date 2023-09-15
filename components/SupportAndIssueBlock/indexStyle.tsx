@@ -1,6 +1,11 @@
 import styled from '@emotion/styled';
 
-export const ArticleWrapper = styled.div`
+export const Wrapper = styled.p`
+  padding: 10px;
+  margin: 15px 0;
+  border: solid ${({ theme }) => theme.colors.thirdText} 1px;
+  border-radius: ${({ theme }) => theme.borderRadius.xs};
+
   a {
     margin: 0 2px;
     padding: 0 3px;

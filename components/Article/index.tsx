@@ -1,11 +1,8 @@
 import md from 'markdown-it';
 import hljs from 'highlight.js';
-import { sendEvent } from '@lib/gtag';
 import Layout from '@components/Layout';
-import {
-  ArticleWrapper,
-  ReminderWrapper,
-} from '@components/Article/indexStyle';
+import SupportAndIssueBlock from '@components/SupportAndIssueBlock';
+import { ArticleWrapper } from '@components/Article/indexStyle';
 
 const mdWitHljs = md({
   highlight: function (code, lang) {
@@ -69,43 +66,7 @@ const Article = ({ content, pageTitle, pageDesc, pageURL }: ArticleProps) => {
             __html: mdWitHljs.render(content),
           }}
         />
-        <ReminderWrapper>
-          如果分享的內容對你有幫助，歡迎{' '}
-          <a
-            href="https://www.buymeacoffee.com/mojito.liangc"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() =>
-              sendEvent({
-                eventName: 'support_click',
-                eventParams: {
-                  article_title: pageTitle,
-                  article_path: pageURL,
-                },
-              })
-            }
-          >
-            點此小額贊助請我喝杯咖啡
-          </a>{' '}
-          😌 ; 如果發現部落格文章內容有誤，或有想進一步討論的內容，歡迎
-          <a
-            href="https://github.com/LiangYingC/Programming-Farmer-Blog/issues"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() =>
-              sendEvent({
-                eventName: 'issues_click',
-                eventParams: {
-                  article_title: pageTitle,
-                  article_path: pageURL,
-                },
-              })
-            }
-          >
-            點此前往開 Issues 討論
-          </a>
-          ，感謝！
-        </ReminderWrapper>
+        <SupportAndIssueBlock />
       </ArticleWrapper>
     </Layout>
   );
