@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useColorMode } from '@contexts/ColorModeContext';
-import { AiFillGithub } from 'react-icons/ai';
+import SupportAndIssueBlock from '@components/SupportAndIssueBlock';
 import {
   BioWrapper,
   RoundImageWrapper,
@@ -9,19 +9,7 @@ import {
   Title,
   Divider,
   Description,
-  SocialLinks,
-  SocialLink,
 } from '@components/Bio/indexStyle';
-
-const socialLinks = [
-  {
-    site: 'GitHub',
-    link: 'https://github.com/LiangYingC',
-    getIcon: function getGithubIcon() {
-      return <AiFillGithub />;
-    },
-  },
-];
 
 const myImages = {
   dark: {
@@ -59,18 +47,7 @@ const Bio = () => {
         <Description>
           曾為農業現場員工、農產品品管、線上課程品管，現為前端工程師，喜歡栽培和成長，在城市裡耕耘程式，期望栽種有價值的產品。
         </Description>
-        <SocialLinks>
-          {socialLinks.map(({ site, link, getIcon }) => {
-            return (
-              <SocialLink
-                key={site}
-                onClick={() => window.open(link, '_blank')}
-              >
-                <SocialLink>{getIcon()}</SocialLink>
-              </SocialLink>
-            );
-          })}
-        </SocialLinks>
+        <SupportAndIssueBlock />
       </Intro>
     </BioWrapper>
   );

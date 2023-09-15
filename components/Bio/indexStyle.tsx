@@ -52,27 +52,3 @@ export const Description = styled.p`
   flex: auto;
   font-size: ${({ theme }) => theme.fontSizes.md};
 `;
-
-export const SocialLinks = styled.div`
-  flex: none;
-  display: flex;
-
-  margin-bottom: 20px;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tabletS}) {
-    margin-bottom: 5px;
-  }
-`;
-
-export const SocialLink = styled.div`
-  font-size: ${({ theme }) => theme.fontSizes['4xl']};
-  padding-top: 5px;
-  padding-right: 10px;
-  filter: brightness(0.95);
-  transition: 0.25s;
-
-  :hover {
-    filter: brightness(1);
-    cursor: pointer;
-  }
-`;
