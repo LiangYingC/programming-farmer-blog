@@ -1,8 +1,14 @@
+import { GetStaticProps } from 'next';
 import Layout from '@components/Layout';
 import Bio from '@components/Bio';
 import ArticleTags from '@components/ArticleTags';
+import { getAllArticleTags } from '@lib/fs';
 
-const HomePage = () => {
+interface HomePageProps {
+  tags: string[];
+}
+
+const HomePage = ({ tags }: HomePageProps) => {
   return (
     <Layout
       pageType="website"
@@ -11,9 +17,18 @@ const HomePage = () => {
       pageURL="https://www.programfarmer.com"
     >
       <Bio />
-      <ArticleTags />
+      <ArticleTags tags={tags} />
     </Layout>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const tags = getAllArticleTags();
+  return {
+    props: {
+      tags,
+    },
+  };
 };
 
 export default HomePage;

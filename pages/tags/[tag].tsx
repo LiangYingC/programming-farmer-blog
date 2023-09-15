@@ -1,11 +1,10 @@
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { Articles } from '@myTypes/articles';
-import { getArticlesByTag } from '@lib/fs';
+import { getArticlesByTag, getAllArticleTags } from '@lib/fs';
 import { sortArticlesByDateDesc } from '@lib/sort';
 import { capitalizeLetter } from '@lib/format';
 import Layout from '@components/Layout';
 import ArticleList from '@components/ArticleList';
-import { ARTICLE_TAG_PATHS } from '@constants/articles';
 
 interface TagPageProps {
   tag: string;
@@ -44,10 +43,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = ARTICLE_TAG_PATHS.map(({ name }) => {
+  const paths = getAllArticleTags().map((tag) => {
     return {
       params: {
-        tag: name,
+        tag,
       },
     };
   });
