@@ -80,13 +80,14 @@ const getGlobalStyle = (theme: Theme) => {
 
     strong {
       margin: 0 1px;
+      color: ${theme.colors.primaryText};
       letter-spacing: ${theme.letterSpacings.wide};
     }
 
     p {
       margin: 25px 0px;
       font-size: ${theme.fontSizes.lg};
-      color: ${theme.colors.primaryText};
+      color: ${theme.colors.secondText};
       letter-spacing: ${theme.letterSpacings.wider};
       line-height: ${theme.lineHeights.tall};
 
