@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { capitalizeLetter } from '@lib/format';
 import { sendEvent } from '@lib/gtag';
 import {
   GoArticleWapper,
@@ -30,7 +29,7 @@ const ArticleTags = ({ tags }: ArticleTagsProps) => {
                   });
                 }}
               >
-                {capitalizeLetter(tag)}
+                {tag}
               </GoArticlesBtn>
             </Link>
           );

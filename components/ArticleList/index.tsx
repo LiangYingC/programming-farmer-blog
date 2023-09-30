@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { formatDashDate, capitalizeLetter } from '@lib/format';
+import { formatDashDate } from '@lib/format';
 import { sendEvent } from '@lib/gtag';
 import { Articles } from '@myTypes/articles';
 import {
@@ -37,7 +37,7 @@ const ArticleList = ({ articleIntro, articles }: ArticleListProps) => {
               }}
             >
               <Infos>
-                <Tag>{capitalizeLetter(tag)}</Tag>
+                <Tag>{tag}</Tag>
                 <Date>{formattedDate}</Date>
               </Infos>
               <Title>{title}</Title>

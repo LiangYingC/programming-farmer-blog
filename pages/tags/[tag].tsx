@@ -2,7 +2,6 @@ import { GetStaticProps, GetStaticPaths } from 'next';
 import { Articles } from '@myTypes/articles';
 import { getArticlesByTag, getAllArticleTags } from '@lib/fs';
 import { sortArticlesByDateDesc } from '@lib/sort';
-import { capitalizeLetter } from '@lib/format';
 import Layout from '@components/Layout';
 import ArticleList from '@components/ArticleList';
 
@@ -12,19 +11,14 @@ interface TagPageProps {
 }
 
 const TagPage = ({ tag, articles }: TagPageProps) => {
-  const capitalizedTag = capitalizeLetter(tag);
-
   return (
     <Layout
       pageType="website"
-      pageTitle={`城市碼農 | LiangC | ${capitalizedTag} 技術文章`}
-      pageDesc={`城市碼農技術部落格中，關於 ${capitalizedTag} 的文章列表。`}
+      pageTitle={`城市碼農 | LiangC | ${tag} 技術文章`}
+      pageDesc={`城市碼農技術部落格中，關於 ${tag} 的文章列表。`}
       pageURL={`https://www.programfarmer.com/tags/${tag}`}
     >
-      <ArticleList
-        articleIntro={`Articles about ${capitalizedTag}`}
-        articles={articles}
-      />
+      <ArticleList articleIntro={`Articles about ${tag}`} articles={articles} />
     </Layout>
   );
 };
