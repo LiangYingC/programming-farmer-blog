@@ -465,7 +465,7 @@ const HelloWorld = () => {
 
 編譯後的結果如下：
 
-```javaScript
+```javascript
 // Inserted by a compiler (don't import it yourself !)
 import { jsx as _jsx } from "react/jsx-runtime";
 
