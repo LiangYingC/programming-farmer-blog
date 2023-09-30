@@ -152,7 +152,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 概觀來說，「 所謂的 `Event Loop`，就是事件任務在 `Call Stack` 與 `Callback Queue` 間，非同步執行的循環機制。」這邊僅提及概觀，意思是還有細節的 `Task(Macrotask)`、`Microtask` 尚未說明，會在後續詳細介紹。
 
-![Call Stack + Web APIs + Callback Queue + Event Loop](/article/javaScript/javascript-browser-event-loop/04.png)
+![Call Stack + Web APIs + Callback Queue + Event Loop](/images/articles/javascript-browser-event-loop/04.png)
 
 需要特別強調，就是 `JavaScript` 語言本身沒有 `Event Loop`，而是要搭配「執行環境」後，才會有 `Event Loop` 機制。像是 `Browser` 或 `Node.js` 的執行環境下，會有各自的 `Event Loop` 機制。
 
@@ -316,7 +316,7 @@ console.log('script end');
 
 雖然 loupe 網站中沒有呈現 `Microtask Queue`，依然可視覺化地觀察程式的運作流程：
 
-![setTimeout and promise execute flow on Loupe](/images/articles/javaScript/javascript-browser-event-loop/10.gif)
+![setTimeout and promise execute flow on Loupe](/images/articles/javascript-browser-event-loop/10.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coJ3NjcmlwdCBzdGFydCcpOwoKc2V0VGltZW91dChmdW5jdGlvbiAoKSB7CiAgY29uc29sZS5sb2coJ3NldFRpbWVvdXQgY2FsbGJhY2snKTsKfSwgMTAwMCk7CgpuZXcgUHJvbWlzZShmdW5jdGlvbiAocmVzb2x2ZSwgcmVqZWN0KSB7CiAgY29uc29sZS5sb2coJ3Byb21pc2UgMSByZXNvbHZlJyk7CiAgcmVzb2x2ZSgpOwp9KS50aGVuKGZ1bmN0aW9uICgpIHsKICBjb25zb2xlLmxvZygncHJvbWlzZSAxIGNhbGxiYWNrJyk7Cn0pOwoKbmV3IFByb21pc2UoZnVuY3Rpb24gKHJlc29sdmUsIHJlamVjdCkgewogIGNvbnNvbGUubG9nKCdwcm9taXNlIDIgcmVzb2x2ZScpOwogIHJlc29sdmUoKTsKfSkudGhlbihmdW5jdGlvbiAoKSB7CiAgY29uc29sZS5sb2coJ3Byb21pc2UgMiBjYWxsYmFjaycpOwp9KTsKCmNvbnNvbGUubG9nKCdzY3JpcHQgZW5kJyk7!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
 
 這個例子蠻重要的，如果能理解，對於 `Event Loop` 的運作就有大致的理解，如果尚不太懂，可以多看幾次。
