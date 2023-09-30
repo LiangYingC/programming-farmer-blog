@@ -2,7 +2,7 @@
 title: 理解 Redux 原始碼 (5)：從 HOC 到 Hooks，實作 useSelector 與 useDispatch
 date: 2023-08-31
 description: 隨著 React-Redux 版本提升，官方更建議使用 Hooks 的方式，而非過去的 HOC 模式 e.g.`connect`。在本文中，將探討這樣的轉變有什麼好處，以及理解和實作 React-Redux 最重要的 useSelector 和 useDispatch Hooks。
-tag: react, sourceCode
+tag: React, SourceCode
 ---
 
 ## 前言

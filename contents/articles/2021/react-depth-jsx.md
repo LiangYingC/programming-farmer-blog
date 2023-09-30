@@ -2,7 +2,7 @@
 title: 深入理解 React.createElement 與 JSX
 date: 2021-05-01
 description: 在寫 React 時，總是非常順手地使用 JSX 語法，然而用久了總會思考到：究竟 JSX 被編譯後結果為何？背後的 Raw API 為何？JSX 有什麼特色？這些疑問都會在文中探討！
-tag: react
+tag: React
 ---
 
 ## 前言

@@ -2,7 +2,7 @@
 title: 理解 Redux 原始碼 (2)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧
 date: 2021-12-30
 description: 接續上篇 Redux 系列文章，已實作完 createStore 中的 getState、dispatch、subscribe 後，這篇將進階到實作 Redux middleware 相關的功能，如 applyMiddleware 及 createStore 傳入的 enhancer 等。帶著好奇心，更深入探討 Redux 吧。
-tag: javaScript, sourceCode
+tag: JavaScript, SourceCode
 ---
 
 ## 前言
