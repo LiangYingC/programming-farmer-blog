@@ -79,9 +79,9 @@ const getGlobalStyle = (theme: Theme) => {
     }
 
     strong {
-      margin: 0 1px;
+      margin: 0 1.5px;
       color: ${theme.colors.primaryText};
-      letter-spacing: ${theme.letterSpacings.wide};
+      letter-spacing: ${theme.letterSpacings.wider};
     }
 
     p {
