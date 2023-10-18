@@ -72,7 +72,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 但如果運行到 `function`，則需要 `function` 內全部執行完畢 (return something or undefined) 後，才移出 `Call Stack`。
 
-有趣的是，當第一個 `function` 中又呼叫第二個 `function` 時，會優先執行「比較晚被呼叫」的第二個 `function`，待第二個執行完後，才會再回到第一個 `function` 繼續執行，例如：`fn1` 雖然是最晚被執行的，卻是最早被執行完畢 ; 而 `fn3` 是最早被執行的，卻是最晚被執行完畢。
+有趣的是，當第一個 `function` 中又呼叫第二個 `function` 時，會**優先執行「比較晚被呼叫」** 的第二個 `function`，待第二個執行完後，才會再回到第一個 `function` 繼續執行，例如：`fn1` 雖然是最晚被執行的，卻是最早被執行完畢 ; 而 `fn3` 是最早被執行的，卻是最晚被執行完畢。
 
 從程式運作的 GIF 圖中，可看到 `function` 是會被堆疊上去的，而最上方的 `function`，會最早執行完畢被移出 `Call Stack`。
 
@@ -93,7 +93,7 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 在 `Browser` 執行環境中，為了解決阻塞問題，有提供 `Web APIs` 協助處理需時較久的任務，例如：`XMLHttpRequest(XHR)`、`setTimeout`、`setInterval` 等等。當遇到這些項目時，會先交給 `Browser` 處理，進而不會阻塞原本的執行緒，藉此**讓原本同時間只能進行一項的任務，變成可以進行多項**。
 
-當 `Web APIs` 協助處理完負責的邏輯後，會吐回待執行的 Callback 任務，Callback 任務不會直接被放回到 `Call Stack` 中，而是先排入 `Callback Queue` 中等待，當 `Call Stack` 為空時，才會將 `Callback Queue` 中的任務，移入 `Call Stack` 中，並開始執行。
+當 `Web APIs` 協助處理完負責的邏輯後，會回傳待執行的 Callback 任務，Callback 任務不會直接被放回到 `Call Stack` 中，而是先排入 `Callback Queue` 中等待。當 `Call Stack` 為空時，才會將 `Callback Queue` 中的任務，移入 `Call Stack`，並開始執行。
 
 ![Call Stack + Web APIs + Callback Queue](/images/articles/javascript-browser-event-loop/02.png)
 
@@ -150,9 +150,11 @@ _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=ZnVuY3
 
 其實前面所述之內容，已經包含 `Event Loop` 概念。
 
-概觀來說，「 所謂的 `Event Loop`，就是事件任務在 `Call Stack` 與 `Callback Queue` 間，非同步執行的循環機制。」這邊僅提及概觀，意思是還有細節的 `Task(Macrotask)`、`Microtask` 尚未說明，會在後續詳細介紹。
+> 概觀來說，所謂的 `Event Loop`，就是事件任務在 `Call Stack` 與 `Callback Queue` 間，**非同步執行的循環機制**。
 
-![Call Stack + Web APIs + Callback Queue + Event Loop](/article/javaScript/javascript-browser-event-loop/04.png)
+這邊僅提及概觀，意思是還有細節的 `Task(Macrotask)`、`Microtask` 尚未說明，會在後續詳細介紹。
+
+![Call Stack + Web APIs + Callback Queue + Event Loop](/images/articles/javascript-browser-event-loop/04.png)
 
 需要特別強調，就是 `JavaScript` 語言本身沒有 `Event Loop`，而是要搭配「執行環境」後，才會有 `Event Loop` 機制。像是 `Browser` 或 `Node.js` 的執行環境下，會有各自的 `Event Loop` 機制。
 
@@ -249,7 +251,9 @@ _p.s. `Task` 其實就是坊間常聽聞的 `Macrotask`，本文從此開始也�
 4. 如果有 `Microtask` 就執行之，並且會將 `Microtask Queue` 中所有 `Microtask` 執行完畢後，才會進入下個 `render` 的階段。
 5. 如果有需要 `render` 就渲染，不需要就不執行。接著再回到第一步。
 
-從中可以發現一個關鍵：**在單次的循環中，最多只處理一項大型任務，但是所有微任務都會被處理完畢**。
+從中可以發現一個關鍵：
+
+> **單次循環中，只處理一項大型任務 (Task)，但是所有微任務 (Microtask) 都會處理完畢**。
 
 可由下面這段程式的執行過程來理解：
 
@@ -316,7 +320,7 @@ console.log('script end');
 
 雖然 loupe 網站中沒有呈現 `Microtask Queue`，依然可視覺化地觀察程式的運作流程：
 
-![setTimeout and promise execute flow on Loupe](/images/articles/javaScript/javascript-browser-event-loop/10.gif)
+![setTimeout and promise execute flow on Loupe](/images/articles/javascript-browser-event-loop/10.gif)
 _[(透過 loupe 網站自行玩玩看)](http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coJ3NjcmlwdCBzdGFydCcpOwoKc2V0VGltZW91dChmdW5jdGlvbiAoKSB7CiAgY29uc29sZS5sb2coJ3NldFRpbWVvdXQgY2FsbGJhY2snKTsKfSwgMTAwMCk7CgpuZXcgUHJvbWlzZShmdW5jdGlvbiAocmVzb2x2ZSwgcmVqZWN0KSB7CiAgY29uc29sZS5sb2coJ3Byb21pc2UgMSByZXNvbHZlJyk7CiAgcmVzb2x2ZSgpOwp9KS50aGVuKGZ1bmN0aW9uICgpIHsKICBjb25zb2xlLmxvZygncHJvbWlzZSAxIGNhbGxiYWNrJyk7Cn0pOwoKbmV3IFByb21pc2UoZnVuY3Rpb24gKHJlc29sdmUsIHJlamVjdCkgewogIGNvbnNvbGUubG9nKCdwcm9taXNlIDIgcmVzb2x2ZScpOwogIHJlc29sdmUoKTsKfSkudGhlbihmdW5jdGlvbiAoKSB7CiAgY29uc29sZS5sb2coJ3Byb21pc2UgMiBjYWxsYmFjaycpOwp9KTsKCmNvbnNvbGUubG9nKCdzY3JpcHQgZW5kJyk7!!!PGJ1dHRvbiBpZD0iY2xpY2tCdG4iPkNsaWNrIG1lITwvYnV0dG9uPg%3D%3D)_
 
 這個例子蠻重要的，如果能理解，對於 `Event Loop` 的運作就有大致的理解，如果尚不太懂，可以多看幾次。
