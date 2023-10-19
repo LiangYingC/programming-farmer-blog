@@ -342,7 +342,8 @@ console.log(myDogName);
 #### 【 特別感謝 】
 
 感謝 **Jason Wu** 在 `var / let` for loop 時給予的觀點與諮詢。
-<br>
+
+---
 
 #### 參考資料
 
