@@ -2,7 +2,7 @@
 title: 理解 Redux 原始碼 (1)：來實作 createStore 的 getState、dispatch、subscribe 吧
 date: 2021-12-01
 description: 很好奇 Redux 是如何在程式中實踐狀態統一控管以及單向資料流的概念，於是決定閱讀 Redux 的原始碼，並解實作基礎的 createStore function，會聚焦在 getState、dispatch、subscribe API。
-tag: JavaScript, SourceCode
+tag: Redux, JavaScript
 ---
 
 ## 前言

@@ -2,7 +2,7 @@
 title: 理解 Redux 原始碼 (3)：來實作 combineReducers 吧
 date: 2022-01-20
 description: 前兩篇 Redux 原始碼的文章，實作了 createStore 以及 applyMiddleware 等項目，在這篇文章中，將實作負責整合多個 reducers 的 combineReducers，藉此了解 Redux 是如何實踐這件事。
-tag: JavaScript, SourceCode
+tag: Redux, JavaScript
 ---
 
 ## 前言
