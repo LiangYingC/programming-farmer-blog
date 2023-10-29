@@ -325,7 +325,7 @@ _(單比 Log 資料的示意)_
 
 至於我當時實作的團隊，**為什麼選用 GCP Cloud Logging 呢**？
 
-1. 金錢成本考量：由於我所在的公司，算是 Google 代理商，可以用很低的成本使用 GCP Cloud 的大多服務。
+1. 金錢成本考量：當時所在的公司，算是 Google 代理商，可以用很低的成本使用 GCP Cloud 的大多服務。
 2. 技術成本考量：當時後端已經有用 GCP Cloud Logging，且其他團隊也用 GCP 相關服務，讓技術統一比較好管理。
 
 所以當時就選擇用 GCP Cloud Logging，在此也會以 GCP Cloud Logging 作為簡要示範。
