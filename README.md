@@ -6,6 +6,10 @@
 
 ## Articles
 
+### Frontend Infra
+
+- [淺談前端錯誤發生時的處理機制，從畫面層到監控層](https://www.programfarmer.com/articles/2023/frontend-basic-error-system)
+
 ### JavaScript
 
 - [透過程式範例，熟悉 JS 執行流程的關鍵：Event Loop](https://www.programfarmer.com/articles/2021/javascript-browser-event-loop)
@@ -14,7 +18,7 @@
 - [parseInt / parseFloat / Number，將字串轉型為數字的方法比較](https://www.programfarmer.com/2021/javaScript/javascript-parseInt-parseFloat-Number)
 - [JS 宣告變數， var 與 let / const 差異](https://www.programfarmer.com/articles/2020/javascript-var-let-const-for-loop)
 
-### SourceCode
+### Redux
 
 - [理解 Redux 原始碼 (1)：來實作 createStore 的 getState、dispatch、subscribe 吧](https://www.programfarmer.com/articles/2021/redux-make-createStore-getState-dispatch-subscribe)
 - [理解 Redux 原始碼 (2)：來實作 middlewares、applyMiddleware 以及 createStore enhancer 吧](https://www.programfarmer.com/articles/2021/redux-make-createStore-enhancer-and-applyMiddleware)
