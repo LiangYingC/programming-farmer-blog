@@ -454,3 +454,7 @@ const useOrderDataHandler = () => {
 - [A Deep Dive into Shallow Copy and Deep Copy in JavaScript](https://javascript.plainenglish.io/shallow-copy-and-deep-copy-in-javascript-a0a04104ab5c)
 - [Understanding Deep and Shallow Copy in Javascript](https://medium.com/@manjuladube/understanding-deep-and-shallow-copy-in-javascript-13438bad941c)
 - [JavaScript 淺拷貝 (Shallow Copy) 與深拷貝 (Deep Copy)](https://awdr74100.github.io/2019-10-24-javascript-deepcopy/)
+
+#### 特別感謝
+
+- 感謝 zacharyptt 在[這則 issue](https://github.com/LiangYingC/programming-farmer-blog/issues/16) 中，提醒我圖片中的 **shadow** copy 應為 **shallow** copy。
