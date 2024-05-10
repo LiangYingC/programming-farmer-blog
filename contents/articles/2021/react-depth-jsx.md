@@ -15,7 +15,7 @@ tag: React
 
 ---
 
-## Using React.createElement to create DOM element
+## Using React.createElement to create React element
 
 概略來說，React.js 是套能夠用來創造/操作 DOM 的前端框架，它有將 browser API 封裝成較為聲明式（declarative）的 API，其中「創建 DOM 」 的 Raw API 即為 `React.createElement`，舉例而言，如果要創建下面的 Hello World Element：
 
@@ -91,7 +91,9 @@ const containerElement = React.createElement('div', {
 }
 ```
 
-延伸地來看，在 React 中，當使用 `ReactDOM.render` 時，其實就是把類似 object 的內容 pass 給 `ReactDOM.render` 讓它去處理 render 相關的事宜。完整的 code 比較像下面這樣：
+延伸地來看，在 React 中，當使用 `ReactDOM.render` 時，其實就是把類似 object 的內容 pass 給 `ReactDOM.render` 讓它去處理 render 相關的事宜，把 React elements 渲染到 DOM。
+
+完整的 code 比較像下面這樣：
 
 ```html
 <body>
@@ -194,7 +196,7 @@ const containerElement = createElement(
 
 ---
 
-## Using JSX to create DOM element
+## Using JSX to create React element
 
 先不解釋 JSX 是什麼，直接來看段 code，同樣地將一樣的 `Hello World !` 用 React render 出來
 
@@ -487,8 +489,8 @@ const HelloWorld = () => {
 
 內容有點多，總結幾個重點：
 
-1. 在 React 中，可以透過 `React.createElement(component, props, ...children)` 或 `JSX` 創建 DOM element。
-2. `React.createElement` 的結果會返回一個 element object，最終會透過 `ReactDOM.render` 的機制渲染。
+1. 在 React 中，可以透過 `React.createElement(component, props, ...children)` 或 `JSX` 創建 React element。
+2. `React.createElement` 的結果會返回一個 element object，最終會透過 `ReactDOM.render` 的機制渲染成 DOM element。
 3. `JSX` 將 render 邏輯與 UI 邏輯結合，並可使用 `JavaScript Express` 語法，比起 `React.createElement` 更加簡潔且直觀。
 4. 在 React 17 版以前，JSX 編譯後是透過 `React.createElement` 處理 ; 在 React 17 之後，則是透過引入 `react/jsx-runtime` 相關的方法處理。
 5. `react/jsx-runtime` 是編譯器在轉譯後自動引入，如果在專案源碼中要不透過 `JSX` 創建 element，還是要使用 `React.createElement` 非 `_jsx` 等等。
@@ -503,3 +505,7 @@ const HelloWorld = () => {
 - [深入 JSX | React 官方文件](https://zh-hant.reactjs.org/docs/jsx-in-depth.html)
 - [Introducing the New JSX Transform | React 官方文件](https://zh-hant.reactjs.org/blog/2020/09/22/introducing-the-new-jsx-transform.html)
 - [What is JSX? | KenC](https://kentcdodds.com/blog/what-is-jsx)
+
+#### 特別感謝
+
+- 感謝 peanshanwu 在[這則 issue](https://github.com/LiangYingC/programming-farmer-blog/issues/15) 中提醒我 `createElement` 並非是創建 DOM element 而是創建 React element。
