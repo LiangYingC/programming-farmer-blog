@@ -528,7 +528,7 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
 
 當然，比起真正的原始碼，還有很多可以進一步優化之處，然而至此算是實踐的減少不必要的 re-render 概念。
 
-這邊我最好奇的地方會在於「為什麼 `Provider` 中使用 **strict equlity ===** 而在 `connect` 中使用 **shadow equlity** 處理呢？」
+這邊我最好奇的地方會在於「為什麼 `Provider` 中使用 **strict equlity ===** 而在 `connect` 中使用 **shallow equality** 處理呢？」
 
 原因在於在 reducer 中，如果 state 沒有被更新，會回傳原本的 state，即便這個 state 是 object value，兩者 reference 會一致，不會觸發 force update 更新，所以 `store.getState()` 可以直接用 **strict equlity** 比對。
 
@@ -550,7 +550,7 @@ function accountReducer(state = {price: 0, credit: 0}, action) {
 }
 ```
 
-至於 `connect` 中需要用到 **shadow equlity** 則是因為每次 `stateProps` 以及 `dispatchProps` 都會產生新的物件，即便裡面的 key value 完全相同，但如果 reference 不同，用 **strict equlity** 比對之下，就依然會觸發 force update，導致每次還是被更新，所以必須用 **shadow equlity** 比對才有意義。
+至於 `connect` 中需要用到 **shallow equality** 則是因為每次 `stateProps` 以及 `dispatchProps` 都會產生新的物件，即便裡面的 key value 完全相同，但如果 reference 不同，用 **strict equlity** 比對之下，就依然會觸發 force update，導致每次還是被更新，所以必須用 **shallow equality** 比對才有意義。
 
 ```javascript
 const mapStateToProps = (state) => {
@@ -565,7 +565,7 @@ export connect(mapStateToProps, null)(component)
 // 當在 connect 中，觸發 const stateProps = mapStateToProps(store.getState() 時，
 // stateProps 這個 object 的 reference 永遠是新的，因此：
 // 若用 === 比對，reference 每次都不同，每次都被更新。
-// 若用 shadow equlity 比對，能真正比對 key value 是否不同，值不同才會被更新。
+// 若用 shallow equality 比對，能真正比對 key value 是否不同，值不同才會被更新。
 ```
 
 以上的小補充，希望能讓這個「比對方式」的細節被理解得更快。
@@ -774,6 +774,11 @@ const connect = (mapStateToProps, mapDispatchToProps) => {
 - [React-redux | 為了瞭解原理，那就來實作一個 React-redux 吧！](https://medium.com/%E6%89%8B%E5%AF%AB%E7%AD%86%E8%A8%98/developing-react-redux-from-zero-to-one-e27eddfbce39)
 - [從 source code 來看 React-Redux 怎麼讓 Redux 跟 React 共舞](https://as790726.medium.com/%E5%BE%9E-source-code-%E4%BE%86%E7%9C%8B-react-redux-%E6%80%8E%E9%BA%BC%E8%AE%93-redux-%E8%B7%9F-react-%E5%85%B1%E8%88%9E-a0777b99463a)
 - 與[ChatGPT4](https://openai.com/gpt-4)對談完成
+
+
+#### 特別感謝
+
+- 感謝 zacharyptt 在[這則 issue](https://github.com/LiangYingC/programming-farmer-blog/issues/16) 中，讓我意識到應為 **shallow** 而非 **shadow** equality。
 
 
 
