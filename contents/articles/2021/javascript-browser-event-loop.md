@@ -678,3 +678,7 @@ console.log('script end');
 - [Day 11 [EventLoop 01] 一次弄懂 Event Loop（徹底解決此類面試問題）](https://ithelp.ithome.com.tw/articles/10241081)
 - [JS 原力覺醒 Day15 - Macrotask 與 MicroTask](https://ithelp.ithome.com.tw/articles/10222737)
 - [忍者 JavaScript 開發技巧探秘第二版：Chapter13 搞懂事件](https://www.books.com.tw/products/0010773867)
+
+#### 特別感謝
+
+- 感謝 hikrr 在[這則 issue](https://github.com/LiangYingC/programming-farmer-blog/issues/13)中，提醒我「setTimeout(fn, 1000) 應該是 1s 不是 0.1s」的錯誤之處，已修正之。
