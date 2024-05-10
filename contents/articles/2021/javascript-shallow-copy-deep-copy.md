@@ -112,11 +112,11 @@ console.log(originalData.obj.secondLayerNum);
 // 200 => 第二層被 clonedData 影響而改變
 ```
 
-### 二、自建 shadowCopy 函式，複製第一層物件值
+### 二、自建 shallowCopy 函式，複製第一層物件值
 
 ```javascript
-/*** 淺拷貝：自建 shadowCopy 函式，複製第一層物件值 ***/
-function shadowCopy(originalObj) {
+/*** 淺拷貝：自建 shallowCopy 函式，複製第一層物件值 ***/
+function shallowCopy(originalObj) {
   let clonedObj = {};
   for (const key in originalObj) {
     clonedObj[key] = originalObj[key];
@@ -130,7 +130,7 @@ const originalData = {
     secondLayerNum: 100,
   },
 };
-const clonedData = shadowCopy(originalData);
+const clonedData = shallowCopy(originalData);
 
 clonedData.firstLayerNum = 20;
 clonedData.obj.secondLayerNum = 200;
