@@ -6,6 +6,7 @@ node_modules
 /out/
 /public/sitemap.xml
 tsconfig.tsbuildinfo
+/test/coverage/
 
 # production
 /build
