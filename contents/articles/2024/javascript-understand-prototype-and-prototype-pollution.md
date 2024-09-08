@@ -1,28 +1,36 @@
 ---
 title: 理解 JS 原型，從 Prototype, Prototype Chain 到 Prototype Pollution
-date: 2024-08-31
-description: JS 原型看似離開發者很遠，實際上很近，因為開發者所使用的原生函式一直都跟 prototype chain 有關，此外，prototype 被污染甚至是種安全性議題，如果開發上能對原型更理解，就更能避免寫出 anti pattern 的程式碼。
+date: 2024-09-08
+description: JS 原型看似離開發者很遠，實際上很近，因為開發者所使用的原生函式一直都跟 Prototype Chain 有關，此外，Prototype 被污染更是種安全性議題，如果開發上能對原型更理解，就更能避免寫出 anti pattern 的程式碼。
 tag: JavaScript
 ---
 
 ## 前言
 
-近期正在閱讀 [《Beyond XSS：探索網頁前端資安宇宙》](https://www.tenlong.com.tw/products/9786267383803) 這本由 Huli 撰寫的前端資安書籍，真的沒想到居然會在談資安的書籍碰到 **Prototype Chain**...，有種熟悉的陌生人感，畢竟每次準備面試時都要看過一遍，但時間一久後都似懂非懂，主要是沒有架構性地理解和記錄，於是乎決定寫篇文章，除了能讓自己更架構化地理解外，也能提供給有需要的人閱讀參考囉。
+近期正在閱讀 [《Beyond XSS：探索網頁前端資安宇宙》](https://www.tenlong.com.tw/products/9786267383803) 這本由 Huli 撰寫的前端資安書籍，真沒想到會在談資安的書籍碰到 **Prototype Chain**...，有種熟悉的陌生人感，畢竟每次準備面試時都要看過一遍，但時間一久後都似懂非懂，主要是沒有架構性地理解和記錄，於是乎決定寫篇文章，除了能讓自己更架構化地理解外，也能提供給有需要的人閱讀參考參考。
 
-本文預計會從 Prototype 開始談，接著帶入 Prototype Chain，此外也會帶到我在《Beyond XSS：探索網頁前端資安宇宙》學到的概念 Prototype Pollution，預計包含：
+本文預計會從 Prototype 開始談，接著帶入 Prototype Chain，此外也會帶到我在《Beyond XSS》學到的 **Prototype Pollution**，預計包含：
 
-- ECMAScript 中的 constructor 與 prototype
+- 從 ECMAScript 的 constructor 與 prototype 談起
+- 由 `[[Prototype]]` 串起的 Prototype Chain
+- Prototype Chain 的應用方式與注意事項
+- 沒想到可以用來攻擊！淺談 Prototype Pollution
+- 避免 Prototype Chain 被污染的方式
+- 總結，以及可以做什麼
+
+希望讓讀者能更理解 Prototype，除了面試能回答外，更重要的是了解實際開發需要注意什麼。
+
+由於內文頗長，在最後總結段落，會透過簡短回答幾個問題回顧本文重點，包含：
+- 什麼是 Prototype
 - 什麼是 Prototype Chain
-- 為什麼理解 Prototype Chain 很重要？
-- 沒想到可以用來攻擊！談談 Prototype Pollution
+- 什麼是 Prototype Pollution
+- 可以做的實際行動
 
-希望能讓讀者都能夠理解 Prototype，除了面試能夠回答外，更重要的是了解實際開發需要注意什麼。
-
-接著就 GOGO 開始內文吧。
+接著就 GOGO 開始這趟 Prototype 之旅吧。
 
 ---
 
-### 從 ECMAScript 的 constructor 與 prototype 開始探討
+## 從 ECMAScript 的 constructor 與 prototype 談起
 
 談 JS Prototype 的文章不少都從 OOP 的 class 概念或繼承概念談起，但我覺得對於純前端出身（aka 轉職成為前端工程師）而言不太好懂，所以在此可以先完全忽略 class 概念，因為 JS 原本是沒有 class 概念。
 
@@ -47,7 +55,7 @@ tag: JavaScript
 1. `constructor` 是用來創建 object 的函式，具體來說是用 `constructor` 搭配 `new` 能創建實例的 object
 2. `constructor` 的 `prototype` 屬性，能讓被創建出來的 object 共用屬性。
 
-單看文字太抽象，搭配程式碼才易理解，先從 1. 開始解釋，示範 `constructor` 與 `new`：
+單看文字太抽象，搭配程式碼才易理解，先從 1. 解釋，示範 `constructor` 與 `new`：
 
 ```javascript 
 // 這是 constructor function `Person`，this 指向被創建的 object
@@ -408,7 +416,7 @@ dogA.bark('旺旺') // ??，無法預期結果，要看最後執行 Dog.prototyp
 
 文章至此大致將 Prototype 大多需要知道的概念談完了，尤其是最重要的「避免」對 Prototype Chain 做什麼，很多時候不做什麼比要做什麼重要很多呢。
 
-接著將進入我閱讀 [《Beyond XSS：探索網頁前端資安宇宙》](https://www.tenlong.com.tw/products/9786267383803) 後才學到的 Prototype Pollution 觀念和案例，算是個人學後的輸出，但僅止於“淺談”，如果想深入理解，推薦去購買原書閱讀，原書不僅有 Prototype Pollution，更有許多意想不到的網頁攻擊/防禦手法，雖然知識量很大不易理解，但頗有趣，如果是有過兩三年前端工程師經驗且對資安議題有興趣的會蠻適合閱讀。
+接著將進入我閱讀 [《Beyond XSS：探索網頁前端資安宇宙》](https://www.tenlong.com.tw/products/9786267383803) 後才學到的 Prototype Pollution 觀念和案例，算是個人學後的輸出，但僅止於“淺談”，如果想深入理解，推薦購買原書閱讀，原書不僅有 Prototype Pollution，更有許多意想不到的網頁攻擊/防禦手法，雖然知識量很大且不限於前端工程，所以不易理解，但真的頗有趣，如果是有過兩年前端工程師經驗（這不一定只是我認為至少初始知識量比較合理）且對資安議題有興趣的人會蠻適合閱讀。
 
 推書推完了，直接進入正題：什麼是 Prototype Pollution？
 
@@ -537,15 +545,17 @@ function merge(target, source) {
 
 如果確認能成功污染，接著將進行到第二階段：**找出要污染的內容**，當污然的內容搭配其他程式碼執行時，就能產生真正的攻擊。
 
-這邊設計另一個演示案例，跟剛剛邏輯不同之處在於：
+這邊設計另一個演示案例(下方有提供連結和程式碼)，跟剛剛邏輯不同之處在於：
 
 - 新增 user 身份，並且會在一開始打 API 拿回 user 的 admin 狀態，BUT 這邊模擬剛好打 API 遇到 fail 的狀況
 - 新增刪除配置的按鈕，只有 user 是 admin 時才會出現
 - 新增把自定義 config 存入 localStorage 的邏輯，因此使用者就可以在一開始網頁渲染後，就看到上次操作的自定義 config
 
-整體而言比剛剛複雜，有時間的人，可先透過[這個 demo-prototype-pollution 連結](https://codesandbox.io/p/sandbox/wv39f3)進入玩看看，想想看在**不能直接用開發者工具改 CSS 的前提下**，要做什麼操作，達成「讓原本權限上不會顯示的“刪除配置”按鈕顯示出來」的攻擊。
+程式碼比剛剛複雜不少，有時間的人，可先透過[這個 demo-prototype-pollution 練習題連結](https://codesandbox.io/p/sandbox/wv39f3)進入玩看看，想想看在**不能直接改 CSS 的前提下**，要做什麼操作，達成「讓原本權限上不會顯示的“刪除配置按鈕“顯示出來」的攻擊。
 
-如果沒時間或不想玩的人，可以直接往下看，首先還是來點程式碼的註解：
+_p.s 此演示案例是我針對“前端工程師”設計的大漏洞，目的是想讓前端工程師的讀者能簡單玩玩看，藉此更理解 Prototype Pollution。真正專案的程式碼會複雜很多，而且蠻多會牽涉到前端工程以外的領域，像是 API 互動等。_
+
+如果沒時間或不想玩的人，可以直接往下看，首先來點程式碼註解：
 
 ```html
 ......省略
@@ -664,9 +674,335 @@ function merge(target, source) {
 ......省略
 ```
 
-接著開始解答！
+開始解答。
 
-首先由於剛剛已經驗證 `merge` 這個函式其實有問題，會造成
+先講**結論**：攻擊者會找出要污染的內容是 `Object.prototype.isAdmin`，而搭配的污染方式是在輸入框中輸入 `{ "__proto__": { "isAdmin": true } }` 並送出。接著只要按下網頁的重新整理讓網頁再次渲染後，便導致 user admin 的“刪除配置按鈕”被顯示出來了！
+
+
+可參見下方測試的畫面：
+
+![prototype pollution example 2](/images/articles/javascript-understand-prototype-and-prototype-pollution/05.gif)
+
+結論雖然單純，但如果要從零找到這個結論，是需要一定的思考過程跟脈絡，接著就來細談**思考過程**：
+
+首先回顧一下，剛剛已驗證 `merge` 這個函式其實有問題，能夠用來污染 Object Prototype Chain，亦即可以在輸入框傳入 `{ "__proto__": { "key": "value" } }`， 就能造成 `Object.prototype.key = 'value'`。
+
+接著來思考目標，目標是想要「讓原本只有 user admin 的功能顯示出來」，透過上述程式碼的閱讀，會發現當 `user` 這個物件的 `isAdmin` 為 `true` 時，就會顯示只有 admin 才會看到的功能，也就是會顯示“刪除配置按鈕”。
+
+```javascript
+function renderDeleteButton() {
+  const deleteButton = document.getElementById("deleteButton");
+  // user.isAdmin 為 true 就會顯示“刪除配置按鈕”
+  deleteButton.style.display = user.isAdmin ? "inline-block" : "none";
+}
+```
+
+如果查看 `user` 這個變數的源頭，會發現是 `const user = {}`，亦即初始化時是一個空物件，沒有 `isAdmin` 的 key 存在！那什麼時候才會設置 `user.isAdmin = true` 或 `user.isAdmin = false` 呢？要等到 `getUserAdminData` 這個模擬用的 API 打回來才會設置。
+
+但是！當查看詳細的打 API 內容後，進一步發現，原來當打 API 發生錯誤時，就不會觸發 `user.isAdmin = xxx`，`user` 就會維持空物件，這麼一來，只要想辦法讓打 API 發生錯誤，就能讓 `user` 維持在沒有 `isAdmin` 狀態，然後在這種狀態下，一但呼叫 `user.isAdmin` 就會觸發 Prototype Chain 機制，最終查找到的就會是 `Object.prototype.isAdmin` 的值，亦即 `user.isAdmin = Object.prototype.isAdmin`。
+
+為了讓這個練習題單純些，所以模擬打 API 的結果永遠都是失敗，因此可以認知到 `user.isAdmin = Object.prototype.isAdmin` 為真。
+
+```javascript
+const user = {};
+
+// 模擬 getUserAdmin API 請求，但最後失敗的情境
+function sendUserAdminApiRequest() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject(new Error("API 請求失敗"));
+    }, 2000);
+  });
+}
+
+// 打 API 去取回 user admin 的資料
+function getUserAdminData() {
+  sendUserAdminApiRequest()
+    .then((response) => {
+      user.isAdmin = response;
+      renderDeleteButton();
+    })
+    .catch((error) => {
+      console.error("API 請求失敗:", error.message);
+    });
+}
+```
+
+好了，這麼一來，只需污染 `Object.prototype.isAdmin = true` 就能達成目標，所以能直接在開發者工具中下這行 `Object.prototype.isAdmin = true` 指令就能讓“刪除配置按鈕”顯示嗎？經過嘗試後發現不行，即便 `Object.prototype.isAdmin = true` 確實會讓 `user.isAdmin` 被污染，但是由於“刪除配置按鈕”的渲染，只發生在一開始網頁載入跑 `renderDeleteButton` 函式的時候發生，在 `renderDeleteButton` 跑完後才去改 `user.isAdmin` 就沒意義了，因為不會 re-render。如果想說用重新整理讓頁面重新渲染的方式也不行，因為一但重新整理，那麼 `Object.prototype` 會被重置。
+
+既然如此，那就來看看渲染邏輯，閱讀過後會發現有個 `renderCustomizedConfig` 會在 `renderDeleteButton` 之前執行，因此可以看看 `renderCustomizedConfig` 裡面有沒有能污染 Prototype Chian 的方式。
+
+閱讀 `renderCustomizedConfig` 後，發現它會從 `localStorage` 中取出上次的 customized config 結果，並且透過有問題的 `merge` 函式，將 default config 與 customized config 合併。如此一來，只需要想辦法讓 `localStorage` 中存入 `{ "__proto__": { "isAdmin": true } }`，就能觸發 `config["__proto__"]["isAdmin"] = true` 進而污染 Prototype Chian 達成目標。
+
+```javascript
+function renderCustomizedConfig(newConfig) {
+  const config = { theme: "light" };
+  const moreConfig = isValidJSON(newConfig)
+    ? JSON.parse(newConfig)
+    : isValidJSON(localStorage.getItem("storedConfigInput"))
+    ? JSON.parse(localStorage.getItem("storedConfigInput"))
+    : {};
+
+  merge(config, moreConfig);
+
+  const configResult = `樣式結果: ${JSON.stringify(
+    config,
+    null,
+    2
+  )}`;
+  document.getElementById("configResult").textContent = configResult;
+}
+```
+
+把客製化設定檔存入 `localStorage` 的邏輯在 `applyCustomizedConfig` 函式中，而它正是按下“送出配置按鈕”時會觸發的邏輯，最終，攻擊者只需要在輸入框輸入 `{ "__proto__": { "isAdmin": true } }`，並且再次按下重新整理網頁的按鈕，就會讓 `Object.prototype.isAdmin = true` 成真，進而導致 `user.isAdmin` 成真，接著渲染完畢後，“刪除配置按鈕”就顯示出來了！
+
+```javascript
+function applyCustomizedConfig() {
+  const configInput = document.getElementById("configInput").value;
+  renderCustomizedConfig(configInput);
+  window.localStorage.setItem(
+    "storedConfigInput",
+    JSON.parse(JSON.stringify(configInput))
+  );
+}
+```
+
+如果上述內容有不清楚的，可以多看幾遍或是搭配自己操作一次，就會比較明白了～
+
+當然在真實世界中，權限都該由後端控管和檢查，即便真的能讓一些被隱藏的操作顯示，也不可能直接被攻擊，畢竟如果只是想要顯示操作的按鈕，改一下 CSS 就行，這邊比較像是硬是用 Prototype Chain 去鑽漏洞。然而，藉由這個例子，不難想像可藉由 Prototype Chain 的方式，改變某些判斷條件，讓渲染內容有所改變，導致更嚴重的攻擊發生，像渲染能執行的程式碼，或把不該送的東西送到後端（而後端又沒檢查），都可能導致意想不到的後果。
+
+最後再次整理，假設攻擊者要用 Prototype 攻擊，大概念下需要：
+1. 攻擊者會試著找出「**能夠污染 Prototype Chain 的方式**」，造成安全性漏洞
+2. 攻擊者還需要找出「**要污染的內容**」，而污染的內容搭配“其他程式碼”的執行，就能產生真正的攻擊
+
+這邊有個專有名詞叫 **Prototype Pollution Gadgets** 專門用來指那些「原本正常無害，但假如 Prototype 被污染後，就會導致意想不到的攻擊」的程式碼片段。稍微提一下而已，如有興趣可以自己查資料，閱讀 《Beyound XSS》。
+
+---
+
+## 避免 Prototype Chain 被污染的方式
+
+既然談到 Prototype Chain 有可能被攻擊者污染，那接續就來看看有什麼避免被攻擊的方式。
+
+### 1. 將 `__proto__`, `prototype` 等關鍵字過濾掉
+
+由於攻擊者的攻擊需要成立，一定需要透過 `__proto__`、 `prototype`、`constructor` 等關鍵字的輸入值，才有辦法污染 Prototype Chain，因此可以把這些關鍵字過濾掉就好，可以用到 **sanitize** 相關的函式庫處理，像是：DOMPurify。
+
+另外像是 `merge` 之類的 function 就可以把相關的 key 都過濾掉，像是：
+
+```javascript
+function merge(target, source) {
+  for (let key in source) {
+    // 過濾掉 "__proto__", "prototype", 和 "constructor"
+    if (key === "__proto__" || key === "prototype" || key === "constructor") {
+      continue;
+    }
+    
+    if (typeof source[key] === "object" && source[key] !== null) {
+      target[key] = merge(target[key] || {}, source[key]);
+    } else {
+      target[key] = source[key];
+    }
+  }
+  return target;
+}
+```
+
+當然實務上，開發者通常不會自己撰寫 `merge` 這類函式，而是直接用 lodash 等函式庫處理，就不用自己造輪子，那如果是用第三方函式庫需要注意什麼？最需要注意的是，假定有新的版本是修補安全性漏洞的話，就要趕緊著升級版本！
+
+然而，通常開發者不會每天都關心第三方函式庫是否更新，所以應變方式可在 CICD 流程中，安插安全性檢測的 job，利用像是 **Trivy** 等 security scanner 的工具，藉此在每次部署自動掃描函式庫是否有問題。
+ 
+### 2. 將 `__proto__`, `prototype` 等關鍵字轉成純 Property 處理
+
+雖然可以用上述改 `merge` 的方式一樣，直接完全“忽略”掉 `__proto__` 等關鍵字來增加安全性，然而假定有需要使用 `__proto__` 這類 key 的時候，那該怎麼做呢？
+
+有個 JS 方法是 `Object.defineProperty` 可以定義 Object 的 Property，可藉此把 `__proto__` 等關鍵字當作是 **普通的物件屬性 key**，藉此避免污染到原型物件，程式碼概念如下：
+
+```javascript
+// 取自 lodash v5 原始碼
+function baseAssignValue(object, key, value) {
+  // 假定遇到 key 等於 '__proto__'，就將其定義為為 Object 的純 Property 處理
+  if (key === '__proto__') {
+    Object.defineProperty(object, key, {
+      'configurable': true,
+      'enumerable': true,
+      'value': value,
+      'writable': true
+    })
+  } else {
+    object[key] = value
+  }
+}
+```
+
+乍看之下由於 `Object.defineProperty` 中的設定檔是 `'configurable': true`, `'enumerable': true`, `'value': value`, `'writable': true`，所以與 `object.__proto__` 似乎無意，畢竟都能賦值且修改，但是，不一樣的是 `object.__proto__` 會修改到 `Object.prototype` 而 `Object.defineProperty(object, key, {'value': value, ...}` 則不會修改到 `Object.prototype`，因此就能避免 Prototype Chain 被污染。
+
+針對上述設計的演示案例中的 `merge`，只需要判斷當 `key` 為 `__proto__`, `prototype`...時，改用 `Object.defineProperty` 的方式賦值就會相對安全。
+
+### 3. 透過 `Object.create(null)` 創建無 Prototype Chian 的物件
+
+針對絕對不能被污染的重要物件，或許可以考慮利用 `Object.create(null)` 來創建，創建出的結果，並不會繼承 `Object.prototype` 的屬性：
+
+```javascript
+const obj = Object.create(null);
+console.log(obj.toString); // undefined
+console.log(obj.hasOwnProperty); // undefined
+```
+
+以演示案例而言，只需要把創造 `user` 物件的方式改為用 `Object.create` 就能避免被污染。
+
+除此之外其實還有用 `new Map` 的方式，創造 `user` 類物件來使用，不會繼承到 Prototype Chain，也是一種避免 `user` 被污染的方法。
+
+### 4. 透過 `Object.freeze(Object.prototype)` 或 `Object.seal(Object.prototype)` 阻止 `Object.prototype` 新增屬性
+
+有兩個方式可以直接阻止物件新增屬性，分別是：
+- **Object.freeze**: 完全凍結物件，無法新增、修改或刪除任何屬性，也無法改變屬性的屬性設定值（如 writable、configurable）。
+- **Object.seal**: 封閉物件，無法新增或刪除屬性，但仍然可以修改現有屬性的值，算是彈性比 freeze 大。
+
+```javascript
+// 利用 “Object.freeze” 凍結 Object.prototype
+Object.freeze(Object.prototype);
+
+// 嘗試修改 Object.prototype 的屬性失敗
+Object.freeze(Object.prototype);
+Object.prototype.toString = 'string';
+console.log(Object.prototype.toString); // f toString()
+
+// 嘗試新增屬性給 Object.prototype 也會失敗
+Object.prototype.newProp = 'new';
+console.log(Object.prototype.newProp); // undefined
+```
+
+```javascript
+// 利用 “Object.seal” 封閉 Object.prototype
+Object.seal(Object.prototype);
+
+// 現有屬性可以修改，會成功
+Object.prototype.toString = "string";
+console.log(Object.prototype.toString); // string
+
+// 但是新增新屬性或刪除屬性都會失敗
+Object.prototype.newProp = 'new';
+console.log(Object.prototype.newProp); // undefined
+```
+
+但把 `Object.prototype`（或 `Array.prototype` 等）直接封死並非最佳做法，因為很多第三方函式庫，會利用原型的特性，做 polyfill 的功能，藉此能讓同一個方法支援多個瀏覽器或裝置環境。 
+
+所以除非是非常特定情境，例如確定不會用第三方且安全性要開到最大，才會考慮用這種方式，當然相對起來是 `Object.seal` 更溫和些。
+
+### 延伸的其他方式
+
+上述的方式都是試圖直接阻止 Prototype Chain 被污染，而其中在實務中的最佳做法，大概會是 loadash 採用的第二種方式「將 `__proto__`, `prototype` 等關鍵字轉成純 Property 處理」，當然，還是要依照專案的情境而定。
+
+不過，單獨污染原型通常沒意義，實際上還會搭配進一步的手法，像是因為 Prototype Pollution 導致某些條件改變，進一步讓某些 `script` 被插入執行等等，那只要讓 `script` 不能夠執行，也就能阻止整個攻擊。
+
+這邊就牽涉到很多延伸出的安全性手段，像是 **CSP(Content Security Policy)** 的設定、有沒有做 **Sanitization** 等等，比較超出本文範圍，有興趣的話跟上面說得一樣，可以自行查資料或閱讀《Beyond XSS》啦。
+
+---
+
+## 總結，以及可以做什麼
+
+從 Prototype 的定義、Prototypal Inheritance 、Prototype Chain 到 Prototype Pollution，大致上把 JS 原型的概念和簡單應用整理完畢，接著快速回顧幾個問題：
+
+### 什麼是 Prototype
+
+在 JavaScript 中，**Prototype** 是個物件，用來實現 Object 資料間的屬性共享。
+
+具體來說，每個 Object 資料都有個原型物件的內部屬性 `[[Prototype]]`，如果在程式碼中想要取得該原型物件，可以透過 `obj.__proto__` 或 `Object.getPrototypeOf(obj)` 進行。
+
+而原型物件的內容，則來源於物件的 `constructor` 中的 `prototype` 屬性值，舉例來說：
+
+```javascript
+// constructor Dog
+function Dog(name){ 
+    this.name = name
+}
+
+// 利用 prototype 使 new Dog 的物件實例都會吠叫
+Dog.prototype.bark = function(voice) {
+  console.log(voice)
+}
+
+const dogA = new Dog('肚子')
+const dogB = new Dog('吐司')
+// bark 的來源都是 constructor.prototype
+console.log(dogA.bark === dogB.bark) // true
+console.log(dogA.bark === dogA.__proto__.bark) // true
+console.log(dogA.__proto__.bark === Dog.prototype.bark) // true
+```
+
+### 什麼是 Prototype Chain
+
+這算是查找物件屬性過程的概念描述。
+
+在 Javascript 中，當呼叫 Object Data 屬性，如果找不到該屬性時，會往其 `[[Prototype]]` 物件查找，如果找到就回傳屬性所對應的值，如果找不到，就會往 `[[Prototype]]` 物件的更上層的 `[[Prototype]]` 物件查找，重複此邏輯，直到找到該屬性就會回傳對應的值，或直到 Prototype 為 `null` 也就代表沒有更上層的 Prototype 內容，這時就會回傳 `undefined`。
+
+這個過程，就是 **Prototype Chain**。
+
+### 什麼是 Prototype Pollution
+
+**Prototype Pollution** 是種安全性漏洞，攻擊者可以利用這類漏洞修改 JavaScript 的原型物件（通常是 `Object.prototype`）。這樣的污染可能導致物件呼叫屬性的回傳值改變，搭配其他程式碼(Prototype Pollution Gadgets)，進一步引發更嚴重的安全性問題。
+
+
+### 所以理解這些後，可以做什麼？
+
+我認為理解後，在實務上可以做得是：
+
+### 1. 避免去修改原生 JS 的 Prototype Chain
+
+因為改動原生 JS Prototype Chain 影響範圍太廣，會導致很多無法預期的問題發生。
+
+最好要透過自動化像是 ESLint 的規則去限制開發者亂改，並且要在 CICD 的過程跑 ESlint 檢測。
+
+另外 Code Review 的流程中，也要對此有敏感性，一但看到 `__proto__`, `prototype` 等字元出沒，就要稍微想到 Prototype Chain，並且更好的是在重要的物件處理上，稍微想一下會不會有問題，需不需要用 `Object.create` 或者 `Map` 的方式去處理重要的資料。
+
+### 2. 如果需所有 Object 資料都能使用的方法，可以考慮用 Prototypal Inheritance
+
+Prototypal Inheritance 的好處就是可以讓所有繼承的 Object 都擁有該屬性方法，而且記憶體位置相同，如此一來除了能共同維護外，也可以讓記憶體佔比變少。
+
+不過如果只是在單一專案內，我個人比較傾向直接宣告一個獨立的共用函式，然後 `import` 到需要的檔案使用即可，不一定需要用 Prototype 的特性。
+
+但如果是在提供給別人使用的函式庫中，似乎更能考慮是否有適合的場景使用其特性。
+
+### 3. 不要相信使用者的輸入
+
+任何跟使用者輸入有關之處，包含網址、輸入框等等，都要小心會被輸入 `__proto__`, `prototype` 等關鍵字，如果後續把資料與物件混合時處理不佳，就有可能會導致 Prototype Pollution。
+
+不過很多第三方函式庫都會對此有處理，可以直接用就好，像是如果用 lodash 的 `merge` 就會自帶過濾。
+
+### 4. 定期進行安全性檢查
+
+即便使用第三方函式庫，也有可能因為有安全性漏洞而導致原型被污染，所以盡量能在 CICD 時進行安全性檢查，就能自動地被提醒要進行第三方函式庫的版本升級，藉此盡量地避免安全性漏洞。
+
+---
+
+希望看完本文後，對於 Prototype 相關的概念有更加清楚明瞭，我自己在本文撰寫過程中，最多新知識是在於 Prototype Pollution 安全性相關的議題，因為是近期閱讀書籍後才認真瞭解的概念，實際了解後發現蠻有趣的，趁這次重新整理時，也算把這塊不足之處也補齊吧！
+
+---
+
+#### 參考資料
+
+- [Prototype | ECMA](https://tc39.es/ecma262/#sec-terms-and-definitions-prototype)
+- [Inheritance and the prototype chain | MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
+- [《Beyond XSS：探索網頁前端資安宇宙》](https://www.tenlong.com.tw/products/9786267383803)
+- [該來理解 JavaScript 的原型鍊了](https://blog.huli.tw/2017/08/27/the-javascripts-prototype-chain/#%E6%8E%A2%E7%A9%B6%E5%8E%9F%E7%90%86)
+- [JavaScript | 關於 Object ，一口氣全說完](https://medium.com/enjoy-life-enjoy-coding/javascript-%E9%97%9C%E6%96%BC-object-%E4%B8%80%E5%8F%A3%E6%B0%A3%E5%85%A8%E8%AA%AA%E5%AE%8C-4bb924bcc79f)
+- 與[ChatGPT 4](https://openai.com/gpt-4)共編
+- 與[Claude 3.5](https://claude.ai/new)共編
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
