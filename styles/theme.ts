@@ -75,8 +75,8 @@ export const defaultTheme = {
 
 export const darkThemeColors = {
   primaryText: '#f9f9f9',
-  secondText: '#eeeeee',
-  thirdText: '#dddddd',
+  secondText: '#e3e3e3',
+  thirdText: '#c3c3c3',
   bodyBg: '#282b30',
   navigationBg: '#202226',
   btnBg: '#202226',
@@ -91,8 +91,8 @@ export const darkThemeColors = {
 
 export const lightThemeColors = {
   primaryText: '#333333',
-  secondText: '#444444',
-  thirdText: '#555555',
+  secondText: '#474747',
+  thirdText: '#575757',
   bodyBg: '#fcfcfc',
   navigationBg: '#ffffff',
   btnBg: '#ffffff',
