@@ -23,6 +23,7 @@ const getGlobalStyle = (theme: Theme) => {
     }
 
     h1 {
+      margin: 40px 0px;
       font-size: ${theme.fontSizes['6xl']};
       font-weight: ${theme.fontWeights.extrabold};
       color: ${theme.colors.primaryText};
@@ -30,6 +31,7 @@ const getGlobalStyle = (theme: Theme) => {
       line-height: ${theme.lineHeights.short};
 
       @media (max-width: ${theme.breakpoints.tabletS}) {
+        margin: 35px 0px;
         font-size: ${theme.fontSizes['4xl']};
       }
 
@@ -169,7 +171,7 @@ const getGlobalStyle = (theme: Theme) => {
 
     p > code,
     li > code {
-      padding: 0px 6px 1px 6px;
+      padding: 2px 6px;
       color: ${theme.colors.primaryText};
       background-color: ${theme.colors.codeElementBg};
       letter-spacing: ${theme.letterSpacings.wide};
