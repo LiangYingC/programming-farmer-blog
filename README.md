@@ -28,6 +28,8 @@
 
 ### React
 
+- [從 React Hook 原始碼的實作與資料結構，探討為何 Hooks 須在最頂層呼叫](https://www.programfarmer.com/articles/2025/react-understand-call-hooks-at-top-level-rule)
+- [深入談談 React useEffect 與其 fetching 與 subscription 的兩大應用場景](https://www.programfarmer.com/articles/2025/react-understand-useEffect-fetching-and-subscription)
 - [深入理解 React.createElement 與 JSX](https://www.programfarmer.com/articles/2021/react-depth-jsx)
 
 ### Style
