@@ -295,13 +295,13 @@ function Counter() {
 ```
 
 渲染時 `useState` 的運作流程：
-- Hook1 `useState` 執行，資料為 isShowText
+- Hook1 `useState` (isShowText) 執行
   - 創建 hook1  節點，`memoizedState` 為 false, `next` 為 null
   - `workInProgressHook` 設定為 hook1
-- Hook2 `useState` 執行，資料為 text
+- Hook2 `useState` (text) 執行
   - 創建 hook2 節點，`memoizedState` 為 'Count', `next` 為 null
   - **workInProgressHook(hook1) 的 next 指向 hook2**，接著 `workInProgressHook` 設定成 hook2
-- Hook3 `useState` 執行，資料為 count
+- Hook3 `useState` (count) 執行
   - 創建 hook3 節點，memoizedState 為 0, next 為 null
   - **workInProgressHook(hook2) 的 next 指向 hook3**，接著 `workInProgressHook` 設定成 hook3
 
@@ -711,4 +711,4 @@ _(當 loop 中資料為 isDone 的多個 useState 都再次執行後的 Hooks �
 - [React hooks: not magic, just arrays](https://medium.com/@ryardley/react-hooks-not-magic-just-arrays-cd4f1857236e)
 - [Rules of ESLint | eslint-plugin-react-hooks](https://www.npmjs.com/package/eslint-plugin-react-hooks)
 - [Wiki | Linked List](https://en.wikipedia.org/wiki/Linked_list)
-- 使用 [https://claude.ai/] 校稿和修正
+- 使用 [Claude](https://claude.ai/) 校稿和修正
