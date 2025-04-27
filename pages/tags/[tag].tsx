@@ -4,6 +4,9 @@ import { getArticlesByTag, getAllArticleTags } from '@lib/fs';
 import { sortArticlesByDateDesc } from '@lib/sort';
 import Layout from '@components/Layout';
 import ArticleList from '@components/ArticleList';
+import { useTranslation } from '@hooks/useTranslation';
+import { Locale } from '@myTypes/locale';
+import { DEFAULT_LOCALE } from '@constants/locales';
 
 interface TagPageProps {
   tag: string;
@@ -11,21 +14,29 @@ interface TagPageProps {
 }
 
 const TagPage = ({ tag, articles }: TagPageProps) => {
+  const { t, locale } = useTranslation();
+
   return (
     <Layout
       pageType="website"
-      pageTitle={`城市碼農 | LiangC | ${tag} 技術文章`}
-      pageDesc={`城市碼農技術部落格中，關於 ${tag} 的文章列表。`}
-      pageURL={`https://www.programfarmer.com/tags/${tag}`}
+      pageTitle={`${t('common.title')} | ${tag} ${t('common.article_tag')}`}
+      pageDesc={`${t('common.title')}${t('common.article_list')}，${tag} ${t(
+        'common.article_tag'
+      )}`}
+      pageURL={`https://www.programfarmer.com/${locale}/tags/${tag}`}
     >
-      <ArticleList articleIntro={`Articles about ${tag}`} articles={articles} />
+      <ArticleList
+        articleIntro={`${t('common.article_tag')}: ${tag}`}
+        articles={articles}
+      />
     </Layout>
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
   const tag = (params?.tag || '') as string;
-  const articles = getArticlesByTag(tag);
+  const currentLocale = (locale || DEFAULT_LOCALE) as Locale;
+  const articles = getArticlesByTag(tag, currentLocale);
   const sortedArticles = sortArticlesByDateDesc(articles);
 
   return {
@@ -36,13 +47,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const paths = getAllArticleTags().map((tag) => {
-    return {
-      params: {
-        tag,
-      },
-    };
+export const getStaticPaths: GetStaticPaths = async ({ locales }) => {
+  const supportedLocales = locales || [DEFAULT_LOCALE];
+
+  const paths = supportedLocales.flatMap((locale) => {
+    const tags = getAllArticleTags(locale as Locale);
+    return tags.map((tag) => ({
+      params: { tag },
+      locale,
+    }));
   });
 
   return {
