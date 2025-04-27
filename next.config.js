@@ -3,6 +3,10 @@ module.exports = {
   compiler: {
     emotion: true,
   },
+  i18n: {
+    locales: ['zh-TW', 'en-US'],
+    defaultLocale: 'zh-TW',
+  },
   async redirects() {
     return [
       {
