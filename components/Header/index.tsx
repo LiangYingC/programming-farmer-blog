@@ -3,6 +3,7 @@ import Link from 'next/link';
 import useNavScrollHandler from '@hooks/useNavScrollHandler';
 import { useColorMode } from '@contexts/ColorModeContext';
 import { useTranslation } from '@hooks/useTranslation';
+import LanguageSwitcher from '@components/LanguageSwitcher';
 import {
   HeaderWrapper,
   InnerWrapper,
@@ -38,6 +39,7 @@ const Header = () => {
             <Link href={'/articles'}>{t('common.article_list')}</Link>
           </NavItem>
         </Nav>
+        <LanguageSwitcher />
         <ColorModeBtn onClick={handleToggleColorMode}>
           <ColorModeIcon>
             {isDarkMode ? <IoMdSunny /> : <IoMdMoon />}
