@@ -26,7 +26,6 @@ export const getArticleMatter = (articleFilePath: string) => {
     ...data,
     date: JSON.stringify(data.date),
   } as Frontmatter;
-
   return { frontmatter, content };
 };
 
