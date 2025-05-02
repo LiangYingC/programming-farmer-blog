@@ -14,8 +14,8 @@ const HomePage = ({ tags }: HomePageProps) => {
   return (
     <Layout
       pageType="website"
-      pageTitle="城市碼農 | LiangC | 技術部落格"
-      pageDesc={t('common.intro')}
+      pageTitle={t('page.home_title')}
+      pageDesc={t('page.home_description')}
       pageURL="https://www.programfarmer.com"
     >
       <Bio />

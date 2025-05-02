@@ -32,6 +32,16 @@ export const TRANSLATION_CONTENT: TranslationContent = {
       open_issue: '點此前往開 Issues 討論',
       thanks: '，感恩。',
     },
+    page: {
+      home_title: '城市碼農 | LiangC | 技術部落格',
+      home_description: 'LiangC 技術部落格',
+      articles_title: '城市碼農 | LiangC | 所有技術文章',
+      articles_description:
+        '城市碼農技術部落格的所有文章，主題涵蓋 JavaScript、React、Source Code、CSS 等技術文章。',
+      tags_title: '城市碼農 | LiangC | 文章分類',
+      tags_description:
+        '城市碼農技術部落格的所有文章分類，包含 React、JaveScript、Source Code 等分類',
+    },
   },
   'en-US': {
     common: {
@@ -49,6 +59,16 @@ export const TRANSLATION_CONTENT: TranslationContent = {
         'If you find any errors in the blog content or want to discuss further, please',
       open_issue: 'click here to open an Issue',
       thanks: ', thank you.',
+    },
+    page: {
+      home_title: 'ProgrammingFarmer | LiangC | Technology Blog',
+      home_description: 'LiangC Technology Blog',
+      articles_title: 'ProgrammingFarmer | LiangC | All Technology Articles',
+      articles_description:
+        'All technology articles of ProgrammingFarmer, covering JavaScript, React, Source Code, CSS, etc.',
+      tags_title: 'ProgrammingFarmer | LiangC | Article Tags',
+      tags_description:
+        'All article tags of ProgrammingFarmer, including React, JavaScript, Source Code, etc.',
     },
   },
 };
