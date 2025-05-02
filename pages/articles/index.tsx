@@ -1,9 +1,11 @@
 import { GetStaticProps } from 'next';
 import { Articles } from '@myTypes/articles';
+import { Locale } from '@myTypes/locale';
 import { getAllArticles } from '@lib/fs';
 import { sortArticlesByDateDesc } from '@lib/sort';
 import Layout from '@components/Layout';
 import ArticleList from '@components/ArticleList';
+import { DEFAULT_LOCALE } from '@constants/locales';
 
 interface AllArticlesPageProps {
   articles: Articles;
@@ -22,8 +24,9 @@ const AllArticlesPage = ({ articles }: AllArticlesPageProps) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async () => {
-  const articles = getAllArticles();
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  const currentLocale = (locale || DEFAULT_LOCALE) as Locale;
+  const articles = getAllArticles(currentLocale);
   const sortedArticles = sortArticlesByDateDesc(articles);
   return {
     props: {
