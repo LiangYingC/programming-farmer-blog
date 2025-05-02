@@ -13,7 +13,8 @@
     "create-sitemap": "next-sitemap",
     "dev": "export NODE_ENV=development && next dev -p 3000",
     "build": "export NODE_ENV=production && next build && npm run create-sitemap",
-    "start": "next start"
+    "start": "next start",
+    "update-readme-articles": "node scripts/update-readme-articles.js"
   },
   "keywords": [
     "personal blog",
