@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useTranslation } from '@hooks/useTranslation';
 import { LOCALE_CONFIG } from '@constants/locales';
 import { Locale } from '@myTypes/locale';
+import { sendEvent } from '@lib/gtag';
 
 const SwitcherContainer = styled.div`
   display: flex;
@@ -35,7 +36,17 @@ const LanguageSwitcher = () => {
 
   return (
     <SwitcherContainer>
-      <LanguageButton onClick={() => changeLocale(targetLocale)}>
+      <LanguageButton
+        onClick={() => {
+          sendEvent({
+            eventName: 'language_switcher_click',
+            eventParams: {
+              target_locale: targetLocale,
+            },
+          });
+          changeLocale(targetLocale);
+        }}
+      >
         {targetLocaleName}
       </LanguageButton>
     </SwitcherContainer>
