@@ -1,10 +1,12 @@
 import { Wrapper } from '@components/SupportAndIssueBlock/indexStyle';
 import { sendEvent } from '@lib/gtag';
+import { useTranslation } from '@hooks/useTranslation';
 
 const SupportAndIssueBlock = () => {
+  const { t } = useTranslation();
   return (
     <Wrapper>
-      如果分享的內容對你有幫助，歡迎{' '}
+      {t('support.help_message')}{' '}
       <a
         href="https://www.buymeacoffee.com/mojito.liangc"
         target="_blank"
@@ -19,9 +21,9 @@ const SupportAndIssueBlock = () => {
           })
         }
       >
-        點此小額贊助請我喝杯咖啡
+        {t('support.buy_coffee')}
       </a>{' '}
-      😌 ; 如果發現部落格文章內容有誤，或有想進一步討論的內容，歡迎
+      😌 ; {t('support.issue_message')}
       <a
         href="https://github.com/LiangYingC/Programming-Farmer-Blog/issues"
         target="_blank"
@@ -36,9 +38,9 @@ const SupportAndIssueBlock = () => {
           })
         }
       >
-        點此前往開 Issues 討論
+        {t('support.open_issue')}
       </a>
-      ，感謝！
+      {t('support.thanks')}
     </Wrapper>
   );
 };

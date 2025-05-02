@@ -24,7 +24,13 @@ export const TRANSLATION_CONTENT: TranslationContent = {
       article_list: '文章列表',
       article_tag: '文章標籤',
       allRights_reserved: '版權所有',
-      thanks: '謝謝',
+    },
+    support: {
+      help_message: '如果分享的內容對你有幫助，歡迎',
+      buy_coffee: '點此小額贊助請我喝杯咖啡',
+      issue_message: '如果發現部落格文章內容有誤，或有想進一步討論的內容，歡迎',
+      open_issue: '點此前往開 Issues 討論',
+      thanks: '，感恩。',
     },
   },
   'en-US': {
@@ -35,7 +41,14 @@ export const TRANSLATION_CONTENT: TranslationContent = {
       article_list: 'Articles',
       article_tag: 'Article Tag',
       allRights_reserved: 'All rights reserved',
-      thanks: 'Thanks',
+    },
+    support: {
+      help_message: 'If the content was helpful to you, feel free to',
+      buy_coffee: 'click here to buy me a coffee',
+      issue_message:
+        'If you find any errors in the blog content or want to discuss further, please',
+      open_issue: 'click here to open an Issue',
+      thanks: ', thank you.',
     },
   },
 };
