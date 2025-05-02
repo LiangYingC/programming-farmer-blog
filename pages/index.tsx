@@ -4,6 +4,7 @@ import Bio from '@components/Bio';
 import ArticleTags from '@components/ArticleTags';
 import { getAllArticleTags } from '@lib/fs';
 import { useTranslation } from '@hooks/useTranslation';
+import { DOMAIN } from '@constants/domain';
 
 interface HomePageProps {
   tags: string[];
@@ -16,7 +17,7 @@ const HomePage = ({ tags }: HomePageProps) => {
       pageType="website"
       pageTitle={t('page.home_title')}
       pageDesc={t('page.home_description')}
-      pageURL="https://www.programfarmer.com"
+      pageURL={DOMAIN}
     >
       <Bio />
       <ArticleTags tags={tags} />

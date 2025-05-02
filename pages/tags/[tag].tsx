@@ -7,6 +7,7 @@ import ArticleList from '@components/ArticleList';
 import { useTranslation } from '@hooks/useTranslation';
 import { Locale } from '@myTypes/locale';
 import { DEFAULT_LOCALE } from '@constants/locales';
+import { DOMAIN } from '@constants/domain';
 
 interface TagPageProps {
   tag: string;
@@ -23,7 +24,7 @@ const TagPage = ({ tag, articles }: TagPageProps) => {
       pageDesc={`${t('common.title')}${t('common.article_list')}，${tag} ${t(
         'common.article_tag'
       )}`}
-      pageURL={`https://www.programfarmer.com/${locale}/tags/${tag}`}
+      pageURL={`${DOMAIN}/${locale}/tags/${tag}`}
     >
       <ArticleList
         articleIntro={`${t('common.article_tag')}: ${tag}`}

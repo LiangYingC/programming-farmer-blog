@@ -3,6 +3,7 @@ import Layout from '@components/Layout';
 import ArticleTags from '@components/ArticleTags';
 import { getAllArticleTags } from '@lib/fs';
 import { useTranslation } from '@hooks/useTranslation';
+import { DOMAIN } from '@constants/domain';
 
 interface TagsPageProps {
   tags: string[];
@@ -15,7 +16,7 @@ const TagsPage = ({ tags }: TagsPageProps) => {
       pageType="website"
       pageTitle={t('page.tags_title')}
       pageDesc={t('page.tags_description')}
-      pageURL="https://www.programfarmer.com/tags"
+      pageURL={`${DOMAIN}/tags`}
     >
       <ArticleTags tags={tags} />
     </Layout>

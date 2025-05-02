@@ -7,6 +7,7 @@ import { useTranslation } from '@hooks/useTranslation';
 import Layout from '@components/Layout';
 import ArticleList from '@components/ArticleList';
 import { DEFAULT_LOCALE } from '@constants/locales';
+import { DOMAIN } from '@constants/domain';
 
 interface AllArticlesPageProps {
   articles: Articles;
@@ -19,7 +20,7 @@ const AllArticlesPage = ({ articles }: AllArticlesPageProps) => {
       pageType="website"
       pageTitle={t('page.articles_title')}
       pageDesc={t('page.articles_description')}
-      pageURL="https://www.programfarmer.com/articles"
+      pageURL={`${DOMAIN}/articles`}
     >
       <ArticleList articleIntro={'All Articles'} articles={articles} />
     </Layout>

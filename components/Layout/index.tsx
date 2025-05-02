@@ -6,8 +6,7 @@ import Footer from '@components/Footer/index';
 import { LOCALES } from '@constants/locales';
 import { Locale } from '@myTypes/locale';
 import { Content } from '@components/Layout/indexStyle';
-
-const DOMAIN = 'https://www.programfarmer.com';
+import { DOMAIN } from '@constants/domain';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -25,7 +24,7 @@ const Layout = ({
   pageType,
 }: LayoutProps) => {
   const { t } = useTranslation();
-  const isHomePage = pageURL === 'https://www.programfarmer.com';
+  const isHomePage = pageURL === DOMAIN;
   const router = useRouter();
   const { asPath } = router;
 
@@ -36,7 +35,7 @@ const Layout = ({
         <meta charSet="utf-8" />
         <link
           rel="shortcut icon"
-          href="https://www.programfarmer.com/assets/icons/favicon-32x32.png"
+          href={`${DOMAIN}/assets/icons/favicon-32x32.png`}
         />
         <link rel="canonical" href={pageURL} />
         {LOCALES.map((loc: Locale) => (
@@ -60,7 +59,7 @@ const Layout = ({
         <meta property="og:url" content={pageURL} key="ogUrl" />
         <meta
           property="og:image"
-          content="https://www.programfarmer.com/assets/icons/icon-384x384.png"
+          content={`${DOMAIN}/assets/icons/icon-384x384.png`}
           key="ogImage"
         />
         <meta
@@ -73,7 +72,7 @@ const Layout = ({
         <meta name="twitter:url" content={pageURL} key="twitterPageUrl" />
         <meta
           name="twitter:image"
-          content="https://www.programfarmer.com/assets/icons/icon-384x384.png"
+          content={`${DOMAIN}/assets/icons/icon-384x384.png`}
           key="twitterImage"
         />
         <meta
