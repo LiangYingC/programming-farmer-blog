@@ -2,18 +2,21 @@ import { GetStaticProps } from 'next';
 import Layout from '@components/Layout';
 import ArticleTags from '@components/ArticleTags';
 import { getAllArticleTags } from '@lib/fs';
+import { useTranslation } from '@hooks/useTranslation';
+import { DOMAIN } from '@constants/domain';
 
 interface TagsPageProps {
   tags: string[];
 }
 
 const TagsPage = ({ tags }: TagsPageProps) => {
+  const { t } = useTranslation();
   return (
     <Layout
       pageType="website"
-      pageTitle="城市碼農 | LiangC | 文章分類"
-      pageDesc="城市碼農技術部落格的所有文章分類，包含 React、JaveScript、Source Code 等分類"
-      pageURL="https://www.programfarmer.com/tags"
+      pageTitle={t('page.tags_title')}
+      pageDesc={t('page.tags_description')}
+      pageURL={`${DOMAIN}/tags`}
     >
       <ArticleTags tags={tags} />
     </Layout>
