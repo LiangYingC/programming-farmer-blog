@@ -6,6 +6,8 @@ Welcome to [Programming-Farmer-Blog](https://www.programfarmer.com/en-US), my pe
 
 If you find any errors in the blog content or want to discuss further, please feel free to [open an Issue](https://github.com/LiangYingC/Programming-Farmer-Blog/issues). Thank you!
 
+If you find the content helpful, feel free to [buy me a coffee](https://www.buymeacoffee.com/mojito.liangc) or give this repo a star. Your support is greatly appreciated!
+
 ## Articles
 
 ### JavaScript

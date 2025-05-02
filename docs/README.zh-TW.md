@@ -4,7 +4,7 @@
 
 [Programming-Farmer-Blog](https://www.programfarmer.com/) 是我的技術部落格，歡迎閱讀。
 
-如果發現部落格文章內容有誤，或有任何想進一步討論的內容，都非常歡迎 [開 Issue 討論](https://github.com/LiangYingC/Programming-Farmer-Blog/issues)，感謝！
+如果發現部落格文章內容有誤，或有任何想進一步討論的內容，都非常歡迎 [開 Issue 討論](https://github.com/LiangYingC/Programming-Farmer-Blog/issues); 如果認為內容有幫助歡迎[點此贊助我咖啡](https://www.buymeacoffee.com/mojito.liangc) 或者替 Repo 點個星星都是很棒的支持，感謝！
 
 ## 文章列表
 
