@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 import { useColorMode } from '@contexts/ColorModeContext';
+import { useTranslation } from '@hooks/useTranslation';
 import SupportAndIssueBlock from '@components/SupportAndIssueBlock';
 import {
   BioWrapper,
@@ -23,6 +24,7 @@ const myImages = {
 };
 
 const Bio = () => {
+  const { t } = useTranslation();
   const { isDarkMode } = useColorMode();
   const initBioImage = isDarkMode ? myImages.dark : myImages.light;
   const [bioImage, setBioImage] = useState(initBioImage);
@@ -44,9 +46,7 @@ const Bio = () => {
         <Title>
           LiangC<Divider>|</Divider>Frontend Developer
         </Title>
-        <Description>
-          曾為農業現場員工、農產品品管、線上課程品管，現為前端工程師，喜歡栽培和成長，在城市裡耕耘程式，期望栽種有價值的產品。
-        </Description>
+        <Description>{t('common.intro')}</Description>
         <SupportAndIssueBlock />
       </Intro>
     </BioWrapper>
