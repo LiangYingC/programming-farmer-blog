@@ -1,6 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const matter = require('gray-matter');
+import fs from 'fs';
+import path, { dirname } from 'path';
+import matter from 'gray-matter';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const ARTICLES_DIR = path.join(__dirname, '../contents/articles');
 const README_PATH = path.join(__dirname, '../README.md');
