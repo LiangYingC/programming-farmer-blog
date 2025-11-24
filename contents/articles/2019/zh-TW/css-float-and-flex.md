@@ -7,7 +7,7 @@ tag: CSS
 
 ## 前言
 
-在 CSS 還沒有 `display: flex` 可以很暢快的玩弄排版前，通常會利用 `float` 來進行平行橫向的排版，然而使用`float`而導致的浮動副作用總是令人恨得牙癢癢，因此這篇文章主要來探索「 利用 `clear:both` 清除浮動（clearfix）的三種方式 」，學一學後，恩.....還是繼續回去用 flex 好了 (非誤為真 RRR )。
+在 CSS 還沒有 `display: flex` 可以很暢快的玩弄排版前，通常會利用 `float` 來進行平行橫向的排版，然而使用`float`而導致的浮動副作用總是令人恨得牙癢癢，因此這篇文章主要來探索「 利用 `clear:both` 清除浮動（clearfix）的三種方式 」，學一學後，恩.....還是繼續回去用 flex 好了。
 
 ---
 
@@ -15,7 +15,7 @@ tag: CSS
 
 首先先理解問題是什麼：**當我們利用 `float` 排版，結果會造成使用 `float` 的元素區塊本身的高度被無視**，進而下方的元素擠上來，形成的排版錯誤狀況。延伸地說，也可能造成父元素的高度坍塌，因為忽略掉父元素內容物的高度。直接看例子比較清楚，由下例可以發現 Footer 非預期性地往上跑了：
 
-![Chinese Salty Egg](/images/articles/css-float-and-flex/01.gif)
+![css float and flex example](/images/articles/css-float-and-flex/01.gif)
 
 為什麼會導致這樣的錯誤？
 
@@ -31,7 +31,7 @@ float 屬性，顧名思義是「 讓元素區塊直接產生浮起來的效果 
 
 首先來理解 `clear` 屬性，**當一個元素中的 CSS 有 `clear` 屬性時，就會「 清除該元素上方所遭遇的浮動情況 」，因此就不會忽略其上方的元素高度，進而回到垂直排列的正常狀況**。也就是說，如果在 Footer 加上 `clear: both` ，就能讓 Left / Right 區塊的浮動情況消失（能再度看見 height ），所以排版會再度回復正常。
 
-簡而言之，**我們需要回到正常垂直排列的元素的 CSS 屬性中加入 `clear: both`**，以上例而言，就是 Footer 中加入。
+簡而言之，**我們需要回到正常垂直排列的元素的 CSS 屬性中加入** `clear: both`，以上例而言，就是 Footer 中加入。
 
 ```css
 .footer {

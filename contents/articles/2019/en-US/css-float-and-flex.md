@@ -7,7 +7,7 @@ tag: CSS
 
 ## Introduction
 
-Before CSS had `display: flex` to easily handle layouts, we often used `float` for horizontal parallel layouts. However, the floating side effects caused by using `float` were always frustrating. Therefore, this article mainly explores "three ways to clear floats (clearfix) using `clear:both`". After learning them, well... you'll probably just want to go back to using flex anyway (not kidding RRR).
+Before CSS had `display: flex` to easily handle layouts, we often used `float` for horizontal parallel layouts. However, the floating side effects caused by using `float` were always frustrating. Therefore, this article mainly explores "three ways to clear floats (clearfix) using `clear:both`". After learning them, well... you'll probably just want to go back to using flex anyway.
 
 ---
 
@@ -15,9 +15,9 @@ Before CSS had `display: flex` to easily handle layouts, we often used `float` f
 
 First, let's understand the problem: **when we use `float` for layout, it causes the height of the floated element block to be ignored**, which results in elements below moving up, creating layout errors. In other words, it can also cause the parent element's height to collapse because the height of the parent's content is ignored. A direct example makes this clearer - in the example below, you can see that the Footer unexpectedly moves up:
 
-![Chinese Salty Egg](/images/articles/css-float-and-flex/01.gif)
+![css float and flex example](/images/articles/css-float-and-flex/01.gif)
 
-Why does this error occur?
+Why does this problem occur?
 
 The float property, as the name suggests, "makes element blocks float up". This sounds mysterious, but the reason for this floating effect is actually **because the height of the Left/Right blocks is ignored**. It can be viewed as if the height becomes 0 (it actually has a value, but it's ignored), so the Footer block moves up because there's no height above it.
 
@@ -31,7 +31,7 @@ Now that we understand why float causes problems, let's look at how to solve the
 
 First, let's understand the `clear` property. **When an element's CSS has the `clear` property, it "clears the floating situation encountered above the element"**, so it doesn't ignore the height of elements above it, returning to the normal vertical arrangement. In other words, if we add `clear: both` to the Footer, it will make the floating situation of the Left/Right blocks disappear (the height becomes visible again), so the layout returns to normal.
 
-Simply put, **we need to add `clear: both` to the CSS of the element that needs to return to normal vertical arrangement**. In the example above, that would be the Footer.
+Simply put, **we need to add** `clear: both` **to the CSS of the element that needs to return to normal vertical arrangement**. In the example above, that would be the Footer.
 
 ```css
 .footer {
