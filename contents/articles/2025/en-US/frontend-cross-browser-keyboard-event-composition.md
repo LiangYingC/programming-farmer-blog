@@ -442,7 +442,7 @@ Try testing your frequently used applications in Safari with Traditional Chinese
 
 For example, Figma's Comment feature has this issue:
 
-![Figma Comment Safari Composition Bug](/images/articles/frontend-cross-browser-keyboard-event-composition/12.png)
+![Figma Comment Safari Composition Bug](/images/articles/frontend-cross-browser-keyboard-event-composition/12.gif)
 _(Figma comments: Using Safari during composition, pressing Enter submits immediately!)_
 
 Hopefully Safari will fix this someday!

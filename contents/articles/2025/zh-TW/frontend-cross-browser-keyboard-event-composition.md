@@ -443,7 +443,7 @@ if (e.key === 'Enter' && !e.isComposing && e.keyCode !== 229) {
 
 像是 Figma 的 Comment 就能遇到這個問題：
 
-![Figma Comment Safari Composition Bug](/images/articles/frontend-cross-browser-keyboard-event-composition/12.png)
+![Figma Comment Safari Composition Bug](/images/articles/frontend-cross-browser-keyboard-event-composition/12.gif)
 _（Figma 的評論，如果用 Safari 在組字狀態時，按下 Enter 會直接被送出啊）_
 
 期待 Safari 某日會修掉這個問題吧！
