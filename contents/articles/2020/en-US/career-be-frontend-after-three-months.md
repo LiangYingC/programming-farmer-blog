@@ -7,10 +7,10 @@ tag: Career
 
 ## Introduction
 
-Although I've been working as a frontend engineer since May 11, 2020, it wasn't until last week, August 11, when I completed three full months on the job, that I considered my career transition to be truly successful.
+I started working as a frontend engineer on May 11, 2020. However, it wasn't until I completed my first three months on August 11 that I felt my career transition was truly successful.
 
 ![sharing at Appworks School](/images/articles/career-be-frontend-after-three-months/01.webp)
-_In July, I went back to AppWorks School to share my experience, when I hadn't quite reached the 3-month mark yet (sweating)_
+_In July, I returned to AppWorks School to share my experience, before reaching my 3-month mark._
 
 This is a fairly casual and authentic record of my career transition thoughts, focusing on the following points:
 
@@ -26,7 +26,7 @@ This article is suitable for those "considering whether to change careers" or "t
 
 Actually, I originally just wanted to document my career transition journey and reflect on whether I had achieved my initial expectations. As I was writing, I thought I might as well share it, as perhaps someone could benefit from the context.
 
-Note: The content is based on personal experience and should always be considered as a reference point, not an absolute answer.
+Note: This content is based on my personal experience and should be taken as one perspective, not absolute truth.
 
 ---
 
@@ -45,7 +45,7 @@ After finishing writing, I realized the content was quite extensive, so I decide
 9. You'll always need to keep learning, so learning how to learn is important. Find methods that work for you.
 10. Keep in mind that transitioning careers is just the beginning; the road ahead is still long.
 
-Now I'll discuss my personal experience, which serves as a personal example and context for the points listed above.
+Now let me share my personal experience, which provides context for these points.
 
 ---
 
@@ -57,7 +57,7 @@ Regarding the "push factors," there were mainly three points:
 
 ### 1. Not Perceiving My Value in the Position Itself
 
-Before transitioning, I held a position in quality control for online course content. A large part of my job involved watching courses after they were produced and providing suggestions to the instructors. The instructors would review these suggestions and decide whether to modify or optimize their content, and if they decided not to make changes, they needed to provide reasons.
+Before transitioning, I worked in quality control for online course content. My job mainly involved reviewing courses after they were produced and providing suggestions to the instructors. The instructors would review these suggestions and decide whether to modify or optimize their content, and if they decided not to make changes, they needed to provide reasons.
 
 In the process at that time, I believed that the quality of a course largely depended on "the instructor's teaching ability" and "collaboration with the course content planner" (another position).
 
@@ -65,36 +65,34 @@ In most cases, I felt that even without my intervention, the courses wouldn't ha
 
 The subject of the paragraph above is consistently "I" rather than "quality control" because these are very subjective feelings. From a more rigorous perspective, the position of course quality control has its value.
 
-For example, if a bestselling course inadvertently included images or music with copyright issues that were later noticed by students, couldn't this potentially develop into significant damage? If an instructor promised that beginners could learn the material, but the content was incomprehensible to novice students, causing frustration, wouldn't students leave negative reviews?
-
-Over time, this would not only make students distrust the instructor but could also affect the credibility of the online learning platform.
+For instance, if a bestselling course inadvertently included copyrighted images or music that students noticed, couldn't this cause significant damage? If content promised for beginners was incomprehensible to novices, wouldn't frustrated students leave negative reviews? Over time, this could erode trust in both the instructor and the platform.
 
 However, even though I understood the importance of the position, and even though the job content included identifying problems, providing concrete suggestions, participating in user interviews, and exchanging ideas with colleagues, which improved my thinking in many ways, I still subjectively couldn't find satisfaction in the position itself.
 
-> After careful consideration, I think the key to career goals isn't just understanding the importance of a position and trying to fit into it. Rather, it's continuously reflecting on your expectations for work, understanding what kinds of contributions, achievements, and salary would satisfy you, and gradually finding the corresponding position through trial and error.
+> After careful reflection, I realized the key to career fulfillment isn't just understanding a position's importance and trying to fit into it. Rather, it's continuously reflecting on your expectations for work—what kinds of contributions, achievements, and compensation would satisfy you—and gradually finding the right role through trial and error.
 
 Moreover, the contributions, achievements, and actual salary that each person wants differ at various life stages, so career development is a dynamic process. Perhaps when I initially took this position, I had expectations and satisfaction, but in the current situation, it no longer satisfied me.
 
 A career is a long journey that requires continuous iteration and optimization to gradually move toward what you desire, finding a good balance along the way.
 
-After some reflection, I discovered that in my next position, I wanted:
+After reflection, I discovered what I wanted in my next role:
 
-- Objective sense of contribution: To be able to measure more directly whether my work had immediate output and contribution, which would usually be reflected in the company's quantitative indicators (those numbers highlighted every quarter or even every day).
-- Subjective sense of achievement: To be able to create things with my own hands, where the success or failure of those things is highly related to me, and ideally to be able to believe from the bottom of my heart that "I play an important role in the quality of this product."
+- **Objective sense of contribution**: More directly measurable work output and impact, typically reflected in quantitative company metrics (those numbers highlighted quarterly or even daily).
+- **Subjective sense of achievement**: The ability to create things with my own hands, where success or failure is closely tied to my efforts, and where I can genuinely believe "I play a crucial role in this product's quality."
 
-To clarify the terminology, a sense of achievement is more about "doing things I want to do, which gives me satisfaction and happiness"; a sense of contribution is more about "doing things that others need me to do, which can be measured by corresponding indicators."
+To clarify: a sense of achievement is about "doing what I want to do, which brings satisfaction and happiness"; a sense of contribution is about "doing what others need me to do, measurable by corresponding indicators."
 
-At the same time, I realized that no matter how capable or interesting my colleagues were, or how free the company's system was, if I couldn't find satisfaction in the "position" itself, I would still want to resign.
+I also realized that regardless of how capable or interesting my colleagues were, or how much freedom the company offered, if I couldn't find satisfaction in the position itself, I would still want to leave.
 
 ### 2. Career Choices: If I Leave, Can I Take My Skills With Me?
 
 Since I mentioned self-doubt about my position above, this led to the question: "If I leave, where should I go?" So I began to think about my current abilities and whether the skills I'd developed in my position could be taken with me and fully utilized at the next company.
 
-My method of judging this was simple: I looked at job search platforms.
+My method was simple: I looked at job search platforms.
 
 Usually, this involves both soft skills and hard skills. In terms of soft skills, I had indeed grown compared to before I started working, but in terms of hard skills, I always felt I didn't have any worth mentioning. Perhaps because of this, I always maintained a sense of anxiety in the workplace.
 
-After gradually sorting through my thoughts, I realized:
+After reflecting on this, I realized what I was looking for:
 
 The hard skills I wanted were those that would have sufficient value across multiple companies, even international ones. These hard skills would be laid out in job descriptions and were relatively easier to measure compared to soft skills. They wouldn't lose value when changing companies; on the contrary, they might become even more valuable.
 
@@ -118,7 +116,7 @@ Of course, by continuously working hard in the same position, there's always a c
 
 Are other positions less tiring or less valuable? I absolutely don't think so. But this is the reality of the job market.
 
-Compared to my peers, I don't think I stand out particularly. So in terms of salary, I tend to choose positions that have a higher probability of paying more, even if they're at a similar level.
+Compared to my peers, I don't consider myself particularly outstanding. So regarding salary, I chose to pursue positions with statistically higher pay potential, even at a similar experience level.
 
 After mentioning the three main push factors above, I'll now move on to the pull factors that led me to transition.
 
@@ -326,7 +324,7 @@ That's my learning method and the reflection process along the way.
 
 I didn't mention my personal background in the article, not because it's unimportant, but because exploring your own "why" takes priority. Before understanding yourself, looking at others' backgrounds might create a bias: "We're alike, so I'm also suitable for transitioning and will succeed/fail as well."
 
-I believe the correct order is: first explore your own goals, then find people with similar backgrounds who have implemented these goals. This would be more meaningful. This article primarily discusses my own goals.
+I believe the right approach is: first clarify your own goals, then seek out people with similar backgrounds who've pursued those goals. That context becomes meaningful only after you understand what you want.
 
 So the most important thing is:
 

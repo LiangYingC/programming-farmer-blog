@@ -10,7 +10,7 @@ tag: Career
 雖然從 2020/05/11 就擔任前端工程師，但對我而言，在上週 08/11 工作滿三個月，才算是實質上的轉職前端工程師成功。
 
 ![sharing at Appworks School](/images/articles/career-be-frontend-after-three-months/01.webp)
-_7 月時有回 AppWorks School 分享，當時其實還未滿 3 個月 (汗）_
+_7 月時有回 AppWorks School 分享，當時其實還未滿 3 個月_
 
 這篇算蠻隨性真實的記錄轉職上的思考，偏重以下幾點：
 
